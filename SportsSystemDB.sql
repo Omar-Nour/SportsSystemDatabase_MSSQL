@@ -168,5 +168,11 @@ CREATE VIEW allStadiumManagers AS
 	SELECT M.username AS StadManUserName,M.name AS StadManName,S.name AS StadiumName
 		FROM StadiumManager AS M,Stadium AS S
 		WHERE M.id = S.StadiumManagerID 
-			AND S.username = S.StadiumManagerUserName;
+			AND M.username = S.StadiumManagerUserName;
+GO
+
+GO
+CREATE VIEW allFans AS
+	SELECT name, NationalID,Birthdate,status
+		FROM Fan;
 GO
