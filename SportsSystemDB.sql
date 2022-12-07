@@ -106,5 +106,20 @@ AS
 		FOREIGN KEY (StadiumManagerID,StadiumManagerUserName) 
 			REFERENCES StadiumManager(id,username)
 	);
+GO
 
+GO
+CREATE PROCEDURE dropAllTables 
+AS
+	DROP TABLE SystemUser;
+	DROP TABLE SystemAdmin;
+	DROP TABLE StadiumManager;
+	DROP TABLE ClubRepresentative;
+	DROP TABLE Fan;
+	DROP TABLE SportsAssociationManager;
+	DROP TABLE Stadium;
+	DROP TABLE Club;
+	DROP TABLE Match;
+	DROP TABLE Ticket;
+	DROP TABLE HostRequest;
 GO
