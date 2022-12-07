@@ -147,5 +147,10 @@ AS
 	TRUNCATE TABLE Match;
 	TRUNCATE TABLE Ticket;
 	TRUNCATE TABLE HostRequest;
+GO
 
+GO
+CREATE VIEW allAssocManagers AS
+	SELECT username,name
+	FROM SportsAssociationManager;
 GO
