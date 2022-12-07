@@ -123,3 +123,29 @@ AS
 	DROP TABLE Ticket;
 	DROP TABLE HostRequest;
 GO
+
+GO
+CREATE PROCEDURE dropAllProceduresFunctionsViews
+AS
+	DROP PROCEDURE createAllTables;
+	DROP PROCEDURE dropAllTables;
+	DROP PROCEDURE clearAllTables;
+	--Add as you go
+GO
+
+GO
+CREATE PROCEDURE clearAllTables
+AS
+	TRUNCATE TABLE SystemUser;
+	TRUNCATE TABLE SystemAdmin;
+	TRUNCATE TABLE StadiumManager;
+	TRUNCATE TABLE ClubRepresentative;
+	TRUNCATE TABLE Fan;
+	TRUNCATE TABLE SportsAssociationManager;
+	TRUNCATE TABLE Stadium;
+	TRUNCATE TABLE Club;
+	TRUNCATE TABLE Match;
+	TRUNCATE TABLE Ticket;
+	TRUNCATE TABLE HostRequest;
+
+GO
