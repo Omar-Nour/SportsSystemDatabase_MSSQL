@@ -1,6 +1,8 @@
 ﻿CREATE DATABASE SportsSystemDB;
 
 GO
+
+--Procedure that creates all tables for DB
 CREATE PROCEDURE createAllTables
 AS 
 	CREATE TABLE SystemUser (
@@ -86,8 +88,8 @@ AS
 	CREATE TABLE Ticket(
 		id int IDENTITY PRIMARY KEY,
 		status bit,
-		FanUserName VARCHAR(20), --FOREIGN KEY REFERENCES Fan(username),
-		FanNationalID VARCHAR(20), --FOREIGN KEY REFERENCES Fan(NationalID),
+		FanUserName VARCHAR(20), 
+		FanNationalID VARCHAR(20), 
 		MatchID int FOREIGN KEY REFERENCES Match,
 		FOREIGN KEY (FanNationalID,FanUserName) 
 			REFERENCES Fan(NationalID,username)
@@ -109,6 +111,7 @@ AS
 GO
 
 GO
+--Procedure that drops all of the created tables 
 CREATE PROCEDURE dropAllTables 
 AS
 	DROP TABLE SystemUser;
@@ -125,6 +128,7 @@ AS
 GO
 
 GO
+--Procedure that drops all of the created Procedures, Functions or Views 
 CREATE PROCEDURE dropAllProceduresFunctionsViews
 AS
 	DROP PROCEDURE createAllTables;
@@ -143,6 +147,7 @@ AS
 GO
 
 GO
+--Procedure that clears the rows of all the tables
 CREATE PROCEDURE clearAllTables
 AS
 	TRUNCATE TABLE SystemUser;
@@ -159,12 +164,17 @@ AS
 GO
 
 GO
+--A View that returns 
+--the usernames and names of all Sports Association Managers
 CREATE VIEW allAssocManagers AS
 	SELECT username,name
 	FROM SportsAssociationManager;
 GO
 
 GO
+--A View that returns the usernames and names
+--of all Club Representatives as well as the name of the club they are 
+--representing
 CREATE VIEW allClubRepresentatives AS
 	SELECT R.username AS RepUserName,R.name AS RepName,C.name AS ClubName
 		FROM ClubRepresentative AS R,Club AS C
@@ -173,6 +183,9 @@ CREATE VIEW allClubRepresentatives AS
 GO
 
 GO
+--A View that returns the usernames and names
+--of all Stadium Managers as well as the name of the stadium they are 
+--managing
 CREATE VIEW allStadiumManagers AS
 	SELECT M.username AS StadManUserName,M.name AS StadManName,S.name AS StadiumName
 		FROM StadiumManager AS M,Stadium AS S
@@ -181,12 +194,17 @@ CREATE VIEW allStadiumManagers AS
 GO
 
 GO
+--A view that returns the name, NationalID
+--and status (blocked or unblocked) for all fans
 CREATE VIEW allFans AS
 	SELECT name, NationalID,Birthdate,status
 		FROM Fan;
 GO
 
 GO
+--A view that returns the start time of the match
+--as well as the names of the competing clubs (and the name of the host club)
+--for all matches
 CREATE VIEW allMatches AS 
 	SELECT C.name AS Club1,C2.name AS Club2,C.name AS HostClub, M.StartTime AS KickOffTime
 		FROM Match AS M, Club AS C, Club AS C2
@@ -195,6 +213,8 @@ CREATE VIEW allMatches AS
 GO
 
 GO
+--A View that returns the name of the competing clubs for a match,
+--the starttime and the stadium for all Tickets
 CREATE VIEW allTickets AS
 	SELECT C.name AS Club1, C2.name AS Club2, S.name AS Stadium,M.StartTime AS KickOffTime
 		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2, Stadium AS S
@@ -205,18 +225,24 @@ CREATE VIEW allTickets AS
 GO
 
 GO
+--A view that returns the name and location of all clubs
 CREATE VIEW allClubs AS
 	SELECT name,location
 		FROM Club;
 GO
 
 GO
+--A View that returns the name, location, capacity
+-- and status (available or unavailable) for all Stadiums
 CREATE VIEW allStadiums AS 
 	SELECT name, location, capacity, status AS StadiumStatus
 		FROM Stadium;
 GO
 
 GO
+--A View that returns the name of the Club Representative sending a host request,
+--the name of the Stadium Manager receiving the request,
+--and its status (accepted or rejected)
 CREATE VIEW allRequests AS 
 	SELECT CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.
 	status AS RequestStatus
