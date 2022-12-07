@@ -184,3 +184,13 @@ CREATE VIEW allMatches AS
 			WHERE M.HostClubID = C.id 
 				AND M.GuestClubID = C2.id AND C.id <> C2.id
 GO
+
+GO
+CREATE VIEW allTickets AS
+	SELECT C.name AS Club1, C2.name AS Club2, S.name AS Stadium,M.StartTime AS KickOffTime
+		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2, Stadium AS S
+			WHERE M.HostClubID = C.id 
+				AND M.GuestClubID = C2.id AND C.id <> C2.id
+				AND T.MatchID = M.id 
+				AND M.StadiumID = S.id;
+GO
