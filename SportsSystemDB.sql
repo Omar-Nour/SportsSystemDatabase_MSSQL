@@ -162,3 +162,11 @@ CREATE VIEW allClubRepresentatives AS
 		WHERE R.id = C.ClubRepresentativeID 
 			AND R.username = C.ClubRepresentativeUserName;
 GO
+
+GO
+CREATE VIEW allStadiumManagers AS
+	SELECT M.username AS StadManUserName,M.name AS StadManName,S.name AS StadiumName
+		FROM StadiumManager AS M,Stadium AS S
+		WHERE M.id = S.StadiumManagerID 
+			AND S.username = S.StadiumManagerUserName;
+GO
