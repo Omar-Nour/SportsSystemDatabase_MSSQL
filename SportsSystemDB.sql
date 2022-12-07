@@ -154,3 +154,11 @@ CREATE VIEW allAssocManagers AS
 	SELECT username,name
 	FROM SportsAssociationManager;
 GO
+
+GO
+CREATE VIEW allClubRepresentatives AS
+	SELECT R.username AS RepUserName,R.name AS RepName,C.name AS ClubName
+		FROM ClubRepresentative AS R,Club AS C
+		WHERE R.id = C.ClubRepresentativeID 
+			AND R.username = C.ClubRepresentativeUserName;
+GO
