@@ -130,6 +130,15 @@ AS
 	DROP PROCEDURE createAllTables;
 	DROP PROCEDURE dropAllTables;
 	DROP PROCEDURE clearAllTables;
+	DROP VIEW allAssocManagers;
+	DROP VIEW allClubRepresentatives;
+	DROP VIEW allStadiumManagers;
+	DROP VIEW allFans;
+	DROP VIEW allMatches;
+	DROP VIEW allTickets;
+	DROP VIEW allClubs;
+	DROP VIEW allStadiums;
+	DROP VIEW allRequests;
 	--Add as you go
 GO
 
