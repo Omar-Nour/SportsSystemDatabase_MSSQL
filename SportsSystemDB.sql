@@ -200,3 +200,9 @@ CREATE VIEW allClubs AS
 	SELECT name,location
 		FROM Club;
 GO
+
+GO
+CREATE VIEW allStadiums AS 
+	SELECT name, location, capacity, status
+		FROM Stadium;
+GO
