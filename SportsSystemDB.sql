@@ -203,6 +203,15 @@ GO
 
 GO
 CREATE VIEW allStadiums AS 
-	SELECT name, location, capacity, status
+	SELECT name, location, capacity, status AS StadiumStatus
 		FROM Stadium;
+GO
+
+GO
+CREATE VIEW allRequests AS 
+	SELECT CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.
+	status AS RequestStatus
+		FROM HostRequest AS H,StadiumManager AS SM, ClubRepresentative AS CR
+			WHERE SM.id = H.StadiumManagerID 
+			AND CR.id = H.ClubRepresentativeID;
 GO
