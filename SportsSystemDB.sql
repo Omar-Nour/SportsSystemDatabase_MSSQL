@@ -194,3 +194,9 @@ CREATE VIEW allTickets AS
 				AND T.MatchID = M.id 
 				AND M.StadiumID = S.id;
 GO
+
+GO
+CREATE VIEW allClubs AS
+	SELECT name,location
+		FROM Club;
+GO
