@@ -176,3 +176,11 @@ CREATE VIEW allFans AS
 	SELECT name, NationalID,Birthdate,status
 		FROM Fan;
 GO
+
+GO
+CREATE VIEW allMatches AS 
+	SELECT C.name AS Club1,C2.name AS Club2,C.name AS HostClub, M.StartTime AS KickOffTime
+		FROM Match AS M, Club AS C, Club AS C2
+			WHERE M.HostClubID = C.id 
+				AND M.GuestClubID = C2.id AND C.id <> C2.id
+GO
