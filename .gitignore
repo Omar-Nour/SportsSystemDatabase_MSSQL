@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
+/.vs/SportsSystemDatabase_MSSQL/v17/.suo
+/.vs/SportsSystemDatabase_MSSQL/FileContentIndex/read.lock
+/.vs/SportsSystemDatabase_MSSQL/FileContentIndex/71479238-df9f-4507-ae1d-1e8421f87aed.vsidx
+/.vs/SportsSystemDatabase_MSSQL/FileContentIndex/3728ec48-2e3a-414d-a52c-706b1ad5abcb.vsidx
+/.vs/SportsSystemDatabase_MSSQL/FileContentIndex
