@@ -251,3 +251,140 @@ CREATE VIEW allRequests AS
 			WHERE SM.id = H.StadiumManagerID 
 			AND CR.id = H.ClubRepresentativeID;
 GO
+
+
+-- (------------------ 2.3 ------------------)
+
+
+--(I)
+GO
+CREATE PROCEDURE addAssociationManager 
+		@name VARCHAR(20),
+		@Username VARCHAR(20), 
+		@Password VARCHAR(20)
+
+	AS
+
+		INSERT INTO SystemUser
+		VALUES (@Username, @Password);
+		INSERT INTO SportsAssociationManager
+		VALUES (@name, @Username);	
+GO
+
+--(II)
+GO
+CREATE PROCEDURE addNewMatch
+		@HostName VARCHAR(20),
+		@GuestName VARCHAR(20),
+		@StartTime datetime,
+		@EndTime datetime
+
+	AS
+		INSERT INTO Match
+		VALUES (@StartTime, @EndTime, NULL, @HostName, @GuestName);
+GO
+
+--(III)
+GO 
+CREATE VIEW clubsWithNoMatches
+AS
+
+	SELECT C.name
+	FROM Club C
+	WHERE C.id NOT IN (SELECT HostClubID
+			   FROM Match M
+			   WHERE C.id = M.HostClubID
+					)					
+			AND
+
+		C.id NOT IN (SELECT GuestClubID
+				FROM Match M
+				WHERE C.id = M.GuestClubID
+					);
+GO
+
+--(IV)
+GO
+CREATE PROCEDURE deleteMatch
+		@HostClub VARCHAR(20),
+		@GuestClub VARCHAR(20)
+AS
+		DECLARE @Host_id INT = (SELECT C.id FROM Club C WHERE C.name = @HostClub);
+		DECLARE @Guest_id INT = (SELECT C.id FROM Club C WHERE C.name = @GuestClub);
+
+
+		DELETE FROM Match  
+		WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id;
+GO
+
+--(V)
+GO
+
+CREATE PROCEDURE deleteMatchesOnStadium
+		@StadiumName VARCHAR(20)
+AS
+		DECLARE @StadiumID INT = (SELECT S.id FROM Stadium S WHERE S.name = @StadiumName);
+		DELETE FROM Match WHERE Match.StadiumID = @StadiumID;
+GO
+
+--(VI)
+GO
+
+CREATE PROCEDURE addClub
+		@ClubName VARCHAR(20),
+		@Location VARCHAR(20)
+AS
+		INSERT INTO Club
+		VALUES (@ClubName, @Location, NULL, NULL);
+
+GO
+
+--(VII)
+GO
+CREATE PROCEDURE addTicket
+		@HostName VARCHAR(20),
+		@GuestName VARCHAR(20),
+		@Time datetime
+AS
+		DECLARE @HostID INT = (SELECT C.id FROM Club C WHERE C.name = @HostName);
+		DECLARE @GuestID INT = (SELECT C.id FROM Club C WHERE C.name = @GuestName);
+		DECLARE @MatchID INT = (SELECT Match.id FROM Match WHERE Match.StartTime = @Time AND Match.HostClubID = @HostID AND Match.GuestClubID = @GuestID);
+
+		INSERT INTO Ticket
+		VALUES (NULL, NULL, NULL, @MatchID);
+
+GO
+
+--(VIII)
+GO
+CREATE PROCEDURE deleteClub
+		@ClubName VARCHAR(20)
+AS
+		DECLARE @ClubID INT = (SELECT C.id FROM Club C WHERE C.name = @ClubName);
+		DECLARE @ClubRepID INT = (SELECT C.ClubRepresentativeID FROM Club C WHERE C.name = @ClubName);
+		DELETE FROM Match WHERE Match.HostClubID = @ClubID OR Match.GuestClubID = @ClubID;
+		DELETE FROM ClubRepresentative WHERE ClubRepresentative.id = @ClubRepID;
+		DELETE FROM Club WHERE Club.name = @ClubName;
+GO
+
+--(IX)
+GO
+
+CREATE PROCEDURE addStadium
+		@Name VARCHAR(20),
+		@Location VARCHAR(20),
+		@Cap INT
+AS
+		INSERT INTO Stadium
+		VALUES (@Name, @Cap, @Location, NULL, NULL, NULL);
+
+GO
+
+--(X)
+GO
+CREATE PROCEDURE deleteStadium
+		@Name VARCHAR(20)
+AS
+		DELETE FROM Stadium WHERE Stadium.name = @Name;
+
+GO
