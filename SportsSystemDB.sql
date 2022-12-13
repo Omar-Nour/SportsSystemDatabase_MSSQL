@@ -254,9 +254,9 @@ CREATE VIEW allRequests AS
 GO
 
 GO
----xxxi
+---xxx
 -- a function that returns a table containing the name of the hosting club 
---and the name of the competing club of all played matches 
+--and the name of the guest club of all played matches 
 --sorted descendingly by the total number of tickets they have sold
 --input: nothing
 --output: table
@@ -265,17 +265,18 @@ CREATE FUNCTION matchesRankedByAttendance
 RETURNS TABLE
 AS 
 RETURN (
-	SELECT TOP(100)PERCENT C.name AS HostClubName, C2.name AS GuestClubName, COUNT(T.id) AS NumOfTickets
+	SELECT TOP(100) PERCENT C.name AS HostClubName, C2.name AS GuestClubName, COUNT(T.id) AS numOfTickets
 		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2
 		WHERE M.HostClubID = C.id 
 				AND M.GuestClubID = C2.id AND C.id <> C2.id
 				AND T.MatchID = M.id
-		ORDER BY COUNT(T.id) DESC 
+		GROUP BY C.name, C2.name,M.id,M.StartTime
+		ORDER BY COUNT(T.id) DESC
 )
 GO
 
 GO
---xxxii
+--xxxi
 -- a function that returns a table containing the name of the hosting club 
 --and the name of the competing club of all matches that are 
 --requested to be hosted on the given stadium sent by the representative
