@@ -351,7 +351,7 @@ AS
 		DECLARE @MatchID INT = (SELECT Match.id FROM Match WHERE Match.StartTime = @Time AND Match.HostClubID = @HostID AND Match.GuestClubID = @GuestID);
 
 		INSERT INTO Ticket
-		VALUES (NULL, NULL, NULL, @MatchID);
+		VALUES ('1', NULL, NULL, @MatchID);
 
 GO
 
