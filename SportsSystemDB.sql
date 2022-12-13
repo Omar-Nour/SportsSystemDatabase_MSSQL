@@ -38,7 +38,7 @@ AS
 	CREATE TABLE Fan(
 		username VARCHAR(20) UNIQUE,
 		NationalID VARCHAR(20),
-		PhoneNo VARCHAR(20),
+		PhoneNo int,
 		Address VARCHAR(20),
 		name VARCHAR(20),
 		status bit,
