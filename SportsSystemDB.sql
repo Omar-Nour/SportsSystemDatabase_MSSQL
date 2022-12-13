@@ -178,7 +178,7 @@ GO
 CREATE VIEW allClubRepresentatives AS
 	SELECT R.username AS RepUserName,R.name AS RepName,C.name AS ClubName
 		FROM ClubRepresentative AS R,Club AS C
-		WHERE R.id = C.ClubRepresentativeID 
+		WHERE R.id = C.ClubRepresentativeID;
 			
 GO
 
@@ -189,7 +189,7 @@ GO
 CREATE VIEW allStadiumManagers AS
 	SELECT M.username AS StadManUserName,M.name AS StadManName,S.name AS StadiumName
 		FROM StadiumManager AS M,Stadium AS S
-		WHERE M.id = S.StadiumManagerID 
+		WHERE M.id = S.StadiumManagerID; 
 			
 GO
 
@@ -209,7 +209,7 @@ CREATE VIEW allMatches AS
 	SELECT C.name AS Club1,C2.name AS Club2,C.name AS HostClub, M.StartTime AS KickOffTime
 		FROM Match AS M, Club AS C, Club AS C2
 			WHERE M.HostClubID = C.id 
-				AND M.GuestClubID = C2.id AND C.id <> C2.id
+				AND M.GuestClubID = C2.id AND C.id <> C2.id;
 GO
 
 GO
@@ -260,17 +260,16 @@ GO
 --output: table
 CREATE FUNCTION matchesRankedByAttendance
 ()
-RETURNS TABLE(HostClubName VARCHAR(20),GuestClubName VARCHAR(20),NumOfTickets int)
+RETURNS TABLE
 AS 
-BEGIN
-	RETURN (SELECT C.name AS HostClubName, C2.name AS GuestClubName,COUNT(T.id) AS NumOfTickets
+RETURN (
+	SELECT C.name AS HostClubName, C2.name AS GuestClubName,COUNT(T.id) AS NumOfTickets
 		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2
 		WHERE M.HostClubID = C.id 
 				AND M.GuestClubID = C2.id AND C.id <> C2.id
 				AND T.MatchID = M.id
 		ORDER BY COUNT(T.id) DESC
-	)
-END;
+)
 GO
 
 GO
@@ -283,20 +282,18 @@ GO
 --output: table
 CREATE FUNCTION requestsFromClub
 (@stadium_name VARCHAR(20),@club_name VARCHAR(20))
-RETURNS TABLE(HostClubName VARCHAR(20),GuestClubName VARCHAR(20))
+RETURNS TABLE
 AS
-BEGIN
-	RETURN (
-		SELECT C.name AS HostClubName, C2.name AS GuestClubName
-			FROM Club AS C, Club AS C2, 
-			Stadium AS S, Match AS M, HostRequest AS HR, 
-			ClubRepresentative AS CR
-				WHERE M.HostClubID = C.id
-				AND M.GuestClubID = C2.id AND C.id <> C2.id
-				AND C.name = @club_name AND C.ClubRepresentativeID = CR.id
-				AND S.id = M.StadiumID 
-				AND S.name = @stadium_name 
-				AND HR.MatchID = M.id AND HR.ClubRepresentativeID = CR.id
+RETURN (
+	SELECT C.name AS HostClubName, C2.name AS GuestClubName
+		FROM Club AS C, Club AS C2, 
+		Stadium AS S, Match AS M, HostRequest AS HR, 
+		ClubRepresentative AS CR
+			WHERE M.HostClubID = C.id
+			AND M.GuestClubID = C2.id AND C.id <> C2.id
+			AND C.name = @club_name AND C.ClubRepresentativeID = CR.id
+			AND S.id = M.StadiumID 
+			AND S.name = @stadium_name 
+			AND HR.MatchID = M.id AND HR.ClubRepresentativeID = CR.id
 	)
-END;
 GO
