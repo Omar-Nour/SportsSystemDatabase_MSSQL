@@ -143,6 +143,8 @@ AS
 	DROP VIEW allClubs;
 	DROP VIEW allStadiums;
 	DROP VIEW allRequests;
+	DROP FUNCTION requestsFromClub;
+	DROP FUNCTION matchesRankedByAttendance;
 	--Add as you go
 GO
 
@@ -263,12 +265,12 @@ CREATE FUNCTION matchesRankedByAttendance
 RETURNS TABLE
 AS 
 RETURN (
-	SELECT C.name AS HostClubName, C2.name AS GuestClubName,COUNT(T.id) AS NumOfTickets
+	SELECT TOP(100)PERCENT C.name AS HostClubName, C2.name AS GuestClubName, COUNT(T.id) AS NumOfTickets
 		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2
 		WHERE M.HostClubID = C.id 
 				AND M.GuestClubID = C2.id AND C.id <> C2.id
 				AND T.MatchID = M.id
-		ORDER BY COUNT(T.id) DESC
+		ORDER BY COUNT(T.id) DESC 
 )
 GO
 
