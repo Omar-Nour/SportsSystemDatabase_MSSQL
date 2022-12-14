@@ -351,7 +351,7 @@ CREATE VIEW clubsNeverMatched AS
 	AND NOT EXISTS (SELECT * FROM Match M 
 					WHERE  (M.HostClubID = C1.id AND M.GuestClubID = C2.id)
 					OR (M.HostClubID = C2.id AND M.GuestClubID = C1.id) AND
-					M.StartTime > CURRENT_TIMESTAMP
+					M.EndTime < CURRENT_TIMESTAMP
 	);
 GO
 
@@ -374,10 +374,10 @@ AS
 			FROM Match M, Club H, Club G, Ticket T
 			WHERE (H.id = M.HostClubID AND G.id = M.GuestClubID)
 			AND T.MatchID = M.id AND T.status = 0
-			GROUP BY H.name, G.name
+			GROUP BY M.id, H.name, G.name
 			HAVING COUNT(T.id) >= ALL (SELECT COUNT(T2.id)
 								 FROM Ticket T2
-								 WHERE T2.status = 0
+								 WHERE T2.status = 0 
 								 GROUP BY T2.MatchID)
 	);
 GO
