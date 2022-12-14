@@ -268,7 +268,7 @@ CREATE PROCEDURE addAssociationManager
 		INSERT INTO SystemUser
 		VALUES (@Username, @Password);
 		INSERT INTO SportsAssociationManager
-		VALUES (@name, @Username);	
+		VALUES (@Username, @name);	
 GO
 
 --(II)
