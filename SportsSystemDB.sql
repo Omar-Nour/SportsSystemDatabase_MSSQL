@@ -269,7 +269,7 @@ RETURN (
 		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2
 		WHERE M.HostClubID = C.id 
 				AND M.GuestClubID = C2.id AND C.id <> C2.id
-				AND T.MatchID = M.id
+				AND T.MatchID = M.id AND T.status = 0
 		GROUP BY C.name, C2.name,M.id,M.StartTime
 		ORDER BY COUNT(T.id) DESC
 )
