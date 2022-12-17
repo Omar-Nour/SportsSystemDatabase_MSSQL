@@ -97,8 +97,8 @@ AS
 	);
 
 	CREATE TABLE HostRequest(
-		id int PRIMARY KEY,
-		status bit,
+		id int IDENTITY PRIMARY KEY,
+		status VARCHAR(20) ,
 		MatchID int FOREIGN KEY REFERENCES Match,
 		StadiumManagerID int,
 		StadiumManagerUserName VARCHAR(20),
@@ -252,6 +252,7 @@ CREATE VIEW allRequests AS
 			AND CR.id = H.ClubRepresentativeID;
 GO
 
+
 ------- FROM XXI TO XXX -------
 
 -- XXI
@@ -389,3 +390,5 @@ GO
 
 
 ----------------------------
+
+
