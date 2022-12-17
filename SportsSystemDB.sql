@@ -614,7 +614,7 @@ DECLARE @MATCHID VARCHAR(20)
 
 SELECT @CRID= H.ClubRepresentativeID, @MATCHID= H.MatchID
 FROM HostRequest H
-WHERE H.StadiumManagerUserName = @STDUSERNAME AND H.status IS NULL
+WHERE H.StadiumManagerUserName = @STDUSERNAME AND H.status = 'unhandled'
 
 DECLARE @CRNAME VARCHAR(20)
 SELECT @CRNAME = CR.name
