@@ -64,8 +64,7 @@ AS
 		status bit,
 		StadiumManagerID int,
 		StadiumManagerUserName VARCHAR(20),
-		FOREIGN KEY (StadiumManagerID) 
-			REFERENCES StadiumManager(id)
+		FOREIGN KEY (StadiumManagerID) REFERENCES StadiumManager(id) ON DELETE CASCADE
 	);
 
 	CREATE TABLE Club(
@@ -82,7 +81,7 @@ AS
 		id int IDENTITY PRIMARY KEY,
 		StartTime datetime,
 		EndTime datetime,
-		StadiumID int REFERENCES Stadium,
+		StadiumID int REFERENCES Stadium ON DELETE CASCADE,
 		HostClubID int FOREIGN KEY REFERENCES Club,
 		GuestClubID int FOREIGN KEY REFERENCES Club
 	);
@@ -92,15 +91,16 @@ AS
 		status bit,
 		FanUserName VARCHAR(20), 
 		FanNationalID VARCHAR(20), 
-		MatchID int FOREIGN KEY REFERENCES Match,
+		MatchID int FOREIGN KEY REFERENCES Match ON DELETE CASCADE,
 		FOREIGN KEY (FanNationalID) 
 			REFERENCES Fan(NationalID)
 	);
 
 	CREATE TABLE HostRequest(
 		id int IDENTITY PRIMARY KEY,
+		status bit,
+		MatchID int FOREIGN KEY REFERENCES Match ON DELETE CASCADE,
 		status VARCHAR(20) check (status in ('unhandled', 'accepted', 'rejected')),
-		MatchID int FOREIGN KEY REFERENCES Match,
 		StadiumManagerID int,
 		StadiumManagerUserName VARCHAR(20),
 		ClubRepresentativeID int,
@@ -258,6 +258,173 @@ CREATE VIEW allRequests AS
 			AND CR.id = H.ClubRepresentativeID;
 GO
 
+
+
+-- (------------------ 2.3 ------------------)
+
+
+--(I)
+GO
+CREATE PROCEDURE addAssociationManager 
+			@name VARCHAR(20),
+			@Username VARCHAR(20), 
+			@Password VARCHAR(20)
+			
+	AS
+
+	INSERT INTO SystemUser
+	VALUES (@Username, @Password);
+	INSERT INTO SportsAssociationManager
+	VALUES (@name, @Username);
+	
+GO
+
+--(II)
+GO
+CREATE PROCEDURE addNewMatch
+		@HostName VARCHAR(20),
+		@GuestName VARCHAR(20),
+		@StartTime datetime,
+		@EndTime datetime
+
+	AS
+
+		DECLARE @HostID INT;
+		DECLARE @GuestID INT;
+
+		SELECT @HostID = C1.id, @GuestID = C2.id FROM Club C1, Club C2 WHERE C1.name = @HostName  AND C2.name = @GuestName;
+
+
+		INSERT INTO Match
+		VALUES (@StartTime, @EndTime, NULL, @HostID, @GuestID);
+
+GO
+
+
+--(III)
+GO 
+
+CREATE VIEW clubsWithNoMatches
+AS
+
+SELECT C.name
+FROM Club C
+
+WHERE C.id NOT IN (SELECT HostClubID
+				   FROM Match M
+						)					
+		AND
+		
+		C.id NOT IN (SELECT GuestClubID
+					 FROM Match M
+							);
+GO
+
+--(IV)
+GO
+CREATE PROCEDURE deleteMatch
+		@HostClub VARCHAR(20),
+		@GuestClub VARCHAR(20)
+AS
+DECLARE @Host_id INT = (SELECT C.id FROM Club C WHERE C.name = @HostClub);
+DECLARE @Guest_id INT = (SELECT C.id FROM Club C WHERE C.name = @GuestClub);
+DECLARE @Match_id INT = (SELECT M.id FROM Match M WHERE M.HostClubID = @Host_id AND M.GuestClubID = @Guest_id);
+
+
+DELETE FROM Match  
+WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id;
+
+DELETE FROM Ticket
+WHERE Ticket.MatchID = @Match_id;
+
+GO
+
+--(V)
+GO
+
+CREATE PROCEDURE deleteMatchesOnStadium
+		@StadiumName VARCHAR(20)
+AS
+DECLARE @StadiumID INT = (SELECT S.id FROM Stadium S WHERE S.name = @StadiumName);
+--DECLARE @MatchID INT = (SELECT M.id FROM Match M WHERE M.StadiumID = @StadiumID);
+
+DELETE FROM Match WHERE Match.id IN (SELECT M.id FROM Match M WHERE M.StadiumID = @StadiumID AND M.StartTime > CURRENT_TIMESTAMP);
+
+GO
+
+--(VI)
+GO
+
+CREATE PROCEDURE addClub
+		@ClubName VARCHAR(20),
+		@Location VARCHAR(20)
+AS
+INSERT INTO Club
+VALUES (@ClubName, @Location, NULL, NULL);
+
+GO
+
+--(VII)
+GO
+CREATE PROCEDURE addTicket
+		@HostName VARCHAR(20),
+		@GuestName VARCHAR(20),
+		@Time datetime
+AS
+DECLARE @HostID INT = (SELECT C.id FROM Club C WHERE C.name = @HostName);
+DECLARE @GuestID INT = (SELECT C.id FROM Club C WHERE C.name = @GuestName);
+DECLARE @MatchID INT = (SELECT Match.id FROM Match WHERE Match.StartTime = @Time AND Match.HostClubID = @HostID AND Match.GuestClubID = @GuestID);
+
+INSERT INTO Ticket
+VALUES (1, NULL, NULL, @MatchID);
+
+GO
+
+
+--(VIII)
+GO
+CREATE PROCEDURE deleteClub
+		@ClubName VARCHAR(20)
+AS
+DECLARE @ClubID INT = (SELECT C.id FROM Club C WHERE C.name = @ClubName);
+
+DELETE FROM Match WHERE (Match.HostClubID = @ClubID OR Match.GuestClubID = @ClubID) AND Match.StartTime > CURRENT_TIMESTAMP;
+DELETE FROM Club WHERE Club.name = @ClubName;
+GO
+
+--(IX)
+GO
+
+CREATE PROCEDURE addStadium
+		@Name VARCHAR(20),
+		@Location VARCHAR(20),
+		@Cap INT
+AS
+INSERT INTO Stadium
+VALUES (@Name, @Cap, @Location, 1, NULL, NULL);
+
+GO
+
+
+--(X)
+GO
+CREATE PROCEDURE deleteStadium
+		@Name VARCHAR(20)
+AS
+
+DECLARE @username VARCHAR(20);
+DECLARE @stadiumID int;
+SELECT @username = SM.username, @stadiumID = S.id FROM Stadium S, StadiumManager SM
+WHERE S.name = @Name AND S.StadiumManagerID = SM.id;
+
+UPDATE Match SET StadiumID = null
+WHERE StadiumID = @stadiumID AND StartTime > CURRENT_TIMESTAMP;
+
+DELETE FROM Stadium WHERE Stadium.name = @Name;
+DELETE FROM StadiumManager WHERE username = @username;
+DELETE FROM SystemUser WHERE username = @username;
+
+GO
 
 --EXEC createAllTables
 
@@ -839,5 +1006,4 @@ GO
 
 
 ----------------------------
-
 
