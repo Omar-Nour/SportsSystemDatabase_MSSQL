@@ -98,7 +98,6 @@ AS
 
 	CREATE TABLE HostRequest(
 		id int IDENTITY PRIMARY KEY,
-		status bit,
 		MatchID int FOREIGN KEY REFERENCES Match ON DELETE CASCADE,
 		status VARCHAR(20) check (status in ('unhandled', 'accepted', 'rejected')),
 		StadiumManagerID int,
