@@ -144,6 +144,8 @@ AS
 	DROP VIEW allClubs;
 	DROP VIEW allStadiums;
 	DROP VIEW allRequests;
+	DROP FUNCTION requestsFromClub;
+	DROP FUNCTION matchesRankedByAttendance;
 	--Add as you go
 GO
 
@@ -179,7 +181,8 @@ GO
 CREATE VIEW allClubRepresentatives AS
 	SELECT R.username AS RepUserName,R.name AS RepName,C.name AS ClubName
 		FROM ClubRepresentative AS R,Club AS C
-		WHERE R.id = C.ClubRepresentativeID 
+		WHERE R.id = C.ClubRepresentativeID;
+
 			
 GO
 
@@ -190,7 +193,9 @@ GO
 CREATE VIEW allStadiumManagers AS
 	SELECT M.username AS StadManUserName,M.name AS StadManName,S.name AS StadiumName
 		FROM StadiumManager AS M,Stadium AS S
-		WHERE M.id = S.StadiumManagerID 
+
+		WHERE M.id = S.StadiumManagerID; 
+
 			
 GO
 
@@ -210,7 +215,7 @@ CREATE VIEW allMatches AS
 	SELECT C.name AS Club1,C2.name AS Club2,C.name AS HostClub, M.StartTime AS KickOffTime
 		FROM Match AS M, Club AS C, Club AS C2
 			WHERE M.HostClubID = C.id 
-				AND M.GuestClubID = C2.id AND C.id <> C2.id
+				AND M.GuestClubID = C2.id AND C.id <> C2.id;
 GO
 
 GO
@@ -251,6 +256,7 @@ CREATE VIEW allRequests AS
 			WHERE SM.id = H.StadiumManagerID 
 			AND CR.id = H.ClubRepresentativeID;
 GO
+
 
 
 ------- FROM XXI TO XXX -------
@@ -385,10 +391,57 @@ AS
 	);
 GO
 
+GO
+---xxx
+-- a function that returns a table containing the name of the hosting club 
+--and the name of the guest club of all played matches 
+--sorted descendingly by the total number of tickets they have sold
+--input: nothing
+--output: table
+CREATE FUNCTION matchesRankedByAttendance
+()
+RETURNS TABLE
+AS 
+RETURN (
+	SELECT TOP(100) PERCENT C.name AS HostClubName, C2.name AS GuestClubName, COUNT(T.id) AS numOfTickets
+		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2
+		WHERE M.HostClubID = C.id 
+				AND M.GuestClubID = C2.id AND C.id <> C2.id
+				AND T.MatchID = M.id AND T.status = 0
+		GROUP BY C.name, C2.name,M.id,M.StartTime
+		ORDER BY COUNT(T.id) DESC
+)
+GO
+
+GO
+--xxxi
+-- a function that returns a table containing the name of the hosting club 
+--and the name of the competing club of all matches that are 
+--requested to be hosted on the given stadium sent by the representative
+--of the given club.
+--input: varchar(20) representing name of a stadium, varchar(20) representing name of a club
+--output: table
+CREATE FUNCTION requestsFromClub
+(@stadium_name VARCHAR(20),@club_name VARCHAR(20))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT C.name AS HostClubName, C2.name AS GuestClubName
+		FROM Club AS C, Club AS C2, 
+		Stadium AS S, Match AS M, HostRequest AS HR, 
+		ClubRepresentative AS CR
+			WHERE M.HostClubID = C.id
+			AND M.GuestClubID = C2.id AND C.id <> C2.id
+			AND C.name = @club_name AND C.ClubRepresentativeID = CR.id
+			AND S.id = M.StadiumID 
+			AND S.name = @stadium_name 
+			AND HR.MatchID = M.id AND HR.ClubRepresentativeID = CR.id
+	)
+GO
+
 
 
 
 
 ----------------------------
-
 
