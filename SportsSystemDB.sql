@@ -135,6 +135,26 @@ AS
 	DROP PROCEDURE createAllTables;
 	DROP PROCEDURE dropAllTables;
 	DROP PROCEDURE clearAllTables;
+	DROP PROCEDURE addAssociationManager;
+	DROP PROCEDURE addNewMatch;
+	DROP PROCEDURE deleteMatch;
+	DROP PROCEDURE deleteMatchesOnStadium;
+	DROP PROCEDURE addClub;
+	DROP PROCEDURE addTicket;
+	DROP PROCEDURE deleteClub;
+	DROP PROCEDURE addStadium;
+	DROP PROCEDURE deleteStadium;
+	DROP PROCEDURE blockFan;
+	DROP PROCEDURE unblockFan;
+	DROP PROCEDURE addRepresentative;
+	DROP PROCEDURE addHostRequest;
+	DROP PROCEDURE addStadiumManager;
+	DROP PROCEDURE acceptRequest;
+	DROP PROCEDURE rejectRequest;
+	DROP PROCEDURE addFan;
+	DROP PROCEDURE purchaseTicket;
+	DROP PROCEDURE updateMatchHost;
+
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
 	DROP VIEW allStadiumManagers;
@@ -144,9 +164,20 @@ AS
 	DROP VIEW allClubs;
 	DROP VIEW allStadiums;
 	DROP VIEW allRequests;
+	DROP VIEW clubsWithNoMatches;
+	DROP VIEW matchesPerTeam;
+	DROP VIEW clubsNeverMatched;
+
 	DROP FUNCTION requestsFromClub;
 	DROP FUNCTION matchesRankedByAttendance;
-	--Add as you go
+	DROP FUNCTION viewAvailableStadiumsOn;
+	DROP FUNCTION allUnassignedMatches;
+	DROP FUNCTION allPendingRequests;
+	DROP FUNCTION upcomingMatchesOfClub;
+	DROP FUNCTION availableMatchesToAttend;
+	DROP FUNCTION clubsNeverPlayed;
+	DROP FUNCTION matchWithHighestAttendance;
+	--Add as you go: DONE
 GO
 
 GO
@@ -432,7 +463,7 @@ GO
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --BLOCK FAN
 GO
-CREATE PROC BlockFan
+CREATE PROC blockFan
 @NatId VARCHAR(20)
 AS
 UPDATE Fan
