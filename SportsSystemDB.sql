@@ -327,11 +327,13 @@ AS
 	SELECT @match_id = M.id, @host_id = M.HostClubID, @guest_id = M.GuestClubID 
 			FROM Club H, Club G, Match M
 			WHERE H.id = M.HostClubID AND G.id = M.GuestClubID AND
-			M.StartTime = @start_time AND  H.name = @host_name
-			AND G.name = @guest_name;
+			M.StartTime = @start_time AND  H.name = @host_name AND 
+			G.name = @guest_name;
+	
 	
 	UPDATE Match SET HostClubID = @guest_id, 
-				     GuestClubID = @host_id
+				     GuestClubID = @host_id,
+					 StadiumID = null
 				  WHERE id = @match_id;
 GO
 
