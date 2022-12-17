@@ -98,7 +98,7 @@ AS
 	CREATE TABLE HostRequest(
 		id int PRIMARY KEY,
 		status bit,
-		MatchID int FOREIGN KEY REFERENCES Match,
+		MatchID int FOREIGN KEY REFERENCES Match ON DELETE CASCADE,
 		StadiumManagerID int,
 		StadiumManagerUserName VARCHAR(20),
 		ClubRepresentativeID int,
@@ -404,6 +404,16 @@ CREATE PROCEDURE deleteStadium
 		@Name VARCHAR(20)
 AS
 
+DECLARE @username VARCHAR(20);
+DECLARE @stadiumID int;
+SELECT @username = SM.username, @stadiumID = S.id FROM Stadium S, StadiumManager SM
+WHERE S.name = @Name AND S.StadiumManagerID = SM.id;
+
+UPDATE Match SET StadiumID = null
+WHERE StadiumID = @stadiumID AND StartTime > CURRENT_TIMESTAMP;
+
 DELETE FROM Stadium WHERE Stadium.name = @Name;
+DELETE FROM StadiumManager WHERE username = @username;
+DELETE FROM SystemUser WHERE username = @username;
 
 GO
