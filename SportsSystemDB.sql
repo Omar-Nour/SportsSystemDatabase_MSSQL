@@ -1036,4 +1036,51 @@ GO
 
 
 ----------------------------
+GO
+-- Login Procedure
+CREATE PROCEDURE login 
+@username VARCHAR(20),
+@password VARCHAR(20),
+@success bit output,
+@user_type VARCHAR(20) output
+AS 
+	if EXISTS (SELECT * FROM SystemUser WHERE username = @username
+		AND password = @password)
+	begin
+		if EXISTS (SELECT * FROM Fan WHERE username = @username)
+		begin 
+			SET @success = 1;
+			SET @user_type = 'fan';
+		end
+		else if EXISTS (SELECT * FROM StadiumManager WHERE username = @username)
+		begin 
+			SET @success = 1;
+			SET @user_type = 'stadman';
+		end
+		else if EXISTS (SELECT * FROM ClubRepresentative WHERE username = @username)
+		begin 
+			SET @success = 1;
+			SET @user_type = 'clubrep';
+		end
+		else if EXISTS (SELECT * FROM SportsAssociationManager WHERE username = @username)
+		begin 
+			SET @success = 1;
+			SET @user_type = 'sam';
+		end
+		else if EXISTS (SELECT * FROM SystemAdmin WHERE username = @username)
+		begin 
+			SET @success = 1;
+			SET @user_type = 'admin';
+		end
+	end
+	else
+	begin
+		SET @success = 0;
+		SET @user_type = 'fail';
+	end
+	--print @success 
+	--print @user_type
+GO
+--INSERT INTO SystemUser VALUES ('abc','123');
 
+--exec login 'abc', '123', 1, 'a';
