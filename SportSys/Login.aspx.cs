@@ -28,7 +28,8 @@ namespace SportSys
             {
                 error_lbl.Text = "username should be less than 21 characters and not empty";
                 error_lbl.Visible = true;
-            } else if (passwd == "" || passwd.Length > 20)
+            } 
+            else if (passwd == "" || passwd.Length > 20)
             {
                 error_lbl.Text = "password should be less than 21 characters and not empty";
                 error_lbl.Visible = true;
@@ -41,5 +42,6 @@ namespace SportSys
         {
             Response.Redirect("register.aspx");
         }
+
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,11 +18,35 @@ namespace SportSys
 
         protected void register_b(object sender, EventArgs e)
         {
+            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
+            SqlConnection conn = new SqlConnection(connStr);
 
+            string usern = username.Text;
+            string passwd = password.Text;
+            string name_i = name.Text;
+
+            if (usern.Length > 20 || usern == "")
+            {
+                error_lbl.Text = "username should be less than 21 characters and not empty";
+                error_lbl.Visible = true;
+            }
+            else if (passwd == "" || passwd.Length > 20)
+            {
+                error_lbl.Text = "password should be less than 21 characters and not empty";
+                error_lbl.Visible = true;
+            }
+            else if (name_i == "" || passwd.Length > 20)
+            {
+                error_lbl.Text = "name should be less than 21 characters and not empty";
+                error_lbl.Visible = true;
+            }
+
+            // continue validation for the rest of the types
         }
 
         protected void RadioList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // handle input view
             switch (RadioList.SelectedIndex)
             {
                 case 0: // stad man
@@ -36,6 +62,7 @@ namespace SportSys
                     phone_l.Visible = false;
                     address.Visible = false;
                     addrs_l.Visible = false;
+                    error_lbl.Visible = false;
                     break;
                 case 1: // fan
                     stadium.Visible = false;
@@ -50,6 +77,7 @@ namespace SportSys
                     phone_l.Visible = true;
                     address.Visible = true;
                     addrs_l.Visible = true;
+                    error_lbl.Visible = false;
                     break;
                 case 2: // sam
                     stadium.Visible = false;
@@ -64,6 +92,7 @@ namespace SportSys
                     phone_l.Visible = false;
                     address.Visible = false;
                     addrs_l.Visible = false;
+                    error_lbl.Visible = false;
                     break;
                 case 3: // club rep
                     stadium.Visible = false;
@@ -78,8 +107,16 @@ namespace SportSys
                     phone_l.Visible = false;
                     address.Visible = false;
                     addrs_l.Visible = false;
+                    error_lbl.Visible = false;
                     break;
             }
+
+            
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
