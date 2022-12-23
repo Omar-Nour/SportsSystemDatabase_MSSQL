@@ -12,7 +12,7 @@ namespace SportSys
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            Label1.Text = "username: " + (string)Session["username"];
+            Label1.Text = "username: " + Session["username"];
         }
     }
 
