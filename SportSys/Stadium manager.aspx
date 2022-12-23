@@ -7,8 +7,10 @@
     <title></title>
 </head>
 <body>
+    <asp:Label runat="server" Text="welcome"></asp:Label>
     <form id="form1" runat="server">
         <div>
+
         </div>
     </form>
 </body>
