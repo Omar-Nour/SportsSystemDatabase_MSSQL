@@ -70,6 +70,7 @@
     <Content Include="Login.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
+    <Content Include="Stadium manager.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +95,13 @@
     </Compile>
     <Compile Include="SAM view.aspx.designer.cs">
       <DependentUpon>SAM view.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stadium manager.aspx.cs">
+      <DependentUpon>Stadium manager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stadium manager.aspx.designer.cs">
+      <DependentUpon>Stadium manager.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
