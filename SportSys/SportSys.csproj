@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Login.aspx" />
     <Content Include="register.aspx" />
+    <Content Include="SAM view.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,13 @@
     </Compile>
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SAM view.aspx.cs">
+      <DependentUpon>SAM view.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SAM view.aspx.designer.cs">
+      <DependentUpon>SAM view.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
