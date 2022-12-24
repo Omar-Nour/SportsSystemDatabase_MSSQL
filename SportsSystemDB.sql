@@ -155,6 +155,7 @@ AS
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
 	DROP PROCEDURE availableMatchesToAttendProcedure; 
+	DROP PROCEDURE fetchNID;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -1127,4 +1128,16 @@ EXEC availableMatchesToAttendProcedure "2022/12/12 00:00:00";
 
 SELECT * FROM Match;
 
+GO
+CREATE PROCEDURE fetchNID
+@username VARCHAR(20)
+AS
+	DECLARE @NationalID VARCHAR(20) = (SELECT  f.NationalID AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+GO
 
+--adding fan example to db
+EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+
+EXEC fetchNID "shamekhjr";

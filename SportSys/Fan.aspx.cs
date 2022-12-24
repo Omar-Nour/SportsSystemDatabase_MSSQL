@@ -16,11 +16,10 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             UsernameLabel.Text = "username: " + Session["username"];
             NIDLabel.Text = "NantionalID: ";
             MatchesGridView.Visible = false;
-
+            PurchaseTicketLabel.Visible = false;
         }
 
         protected void userInFunc(object sender, EventArgs e)
