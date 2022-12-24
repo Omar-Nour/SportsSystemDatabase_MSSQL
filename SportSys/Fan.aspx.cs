@@ -49,7 +49,7 @@ namespace SportSys
             dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
 
             //Add button column 
-            MatchesGridView.Columns.Add(new ButtonField() { Text = "Purchase ", HeaderText = "Purchase Ticket" });
+            MatchesGridView.Columns.Add(new ButtonField() { Text = "Purchase Ticket", HeaderText = "Purchase Ticket" ,ButtonType = ButtonType.Button });
 
             //Add rows with data
             if (rd.HasRows)
@@ -101,7 +101,7 @@ namespace SportSys
             dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
 
             //Add button column 
-            MatchesGridView.Columns.Add(new ButtonField() { Text = "Purchase ", HeaderText = "Purchase Ticket" });
+            MatchesGridView.Columns.Add(new ButtonField() { Text = "Purchase Ticket", HeaderText = "Purchase Ticket", ButtonType=ButtonType.Button });
 
             //Add rows with data
             if (rd.HasRows)

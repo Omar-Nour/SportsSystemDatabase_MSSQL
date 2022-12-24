@@ -12,7 +12,7 @@
             <asp:Label ID="UsernameLabel" runat="server" Text="Label"></asp:Label>
             <asp:Label ID="NIDLabel" runat="server" Text="Label"></asp:Label>
         </div>
-        <asp:TextBox ID="DateTimeBox" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px" Text="Format: YYYY/MM/DD HOUR:MIN:SEC"></asp:TextBox>
+        <asp:TextBox ID="DateTimeBox" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px" TextMode="Date"></asp:TextBox>
         <asp:Button ID="userIn" runat="server" Text="Choose Date Time" OnClick="userInFunc" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px"   Width="135px"/>
         <asp:Button ID="currTimeStamp" runat="server" Text="From Current Time" OnClick="currTimeFunc" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px"   Width="135px"/>
         <asp:GridView ID="MatchesGridView" runat="server">
