@@ -188,14 +188,70 @@ namespace SportSys
         
                     break;
                 case 2: // sam
-                    // no extra validation
-                    // exec insert
+                        // no extra validation
+                        // exec insert
+                        //CREATE PROCEDURE addAssociationManager
+                        //@name VARCHAR(20),
+                        //@Username VARCHAR(20), 
+                        //@Password VARCHAR(20)
+                    SqlCommand add_sam_proc = new SqlCommand("addAssociationManager ", conn);
+                    add_sam_proc.CommandType = System.Data.CommandType.StoredProcedure;
+                    add_sam_proc.Parameters.AddWithValue("@name", name_i);
+                    add_sam_proc.Parameters.AddWithValue("@Username", usern);
+                    add_sam_proc.Parameters.AddWithValue("@Password", passwd);
+
+
+                    add_sam_proc.ExecuteNonQuery();
+                    conn.Close();
+
                     // session redirect
+                    Session["username"] = usern;
+                    Response.Redirect("SAM view.aspx"); // TODO: to be modified correspondingly
+
                     break;
                 case 3: // club rep
                     // needs club existance proc
-                    // exec insert
-                    // session redirect
+                    SqlCommand clubproc = new SqlCommand("checkClubExists", conn);
+                    clubproc.CommandType = System.Data.CommandType.StoredProcedure;
+                    clubproc.Parameters.AddWithValue("clubname", club.Text);
+
+                    SqlParameter success_clubproc = clubproc.Parameters.Add("@success", SqlDbType.Int);
+
+                    success_clubproc.Direction = ParameterDirection.Output;
+
+                    clubproc.ExecuteNonQuery();
+
+                    if (success_clubproc.Value.ToString() == "0") // club doesn't exist
+                    {
+                        error_lbl.Text = "club does not exist or typed incorrectly";
+                        error_lbl.Visible = true;
+                        conn.Close();
+                    }
+                    else
+                    {
+                        // exec insert
+                        //CREATE PROC addRepresentative
+                        //@Name VARCHAR(20),
+                        //@ClubName VARCHAR(20),
+                        //@Username VARCHAR(20),
+                        //@Password VARCHAR(20)
+
+                        SqlCommand add_clubrep_proc = new SqlCommand("addRepresentative", conn);
+                        add_clubrep_proc.CommandType = System.Data.CommandType.StoredProcedure;
+                        add_clubrep_proc.Parameters.AddWithValue("@name", name_i);
+                        add_clubrep_proc.Parameters.AddWithValue("@username", usern);
+                        add_clubrep_proc.Parameters.AddWithValue("@password", passwd);
+                        add_clubrep_proc.Parameters.AddWithValue("@ClubName", club.Text);
+
+
+                        add_clubrep_proc.ExecuteNonQuery();
+                        conn.Close();
+
+                        // session redirect
+                        Session["username"] = usern;
+                        Response.Redirect("clubrep.aspx"); // TODO: to be modified correspondingly
+                    }
+  
                     break;
             }
 
@@ -275,5 +331,6 @@ namespace SportSys
         {
             
         }
+
     }
 }
