@@ -1116,10 +1116,24 @@ begin
 	SET @success = 0;
 end
 GO
+CREATE PROCEDURE checkClubExists
+@clubname VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@clubname IN (SELECT name FROM Club))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+
+exec addClub 'nigaz', 'women';
 --EXEC addAssociationManager 'a','abc','123'; 
 --DROP PROCEDURE checkUsername;
 --SELECT * FROM SystemUser;
 --SELECT * FROM Fan
+--SELECT * FROM SportsAssociationManager
 --DECLARE @success bit;
 --exec checkUsername 'abce', @success;
 
