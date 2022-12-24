@@ -7,11 +7,20 @@
     <title></title>
 </head>
 <body>
-    <asp:Label runat="server" Text="welcome"></asp:Label>
     <form id="form1" runat="server">
         <div>
-
+                <asp:Label runat="server" Text="welcome"></asp:Label>
+            </br>
+            <asp:Label runat="server" Text="view stadium info"></asp:Label>
+             </br>
+            
+                        <asp:Button ID="View" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px" Text="VIEW" Width="135px" OnClick="Viewstad" />
+             </br>
+            <asp:Label runat="server" Text="view host requests"></asp:Label>
+            </br>
+            <asp:Button ID="hostreq" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px" Text="VIEW Host request" Width="135px" OnClick="Viewhost" />
         </div>
+        
     </form>
 </body>
 </html>

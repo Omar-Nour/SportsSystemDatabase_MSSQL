@@ -275,7 +275,11 @@ CREATE VIEW allStadiums AS
 	SELECT name, location, capacity, status AS StadiumStatus
 		FROM Stadium;
 GO
+GO
 
+
+
+GO
 GO
 --A View that returns the name of the Club Representative sending a host request,
 --the name of the Stadium Manager receiving the request,
@@ -434,7 +438,7 @@ INSERT INTO Stadium
 VALUES (@Name, @Cap, @Location, 1, NULL, NULL);
 
 GO
-
+exec addStadium 'emirates' , 'london', 20000
 
 --(X)
 GO
@@ -588,7 +592,7 @@ SET StadiumManagerUserName= @Name, StadiumManagerID = @ID
 
 WHERE Stadium.name = @stadiumname
 ------------------------------
---EXEC addStadiumManager 'Ahmed','EMIRATES','Ahmed1','1EW'
+EXEC addStadiumManager 'Ahmed','emirates','Ahmed','12345'
 
 --DROP PROC addStadiumManager
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -732,20 +736,20 @@ GO
 
 --SELECT* -------------------------------------------------------------------------------------------------------------------------------------------------------
 
---SELECT * 
---FROM StadiumManager
---SELECT * 
---FROM ClubRepresentative
---SELECT * 
---FROM SystemUser
---SELECT * 
---FROM Club
---SELECT *
---FROM Stadium
---SELECT *
---FROM Match
---SELECT * 
---FROM HostRequest
+SELECT * 
+FROM StadiumManager
+SELECT * 
+FROM ClubRepresentative
+SELECT * 
+FROM SystemUser
+SELECT * 
+FROM Club
+SELECT *
+FROM Stadium
+SELECT *
+FROM Match
+SELECT * 
+FROM HostRequest
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- VIEW AVAILABELE STADUIM THAT AVAIALABLE FOR RESERVATION AND NOT ALREADY HOSTING A MATCH AT THE START TIME--------------------------------------------------
@@ -1125,3 +1129,18 @@ GO
 
 
 --exec login 'abc', '123', 1, 'a';
+--REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
+CREATE PROCEDURE StadiumINFO
+@managername VARCHAR(20)
+AS
+SELECT S.capacity , S.location ,S.StadiumManagerID, S.name , S.status
+FROM STADIUM S
+WHERE S.StadiumManagerUserName=@managername
+
+exec StadiumINFO 'Ahmed'
+GO
+
+GO
+
+
+

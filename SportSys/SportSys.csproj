@@ -67,13 +67,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pending requests.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
+    <Content Include="Hostrequests.aspx" />
+    <Content Include="Stadium info.aspx" />
     <Content Include="Stadium manager.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pending requests.aspx.cs">
+      <DependentUpon>pending requests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pending requests.aspx.designer.cs">
+      <DependentUpon>pending requests.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -95,6 +105,20 @@
     </Compile>
     <Compile Include="SAM view.aspx.designer.cs">
       <DependentUpon>SAM view.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Hostrequests.aspx.cs">
+      <DependentUpon>Hostrequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Hostrequests.aspx.designer.cs">
+      <DependentUpon>Hostrequests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stadium info.aspx.cs">
+      <DependentUpon>Stadium info.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stadium info.aspx.designer.cs">
+      <DependentUpon>Stadium info.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stadium manager.aspx.cs">
       <DependentUpon>Stadium manager.aspx</DependentUpon>
