@@ -883,7 +883,7 @@ GO
 CREATE FUNCTION [availableMatchesToAttend]
 (@date datetime)
 RETURNS TABLE AS 
-	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name
+	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name,S.location AS stadium_loc
 			FROM Club H, Club G, Match M, Stadium S
 			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID)
 			AND EXISTS (SELECT * FROM Ticket T WHERE T.MatchID = M.id AND T.status = 1);

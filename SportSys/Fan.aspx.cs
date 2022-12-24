@@ -41,21 +41,25 @@ namespace SportSys
             dt.Columns.Add(new DataColumn("Guest Club", typeof(string)));
             dt.Columns.Add(new DataColumn("Start Time", typeof(string)));
             dt.Columns.Add(new DataColumn("Stadium Name", typeof(string)));
+            dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
 
             //Add rows with data
             if (rd.HasRows)
             {
                 while (rd.Read())
                 {
+                    //create a row/tuple then fill it with data from reader
                     DataRow dr = dt.NewRow();
                     dr["Host Club"] = rd[0];
                     dr["Guest Club"] = rd[1];
                     dr["Start Time"] = rd[2];
                     dr["Stadium Name"] = rd[3];
+                    dr["Stadium Location"] = rd[4];
                     dt.Rows.Add(dr);
                 }
             }
 
+            //Bind GridView to table
             MatchesGridView.DataSource = dt;
             MatchesGridView.DataBind();
 
