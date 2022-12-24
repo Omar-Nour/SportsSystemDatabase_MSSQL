@@ -305,7 +305,7 @@ CREATE PROCEDURE addAssociationManager
 	INSERT INTO SystemUser
 	VALUES (@Username, @Password);
 	INSERT INTO SportsAssociationManager
-	VALUES (@name, @Username);
+	VALUES (@Username, @name);
 	
 GO
 
@@ -1081,6 +1081,47 @@ AS
 	--print @success 
 	--print @user_type
 GO
---INSERT INTO SystemUser VALUES ('abc','123');
+
+CREATE PROCEDURE checkUsername
+@username VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@username IN (SELECT username FROM SystemUser))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+
+CREATE PROCEDURE checkStadExists
+@stadname VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@stadname IN (SELECT name FROM Stadium))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+CREATE PROCEDURE checkNidExists
+@nid VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@nid IN (SELECT NationalID FROM Fan))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+--EXEC addAssociationManager 'a','abc','123'; 
+--DROP PROCEDURE checkUsername;
+--SELECT * FROM SystemUser;
+--SELECT * FROM Fan
+--DECLARE @success bit;
+--exec checkUsername 'abce', @success;
+
 
 --exec login 'abc', '123', 1, 'a';
