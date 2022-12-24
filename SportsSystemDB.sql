@@ -154,6 +154,9 @@ AS
 	DROP PROCEDURE addFan;
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
+	DROP PROCEDURE availableMatchesToAttendProcedure;
+AS 
+	SELECT * FROM availableMatchesToAttend(@date);
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -1085,3 +1088,10 @@ GO
 
 --exec login 'abc', '123', 1, 'a';
 --dsfsdfjhdshjsd
+
+CREATE PROCEDURE availableMatchesToAttendProcedure 
+@date datetime
+AS 
+	SELECT * FROM availableMatchesToAttend(@date);
+
+SELECT * FROM Match;
