@@ -7,31 +7,32 @@
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="SAM_View" runat="server">
+
         <div>
-            Welcome, [SAM name]<br />
-            <br />
+            Welcome, <asp:Label ID="Sys_User_name" runat="server" Text=""></asp:Label>
+          
         </div>
 
         <p>
-          <asp:Button ID="Add_Match"  BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="ADD NEW MATCH" />
+          <asp:LinkButton ID="Add_Match" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="ADD NEW MATCH" PostBackUrl="~/SAM_Add_Match.aspx"/>
        </p>
 
          <p>
-          <asp:Button ID="Remove_Match"  BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="DELETE MATCHE(S)" />
+          <asp:LinkButton ID="Remove_Match" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="DELETE MATCHE(S)" PostBackUrl="~/SAM_Remove_Match.aspx"/>
        </p>
 
          <p>
-          <asp:Button ID="View_Upcoming"  BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW UPCOMING MATCHES" />
+          <asp:LinkButton ID="View_Upcoming" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW UPCOMING MATCHES" PostBackUrl="~/SAM_View_Upcoming.aspx"/>
        </p>
 
          <p>
-          <asp:Button ID="View_Past"  BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW OLD MATCHES" />
+          <asp:LinkButton ID="View_Past" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW OLD MATCHES" PostBackUrl="~/SAM_View_Upcoming.aspx"/>
        </p>
 
          <p>
-          <asp:Button ID="View_Unmatched"  BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW UNMATCHED CLUBS" />
+          <asp:LinkButton ID="View_Unmatched" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW UNMATCHED CLUBS" />
        </p>
-    </form>
+     </form>
 </body>
 </html>

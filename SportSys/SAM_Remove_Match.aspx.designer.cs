@@ -11,11 +11,11 @@ namespace SportSys
 {
 
 
-    public partial class SAM_view
+    public partial class SAM_Add_Match
     {
 
         /// <summary>
-        /// SAM_View control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -24,57 +24,48 @@ namespace SportSys
         protected global::System.Web.UI.HtmlControls.HtmlForm SAM_View;
 
         /// <summary>
-        /// Sys_User_name control.
+        /// Host_Club control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Sys_User_name;
+        protected global::System.Web.UI.WebControls.TextBox Removed_Host_Club;
 
         /// <summary>
-        /// Add_Match control.
+        /// Guest_Club control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Add_Match;
+        protected global::System.Web.UI.WebControls.TextBox Removed_Guest_Club;
 
         /// <summary>
-        /// Remove_Match control.
+        /// Start_Time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Remove_Match;
+        protected global::System.Web.UI.WebControls.TextBox Removed_Start_Time;
 
         /// <summary>
-        /// View_Upcoming control.
+        /// End_Time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton View_Upcoming;
+        protected global::System.Web.UI.WebControls.TextBox Removed_End_Time;
 
         /// <summary>
-        /// View_Past control.
+        /// Back_to_main control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton View_Past;
-
-        /// <summary>
-        /// View_Unmatched control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton View_Unmatched;
+        protected global::System.Web.UI.WebControls.LinkButton Remove_Back_to_main;
     }
 }

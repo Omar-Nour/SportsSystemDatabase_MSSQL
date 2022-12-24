@@ -70,6 +70,10 @@
     <Content Include="Login.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
+    <Content Include="SAM_View_Played.aspx" />
+    <Content Include="SAM_View_Upcoming.aspx" />
+    <Content Include="SAM_Remove_Match.aspx" />
+    <Content Include="SAM_Add_Match.aspx" />
     <Content Include="Stadium manager.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -95,6 +99,34 @@
     </Compile>
     <Compile Include="SAM view.aspx.designer.cs">
       <DependentUpon>SAM view.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SAM_View_Played.aspx.cs">
+      <DependentUpon>SAM_View_Played.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SAM_View_Played.aspx.designer.cs">
+      <DependentUpon>SAM_View_Played.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SAM_View_Upcoming.aspx.cs">
+      <DependentUpon>SAM_View_Upcoming.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SAM_View_Upcoming.aspx.designer.cs">
+      <DependentUpon>SAM_View_Upcoming.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SAM_Remove_Match.aspx.cs">
+      <DependentUpon>SAM_Remove_Match.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SAM_Remove_Match.aspx.designer.cs">
+      <DependentUpon>SAM_Remove_Match.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SAM_Add_Match.aspx.cs">
+      <DependentUpon>SAM_Add_Match.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SAM_Add_Match.aspx.designer.cs">
+      <DependentUpon>SAM_Add_Match.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stadium manager.aspx.cs">
       <DependentUpon>Stadium manager.aspx</DependentUpon>
