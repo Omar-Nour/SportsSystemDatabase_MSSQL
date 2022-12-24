@@ -154,9 +154,7 @@ AS
 	DROP PROCEDURE addFan;
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
-	DROP PROCEDURE availableMatchesToAttendProcedure;
-AS 
-	SELECT * FROM availableMatchesToAttend(@date);
+	DROP PROCEDURE availableMatchesToAttendProcedure; 
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -1084,14 +1082,49 @@ AS
 	--print @success 
 	--print @user_type
 GO
---INSERT INTO SystemUser VALUES ('abc','123');
 
---exec login 'abc', '123', 1, 'a';
---dsfsdfjhdshjsd
 
+--adding info to test fan page
+--to insert into match
+--i need to insert into staidum, and thus stadium manager, and club and thus club rep
+
+
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
+EXEC addStadium "Bernabeu", "Madrid", 40000;
+
+EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
+EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
+
+EXEC addClub "FC Barcelona", "Barcelona, Spain";
+EXEC addClub "Real Madrid", "Madrid, Spain";
+
+EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
+EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
+
+EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
+EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+
+EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
+EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
+
+EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
+EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
+
+SELECT * FROM Ticket;
+
+--create a procedure that calls the availableMatchesToAttend function
+GO
 CREATE PROCEDURE availableMatchesToAttendProcedure 
 @date datetime
 AS 
 	SELECT * FROM availableMatchesToAttend(@date);
+GO
+
+DROP PROCEDURE availableMatchesToAttendProcedure;
+
+EXEC availableMatchesToAttendProcedure "2022/12/12 00:00:00";
+--error in the sql file (a match shows up twice, marra be stadium el awal we marra be stadium
 
 SELECT * FROM Match;
+
+
