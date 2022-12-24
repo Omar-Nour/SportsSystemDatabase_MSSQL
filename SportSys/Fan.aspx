@@ -11,6 +11,8 @@
         <div>
             <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         </div>
+        <asp:GridView ID="MatchesGridView" runat="server">
+        </asp:GridView>
     </form>
 </body>
 </html>
