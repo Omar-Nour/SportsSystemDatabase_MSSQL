@@ -133,6 +133,7 @@ namespace SportSys
 
             //Make the GridView visible
             MatchesGridView.Visible = true;
+            conn.Close();
         }
 
         protected void MatchesGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
@@ -168,6 +169,7 @@ namespace SportSys
             PurchaseTicketLabel.Visible = true;
             PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
                 hostClub+" and "+ guestClub+" on "+startTime;
+            conn.Close();
         }
 
     }
