@@ -24,58 +24,25 @@ namespace SportSys
 
         protected void userInFunc(object sender, EventArgs e)
         {
-            //get connection string
-            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
-            SqlConnection conn = new SqlConnection(connStr);
-
-            //initialize the command that fetches the table 
-            SqlCommand getMatches = new SqlCommand("availableMatchesToAttendProcedure", conn);
-            getMatches.CommandType = System.Data.CommandType.StoredProcedure;
-            getMatches.Parameters.AddWithValue("@date", DateTimeBox.Text);
-
-            //Get table from db
-            conn.Open();
-            SqlDataReader rd = getMatches.ExecuteReader();
-
-
-            //create the GridView
-            DataTable dt = new DataTable();
-
-            //Add columns 
-            dt.Columns.Add(new DataColumn("Host Club", typeof(string)));
-            dt.Columns.Add(new DataColumn("Guest Club", typeof(string)));
-            dt.Columns.Add(new DataColumn("Start Time", typeof(string)));
-            dt.Columns.Add(new DataColumn("Stadium Name", typeof(string)));
-            dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
-
-            //Add button column 
-            MatchesGridView.Columns.Add(new ButtonField() { Text = "Purchase Ticket", HeaderText = "Purchase Ticket" ,ButtonType = ButtonType.Button });
-
-            //Add rows with data
-            if (rd.HasRows)
-            {
-                while (rd.Read())
-                {
-                    //create a row/tuple then fill it with data from reader
-                    DataRow dr = dt.NewRow();
-                    dr["Host Club"] = rd[0];
-                    dr["Guest Club"] = rd[1];
-                    dr["Start Time"] = rd[2];
-                    dr["Stadium Name"] = rd[3];
-                    dr["Stadium Location"] = rd[4];
-                    dt.Rows.Add(dr);
-                }
-            }
-
-            //Bind GridView to table
-            MatchesGridView.DataSource = dt;
-            MatchesGridView.DataBind();
-            MatchesGridView.Visible = true;
+            getTheTable(false);
         }
 
 
         protected void currTimeFunc(object sender, EventArgs e)
         {
+            getTheTable(true);
+        }
+
+        protected void getTheTable(bool now)
+        {
+            string input = "";
+            if (now)
+            {
+                input = DateTime.Now.ToString();
+            } else
+            {
+                input = DateTimeBox.Text;
+            }
             //get connection string
             string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection conn = new SqlConnection(connStr);
@@ -83,7 +50,7 @@ namespace SportSys
             //initialize the command that fetches the table 
             SqlCommand getMatches = new SqlCommand("availableMatchesToAttendProcedure", conn);
             getMatches.CommandType = System.Data.CommandType.StoredProcedure;
-            getMatches.Parameters.AddWithValue("@date", DateTime.Now);
+            getMatches.Parameters.AddWithValue("@date", input);
 
             //Get table from db
             conn.Open();
@@ -100,8 +67,6 @@ namespace SportSys
             dt.Columns.Add(new DataColumn("Stadium Name", typeof(string)));
             dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
 
-            //Add button column 
-            MatchesGridView.Columns.Add(new ButtonField() { Text = "Purchase Ticket", HeaderText = "Purchase Ticket", ButtonType=ButtonType.Button });
 
             //Add rows with data
             if (rd.HasRows)
