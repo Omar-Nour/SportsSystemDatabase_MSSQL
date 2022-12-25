@@ -1135,7 +1135,7 @@ GO
 exec addClub 'nigaz', 'women';
 --EXEC addAssociationManager 'a','abc','123'; 
 --DROP PROCEDURE checkUsername;
---SELECT * FROM SystemUser;
+SELECT * FROM SystemUser;
 --SELECT * FROM Fan
 --SELECT * FROM SportsAssociationManager
 --DECLARE @success bit;
@@ -1144,6 +1144,7 @@ exec addClub 'nigaz', 'women';
 
 --exec login 'abc', '123', 1, 'a';
 --REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
+GO
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
