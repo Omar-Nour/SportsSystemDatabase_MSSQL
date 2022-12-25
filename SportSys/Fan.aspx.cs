@@ -10,6 +10,7 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace SportSys
 {
@@ -17,8 +18,8 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string username = "shamekhjr";
-            //string username = Session["username"].ToString();
+            //string username = "shamekhjr";
+            string username = Session["username"].ToString();
             string nid = ""; //initially empty until it is fetched
             
             //initially make the label and gridview not visible since there 
@@ -37,15 +38,19 @@ namespace SportSys
             //initialize the command that fetches the NationalID 
             SqlCommand getNID = new SqlCommand("fetchNID", conn);
             getNID.CommandType = System.Data.CommandType.StoredProcedure;
+
+            //add input params
             getNID.Parameters.AddWithValue("@username", username);
 
-            //specify output
+            //specify output params
             SqlParameter NationalID = getNID.Parameters.Add("@NationalID", SqlDbType.VarChar,20);
             NationalID.Direction = ParameterDirection.Output;
 
             //open a connection and execute the procedure
             conn.Open();
             getNID.ExecuteNonQuery();
+
+            //store NID in string var
             nid = NationalID.Value.ToString();
 
             //display NationalID
@@ -81,6 +86,8 @@ namespace SportSys
             //initialize the command that fetches the table 
             SqlCommand getMatches = new SqlCommand("availableMatchesToAttendProcedure", conn);
             getMatches.CommandType = System.Data.CommandType.StoredProcedure;
+
+            //add input params
             getMatches.Parameters.AddWithValue("@date", input);
 
             //Get table from db
@@ -88,7 +95,7 @@ namespace SportSys
             SqlDataReader rd = getMatches.ExecuteReader();
 
 
-            //create the GridView
+            //create the DataTable that will be bound to GridView
             DataTable dt = new DataTable();
 
             //Add columns 
@@ -119,9 +126,6 @@ namespace SportSys
             MatchesGridView.DataSource = dt;
             MatchesGridView.DataBind();
 
-            //Create button column
-
-
             //Make the GridView visible
             MatchesGridView.Visible = true;
         }
@@ -133,11 +137,33 @@ namespace SportSys
             //keep GridView Visible
             MatchesGridView.Visible = true;
 
-            //Make label visible and display data of coressponding tuple (testing)
-            PurchaseTicketLabel.Visible = true;
-            PurchaseTicketLabel.Text = e.CommandArgument.ToString();
-        }
+            //partition the data
+            string hostClub= e.CommandArgument.ToString().Split(';')[0];
+            string guestClub = e.CommandArgument.ToString().Split(';')[1];
+            string startTime = e.CommandArgument.ToString().Split(';')[2];
 
+
+            //get connection string
+            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
+            SqlConnection conn = new SqlConnection(connStr);
+
+            //initialize the command that purchases the ticket 
+            SqlCommand purchaseTicket = new SqlCommand("purchaseTicket", conn);
+            purchaseTicket.CommandType = System.Data.CommandType.StoredProcedure;
+            purchaseTicket.Parameters.AddWithValue("@host_name", hostClub);
+            purchaseTicket.Parameters.AddWithValue("@guest_name", guestClub);
+            purchaseTicket.Parameters.AddWithValue("@nid", NIDLabel.Text.Split(' ')[1]);
+            purchaseTicket.Parameters.AddWithValue("@start_time", startTime);
+
+            //open a connection and execute the procedure
+            conn.Open();
+            purchaseTicket.ExecuteNonQuery();
+
+            //make label visible and tell the user that the ticket has been purchased
+            PurchaseTicketLabel.Visible = true;
+            PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
+                hostClub+" and "+ guestClub+" on "+startTime;
+        }
 
     }
 }

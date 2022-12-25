@@ -1142,3 +1142,5 @@ GO
 
 --adding fan example to db
 EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+
+SELECT * FROM Ticket AS T WHERE T.FanUserName = 'shamekhjr';
