@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace SportSys
 {
@@ -87,7 +88,24 @@ namespace SportSys
             //Bind GridView to table
             MatchesGridView.DataSource = dt;
             MatchesGridView.DataBind();
+
+            //Create button column
+
+
+            //Make the GridView visible
             MatchesGridView.Visible = true;
+        }
+
+        protected void MatchesGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName != "getTicket") return;
+
+            //keep GridView Visible
+            MatchesGridView.Visible = true;
+
+            //Make label visible and display data of coressponding tuple (testing)
+            PurchaseTicketLabel.Visible = true;
+            PurchaseTicketLabel.Text = e.CommandArgument.ToString();
         }
 
 
