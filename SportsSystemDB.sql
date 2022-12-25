@@ -1259,4 +1259,7 @@ GO
 Select * from SystemUser
 select * from SportsAssociationManager
 
+INSERT INTO SystemUser VALUES ('admin','admin');
+INSERT INTO SystemAdmin VALUES('admin','SysAdmin');
+
 
