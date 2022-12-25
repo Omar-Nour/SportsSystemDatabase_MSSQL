@@ -41,12 +41,15 @@
             &nbsp;</p>
 
           <p>
-          <asp:Button ID="ADD_MATCH" style="text-align:center" Font-Underline="false" BackColor="#33CC33" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="ADD MATCH" />
+          <asp:Button ID="ADD_MATCH" style="text-align:center" Font-Underline="false" BackColor="#33CC33" OnClick="add_match" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="ADD MATCH" />
        </p>
 
           <p>
           <asp:LinkButton ID="Back_to_main" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="BACK TO MAIN MENU" PostBackUrl="~/SAM View.aspx"/>
        </p>
+          <p>
+            <asp:Label ID="error_lbl" runat="server" Font-Bold="True" ForeColor="#CC6600" Text="Label" Visible="False"></asp:Label>
+        </p>
     </form>
 </body>
 </html>

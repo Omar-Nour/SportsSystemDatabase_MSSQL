@@ -1,6 +1,4 @@
 CREATE DATABASE SportsSystemDB;
-
-
 GO
 
 --Procedure that creates all tables for DB
@@ -1144,6 +1142,8 @@ exec addClub 'nigaz', 'women';
 
 --exec login 'abc', '123', 1, 'a';
 --REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
+GO
+
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
@@ -1153,6 +1153,10 @@ WHERE S.StadiumManagerUserName=@managername
 
 exec StadiumINFO 'Ahmed'
 GO
+
+
+select * from Match
+select * from SportsAssociationManager
 
 GO
 
