@@ -916,7 +916,7 @@ AS
 					  AND G.name = @guest_name
 	);
 	SET @ticket_id = (SELECT MIN(T.id) FROM Ticket T, Match M
-					  WHERE M.id = T.MatchID AND T.status = 1 
+					  WHERE M.id = T.MatchID AND T.status = 1 AND M.id = @match_id
 	);
 	SET @fan_user_name = (SELECT username FROM Fan WHERE NationalID = @nid);
 
@@ -1252,6 +1252,7 @@ select * from SportsAssociationManager
 select * from SystemUser
 select * from club
 select * from HostRequest
+select * from Ticket WHERE Status = 0 
 
 GO
 
