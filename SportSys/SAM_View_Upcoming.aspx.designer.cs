@@ -11,7 +11,7 @@ namespace SportSys
 {
 
 
-    public partial class SAM_Add_Match
+    public partial class SAM_View_Upcoming
     {
 
         /// <summary>

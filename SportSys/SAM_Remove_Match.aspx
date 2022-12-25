@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SAM_Add_Match.aspx.cs" Inherits="SportSys.SAM_Add_Match" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SAM_Remove_Match.aspx.cs" Inherits="SportSys.SAM_Remove_Match" %>
 
 <!DOCTYPE html>
 

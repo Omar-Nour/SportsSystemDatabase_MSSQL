@@ -11,17 +11,26 @@ namespace SportSys
 {
 
 
-    public partial class SAM_Add_Match
+    public partial class SAM_Remove_Match
     {
 
         /// <summary>
-        /// form1 control.
+        /// Remove_Matches control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm SAM_View;
+        protected global::System.Web.UI.HtmlControls.HtmlForm Remove_Matches;
+
+        /// <summary>
+        /// User_name control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label User_name;
 
         /// <summary>
         /// Host_Club control.
@@ -30,7 +39,7 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Removed_Host_Club;
+        protected global::System.Web.UI.WebControls.TextBox Host_Club;
 
         /// <summary>
         /// Guest_Club control.
@@ -39,7 +48,7 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Removed_Guest_Club;
+        protected global::System.Web.UI.WebControls.TextBox Guest_Club;
 
         /// <summary>
         /// Start_Time control.
@@ -48,7 +57,7 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Removed_Start_Time;
+        protected global::System.Web.UI.WebControls.TextBox Start_Time;
 
         /// <summary>
         /// End_Time control.
@@ -57,7 +66,16 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Removed_End_Time;
+        protected global::System.Web.UI.WebControls.TextBox End_Time;
+
+        /// <summary>
+        /// REMOVE_MATCH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button REMOVE_MATCH;
 
         /// <summary>
         /// Back_to_main control.
@@ -66,6 +84,6 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Remove_Back_to_main;
+        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
     }
 }
