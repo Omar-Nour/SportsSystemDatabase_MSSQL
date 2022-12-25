@@ -18,6 +18,11 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["username"] == null || Session["type"] != "fan")
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             //string username = "shamekhjr";
             string username = Session["username"].ToString();
             string nid = ""; //initially empty until it is fetched

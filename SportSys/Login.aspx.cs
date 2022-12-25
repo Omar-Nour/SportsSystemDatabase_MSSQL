@@ -67,18 +67,23 @@ namespace SportSys
                 switch (type.Value.ToString())
                 {
                     case "fan":
+                        Session["type"] = "fan";
                         Response.Redirect("Fan.aspx");
                         break;
                     case "stadman":
-                        Response.Redirect("SAM view.aspx");
+                        Session["type"] = "stadman";
+                        Response.Redirect("Stadium manager.aspx");
                         break;
                     case "clubrep":
+                        Session["type"] = "clubrep";
                         Response.Redirect("ClubRep.aspx"); // to be modified
                         break;
                     case "sam":
-                        Response.Redirect("Fan.aspx");
+                        Session["type"] = "sam";
+                        Response.Redirect("SAM view.aspx");
                         break;
                     case "admin":
+                        Session["type"] = "admin";
                         Response.Redirect("admin.aspx");
                         break;
                 }

@@ -9,12 +9,12 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["username"] == null)
+            if (Session["username"] == null || Session["type"] != "sam")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
-            User_name.Text += Session["Username"];
+            User_name.Text += Session["username"];
             string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection con = new SqlConnection(ConStr);
 
