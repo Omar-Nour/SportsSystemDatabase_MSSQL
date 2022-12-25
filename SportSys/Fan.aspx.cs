@@ -17,10 +17,40 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            UsernameLabel.Text = "username: " + Session["username"];
-            NIDLabel.Text = "NantionalID: ";
+            string username = "shamekhjr";
+            //string username = Session["username"].ToString();
+            string nid = ""; //initially empty until it is fetched
+            
+            //initially make the label and gridview not visible since there 
+            //is no data yet
             MatchesGridView.Visible = false;
             PurchaseTicketLabel.Visible = false;
+
+            //display username
+            UsernameLabel.Text = "username: "+ username;
+
+            //fetch NationalID
+            //get connection string
+            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
+            SqlConnection conn = new SqlConnection(connStr);
+
+            //initialize the command that fetches the NationalID 
+            SqlCommand getNID = new SqlCommand("fetchNID", conn);
+            getNID.CommandType = System.Data.CommandType.StoredProcedure;
+            getNID.Parameters.AddWithValue("@username", username);
+
+            //specify output
+            SqlParameter NationalID = getNID.Parameters.Add("@NationalID", SqlDbType.VarChar,20);
+            NationalID.Direction = ParameterDirection.Output;
+
+            //open a connection and execute the procedure
+            conn.Open();
+            getNID.ExecuteNonQuery();
+            nid = NationalID.Value.ToString();
+
+            //display NationalID
+            NIDLabel.Text = "NantionalID: " + nid;
+            
         }
 
         protected void userInFunc(object sender, EventArgs e)

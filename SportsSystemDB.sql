@@ -1130,14 +1130,15 @@ SELECT * FROM Match;
 
 GO
 CREATE PROCEDURE fetchNID
-@username VARCHAR(20)
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output
 AS
-	DECLARE @NationalID VARCHAR(20) = (SELECT  f.NationalID AS nid
+	SET @NationalID = (SELECT  f.NationalID AS nid
 		FROM Fan AS f
 		WHERE f.username = @username);
 GO
 
+--DROP PROCEDURE fetchNID;
+
 --adding fan example to db
 EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
-
-EXEC fetchNID "shamekhjr";
