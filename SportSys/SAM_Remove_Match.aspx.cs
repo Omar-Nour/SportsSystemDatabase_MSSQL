@@ -2,7 +2,7 @@
 
 namespace SportSys
 {
-    public partial class SAM_Add_Match : System.Web.UI.Page
+    public partial class SAM_Remove_Match : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

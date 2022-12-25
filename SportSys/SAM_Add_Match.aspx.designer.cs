@@ -15,13 +15,13 @@ namespace SportSys
     {
 
         /// <summary>
-        /// Add_Matches control.
+        /// Remove_Matches control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Add_Matches;
+        protected global::System.Web.UI.HtmlControls.HtmlForm Remove_Matches;
 
         /// <summary>
         /// User_name control.
@@ -69,13 +69,13 @@ namespace SportSys
         protected global::System.Web.UI.WebControls.TextBox End_Time;
 
         /// <summary>
-        /// ADD_MATCH control.
+        /// REMOVE_MATCH control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ADD_MATCH;
+        protected global::System.Web.UI.WebControls.Button REMOVE_MATCH;
 
         /// <summary>
         /// Back_to_main control.
@@ -84,6 +84,6 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Add_Back_to_main;
+        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
     }
 }
