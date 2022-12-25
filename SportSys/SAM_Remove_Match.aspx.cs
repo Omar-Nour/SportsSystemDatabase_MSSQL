@@ -2,7 +2,7 @@
 
 namespace SportSys
 {
-    public partial class SAM_view : System.Web.UI.Page
+    public partial class SAM_Remove_Match : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -11,12 +11,7 @@ namespace SportSys
                 Response.Redirect("Login.aspx");
                 return;
             }
-            Sys_User_name.Text += Session["Username"];
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-
+            User_name.Text += Session["Username"];
         }
     }
 }

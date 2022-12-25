@@ -1,6 +1,4 @@
 CREATE DATABASE SportsSystemDB;
-
-
 GO
 
 --Procedure that creates all tables for DB
@@ -277,7 +275,11 @@ CREATE VIEW allStadiums AS
 	SELECT name, location, capacity, status AS StadiumStatus
 		FROM Stadium;
 GO
+GO
 
+
+
+GO
 GO
 --A View that returns the name of the Club Representative sending a host request,
 --the name of the Stadium Manager receiving the request,
@@ -307,7 +309,7 @@ CREATE PROCEDURE addAssociationManager
 	INSERT INTO SystemUser
 	VALUES (@Username, @Password);
 	INSERT INTO SportsAssociationManager
-	VALUES (@name, @Username);
+	VALUES (@Username, @name);
 	
 GO
 
@@ -436,7 +438,7 @@ INSERT INTO Stadium
 VALUES (@Name, @Cap, @Location, 1, NULL, NULL);
 
 GO
-
+exec addStadium 'emirates' , 'london', 20000
 
 --(X)
 GO
@@ -590,7 +592,7 @@ SET StadiumManagerUserName= @Name, StadiumManagerID = @ID
 
 WHERE Stadium.name = @stadiumname
 ------------------------------
---EXEC addStadiumManager 'Ahmed','EMIRATES','Ahmed1','1EW'
+EXEC addStadiumManager 'Ahmed','emirates','Ahmed','12345'
 
 --DROP PROC addStadiumManager
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -734,20 +736,20 @@ GO
 
 --SELECT* -------------------------------------------------------------------------------------------------------------------------------------------------------
 
---SELECT * 
---FROM StadiumManager
---SELECT * 
---FROM ClubRepresentative
---SELECT * 
---FROM SystemUser
---SELECT * 
---FROM Club
---SELECT *
---FROM Stadium
---SELECT *
---FROM Match
---SELECT * 
---FROM HostRequest
+SELECT * 
+FROM StadiumManager
+SELECT * 
+FROM ClubRepresentative
+SELECT * 
+FROM SystemUser
+SELECT * 
+FROM Club
+SELECT *
+FROM Stadium
+SELECT *
+FROM Match
+SELECT * 
+FROM HostRequest
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- VIEW AVAILABELE STADUIM THAT AVAIALABLE FOR RESERVATION AND NOT ALREADY HOSTING A MATCH AT THE START TIME--------------------------------------------------
@@ -1144,3 +1146,85 @@ GO
 EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
 
 SELECT * FROM Ticket AS T WHERE T.FanUserName = 'shamekhjr';
+
+
+
+CREATE PROCEDURE checkUsername
+@username VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@username IN (SELECT username FROM SystemUser))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+
+CREATE PROCEDURE checkStadExists
+@stadname VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@stadname IN (SELECT name FROM Stadium))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+CREATE PROCEDURE checkNidExists
+@nid VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@nid IN (SELECT NationalID FROM Fan))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+CREATE PROCEDURE checkClubExists
+@clubname VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@clubname IN (SELECT name FROM Club))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+
+exec addClub 'nigaz', 'women';
+--EXEC addAssociationManager 'a','abc','123'; 
+--DROP PROCEDURE checkUsername;
+--SELECT * FROM SystemUser;
+--SELECT * FROM Fan
+--SELECT * FROM SportsAssociationManager
+--DECLARE @success bit;
+--exec checkUsername 'abce', @success;
+
+
+--exec login 'abc', '123', 1, 'a';
+--REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
+GO
+
+CREATE PROCEDURE StadiumINFO
+@managername VARCHAR(20)
+AS
+SELECT S.capacity , S.location ,S.StadiumManagerID, S.name , S.status
+FROM STADIUM S
+WHERE S.StadiumManagerUserName=@managername
+
+exec StadiumINFO 'Ahmed'
+GO
+
+
+select * from Match
+select * from SportsAssociationManager
+
+GO
+
+
+
+

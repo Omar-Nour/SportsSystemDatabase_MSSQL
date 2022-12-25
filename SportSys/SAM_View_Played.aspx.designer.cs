@@ -11,34 +11,34 @@ namespace SportSys
 {
 
 
-    public partial class Stadium_manager
+    public partial class SAM_View_Played
     {
 
         /// <summary>
-        /// form1 control.
+        /// View_Past control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm View_Past;
 
         /// <summary>
-        /// View control.
+        /// Played_Sys_User_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button View;
+        protected global::System.Web.UI.WebControls.Label Played_Sys_User_name;
 
         /// <summary>
-        /// hostreq control.
+        /// Back_to_main control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button hostreq;
+        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
     }
 }
