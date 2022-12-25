@@ -615,10 +615,14 @@ DECLARE @HOST VARCHAR(20)
 DECLARE @GUEST VARCHAR(20)
 
 DECLARE @MATCHID VARCHAR(20)
+DECLARE @STADIUMID int;
 
-SELECT @HOST=C.id , @GUEST=C.id
-FROM CLUB C
-WHERE @hostclub=C.name AND @GUESTCLUB=C.name
+SELECT @STADIUMID = S.id FROM Stadium S, StadiumManager SM
+WHERE S.StadiumManagerID = SM.id AND SM.username = @usernamestadman
+
+SELECT @HOST=C1.id , @GUEST=C2.id
+FROM CLUB C1, CLub C2
+WHERE @hostclub=C1.name AND @GUESTCLUB=C2.name AND C1.id <> C2.id;
 
 SELECT @MATCHID= M.id
 FROM Match M
@@ -627,6 +631,10 @@ WHERE M.HostClubID=@HOST AND M.GuestClubID=@GUEST AND M.StartTime=@starttime
 UPDATE HostRequest
 SET status='accepted'
 WHERE HostRequest.MatchID=@MATCHID AND HostRequest.StadiumManagerID=@MANAGERID;
+
+UPDATE Match
+SET StadiumID = @STADIUMID
+WHERE id = @MATCHID;
 
 DECLARE @capacity int;
 SELECT @capacity = S.capacity FROM Stadium S, StadiumManager SM
@@ -888,7 +896,7 @@ CREATE FUNCTION [availableMatchesToAttend]
 RETURNS TABLE AS 
 	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name,S.location AS stadium_loc
 			FROM Club H, Club G, Match M, Stadium S
-			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID)
+			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID) AND S.id = M.StadiumID
 			AND EXISTS (SELECT * FROM Ticket T WHERE T.MatchID = M.id AND T.status = 1);
 GO
 
@@ -1243,6 +1251,7 @@ select * from Match
 select * from SportsAssociationManager
 select * from SystemUser
 select * from club
+select * from HostRequest
 
 GO
 

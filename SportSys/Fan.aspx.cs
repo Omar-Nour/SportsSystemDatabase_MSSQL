@@ -33,7 +33,7 @@ namespace SportSys
             PurchaseTicketLabel.Visible = false;
 
             //display username
-            UsernameLabel.Text = "username: "+ username;
+            UsernameLabel.Text = "Username: "+ username;
 
             //fetch NationalID
             //get connection string
@@ -59,7 +59,7 @@ namespace SportSys
             nid = NationalID.Value.ToString();
 
             //display NationalID
-            NIDLabel.Text = "NantionalID: " + nid;
+            NIDLabel.Text = "NationalID: " + nid;
             
         }
 
