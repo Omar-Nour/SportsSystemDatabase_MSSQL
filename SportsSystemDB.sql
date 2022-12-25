@@ -152,6 +152,8 @@ AS
 	DROP PROCEDURE addFan;
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
+	DROP PROCEDURE availableMatchesToAttendProcedure; 
+	DROP PROCEDURE fetchNID;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -884,7 +886,7 @@ GO
 CREATE FUNCTION [availableMatchesToAttend]
 (@date datetime)
 RETURNS TABLE AS 
-	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name
+	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name,S.location AS stadium_loc
 			FROM Club H, Club G, Match M, Stadium S
 			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID)
 			AND EXISTS (SELECT * FROM Ticket T WHERE T.MatchID = M.id AND T.status = 1);
@@ -1084,6 +1086,69 @@ AS
 	--print @user_type
 GO
 
+
+--adding info to test fan page
+--to insert into match
+--i need to insert into staidum, and thus stadium manager, and club and thus club rep
+
+
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
+EXEC addStadium "Bernabeu", "Madrid", 40000;
+
+EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
+EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
+
+EXEC addClub "FC Barcelona", "Barcelona, Spain";
+EXEC addClub "Real Madrid", "Madrid, Spain";
+
+EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
+EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
+
+EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
+EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+
+EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
+EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
+
+EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
+EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
+
+SELECT * FROM Ticket;
+
+--create a procedure that calls the availableMatchesToAttend function
+GO
+CREATE PROCEDURE availableMatchesToAttendProcedure 
+@date datetime
+AS 
+	SELECT * FROM availableMatchesToAttend(@date);
+GO
+
+DROP PROCEDURE availableMatchesToAttendProcedure;
+
+EXEC availableMatchesToAttendProcedure "2022/12/12 00:00:00";
+--error in the sql file (a match shows up twice, marra be stadium el awal we marra be stadium
+
+SELECT * FROM Match;
+
+GO
+CREATE PROCEDURE fetchNID
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output
+AS
+	SET @NationalID = (SELECT  f.NationalID AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+GO
+
+--DROP PROCEDURE fetchNID;
+
+--adding fan example to db
+EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+
+SELECT * FROM Ticket AS T WHERE T.FanUserName = 'shamekhjr';
+
+
+
 CREATE PROCEDURE checkUsername
 @username VARCHAR(20),
 @success bit OUTPUT
@@ -1133,7 +1198,7 @@ GO
 exec addClub 'nigaz', 'women';
 --EXEC addAssociationManager 'a','abc','123'; 
 --DROP PROCEDURE checkUsername;
---SELECT * FROM SystemUser;
+SELECT * FROM SystemUser;
 --SELECT * FROM Fan
 --SELECT * FROM SportsAssociationManager
 --DECLARE @success bit;
@@ -1142,8 +1207,6 @@ exec addClub 'nigaz', 'women';
 
 --exec login 'abc', '123', 1, 'a';
 --REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
-GO
-
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
@@ -1181,6 +1244,7 @@ select * from SystemUser
 select * from club
 
 GO
+
 
 
 

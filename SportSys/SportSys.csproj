@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fan.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
@@ -78,6 +79,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fan.aspx.cs">
+      <DependentUpon>Fan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fan.aspx.designer.cs">
+      <DependentUpon>Fan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
