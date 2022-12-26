@@ -1156,7 +1156,7 @@ EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Eg
 SELECT * FROM Ticket AS T WHERE T.FanUserName = 'shamekhjr';
 
 
-go
+GO
 CREATE PROCEDURE checkUsername
 @username VARCHAR(20),
 @success bit OUTPUT
@@ -1190,6 +1190,7 @@ begin
  ELSE
 	SET @success = 0;
 end
+
 GO
 CREATE PROCEDURE checkClubExists
 @clubname VARCHAR(20),
@@ -1215,7 +1216,8 @@ SELECT * FROM SystemUser;
 
 --exec login 'abc', '123', 1, 'a';
 --REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
-go
+
+GO
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
@@ -1251,31 +1253,13 @@ select * from Match
 select * from SportsAssociationManager
 select * from SystemUser
 select * from club
-select * from HostRequest
-select * from Ticket WHERE Status = 0 
 
 GO
 
 Select * from SystemUser
 select * from SportsAssociationManager
 
-GO
-CREATE PROCEDURE getTicketsOfFan
-@username VARCHAR(20)
-AS 
-	SELECT T.id AS TicketID, T.FanUserName AS Fan, C.name AS HostClub, C2.name AS GuestClub, S.name AS Stadium,S.location AS loc, M.StartTime AS KickOffTime
-		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2, Stadium AS S
-			WHERE M.HostClubID = C.id 
-				AND M.GuestClubID = C2.id AND C.id <> C2.id
-				AND T.MatchID = M.id 
-				AND M.StadiumID = S.id
-				AND T.FanUserName = @username;
-GO
-
-DROP PROCEDURE getTicketsOfFan;
-
-EXEC getTicketsOfFan;
-
-
+INSERT INTO SystemUser VALUES ('admin','admin');
+INSERT INTO SystemAdmin VALUES('admin','SysAdmin');
 
 
