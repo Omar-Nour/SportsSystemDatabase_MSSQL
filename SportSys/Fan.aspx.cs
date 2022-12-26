@@ -31,6 +31,8 @@ namespace SportSys
             //is no data yet
             MatchesGridView.Visible = false;
             PurchaseTicketLabel.Visible = false;
+            PurchaseHistoryGridView.Visible = false;
+            PurchaseHistoryExistsLabel.Visible = false;
 
             //display username
             UsernameLabel.Text = "Username: "+ username;
@@ -60,7 +62,10 @@ namespace SportSys
 
             //display NationalID
             NIDLabel.Text = "NationalID: " + nid;
-            
+            conn.Close();
+
+            //show purchase history
+            showPurchasedTickets();
         }
 
         protected void userInFunc(object sender, EventArgs e)
@@ -106,8 +111,8 @@ namespace SportSys
             //Add columns 
             dt.Columns.Add(new DataColumn("Host Club", typeof(string)));
             dt.Columns.Add(new DataColumn("Guest Club", typeof(string)));
-            dt.Columns.Add(new DataColumn("Start Time", typeof(string)));
-            dt.Columns.Add(new DataColumn("Stadium Name", typeof(string)));
+            dt.Columns.Add(new DataColumn("Kick-Off Time", typeof(string)));
+            dt.Columns.Add(new DataColumn("Stadium", typeof(string)));
             dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
 
 
@@ -120,8 +125,8 @@ namespace SportSys
                     DataRow dr = dt.NewRow();
                     dr["Host Club"] = rd[0];
                     dr["Guest Club"] = rd[1];
-                    dr["Start Time"] = rd[2];
-                    dr["Stadium Name"] = rd[3];
+                    dr["Kick-Off Time"] = rd[2];
+                    dr["Stadium"] = rd[3];
                     dr["Stadium Location"] = rd[4];
                     dt.Rows.Add(dr);
                 }
@@ -169,6 +174,74 @@ namespace SportSys
             PurchaseTicketLabel.Visible = true;
             PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
                 hostClub+" and "+ guestClub+" on "+startTime;
+            conn.Close();
+
+            //update purchase history
+            showPurchasedTickets();
+        }
+
+        protected void showPurchasedTickets()
+        {
+            PurchaseHistoryLabel.Visible = true;
+
+            //get connection string
+            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
+            SqlConnection conn = new SqlConnection(connStr);
+
+            //initialize the command that fetches the table 
+            SqlCommand getMatches = new SqlCommand("getTicketsOfFan", conn);
+            getMatches.CommandType = System.Data.CommandType.StoredProcedure;
+
+            //add input params
+            getMatches.Parameters.AddWithValue("@username", UsernameLabel.Text.Split(' ')[1]);
+
+            //Get table from db
+            conn.Open();
+            SqlDataReader rd = getMatches.ExecuteReader();
+
+
+            //create the DataTable that will be bound to GridView
+            DataTable dt = new DataTable();
+
+            //Add columns 
+            dt.Columns.Add(new DataColumn("TicketID", typeof(string)));
+            dt.Columns.Add(new DataColumn("Fan Username", typeof(string)));
+            dt.Columns.Add(new DataColumn("Host Club", typeof(string)));
+            dt.Columns.Add(new DataColumn("Guest Club", typeof(string)));
+            dt.Columns.Add(new DataColumn("Stadium", typeof(string)));
+            dt.Columns.Add(new DataColumn("Stadium Location", typeof(string)));
+            dt.Columns.Add(new DataColumn("Kick-Off Time", typeof(string)));
+
+
+            //Add rows with data
+            if (rd.HasRows)
+            {
+                while (rd.Read())
+                {
+                    //create a row/tuple then fill it with data from reader
+                    DataRow dr = dt.NewRow();
+                    dr["TicketID"] = rd[0];
+                    dr["Fan Username"] = rd[1];
+                    dr["Host Club"] = rd[2];
+                    dr["Guest Club"] = rd[3];
+                    dr["Stadium"] = rd[4];
+                    dr["Stadium Location"] = rd[5];
+                    dr["Kick-Off Time"] = rd[6];
+
+                    dt.Rows.Add(dr);
+                }
+            } else
+            {
+                PurchaseHistoryExistsLabel.Visible = true;
+                PurchaseHistoryExistsLabel.Text = "No purchase history";
+            }
+
+            //Bind GridView to table
+            PurchaseHistoryGridView.DataSource = dt;
+            PurchaseHistoryGridView.DataBind();
+
+            //Make the GridView visible
+            PurchaseHistoryGridView.Visible = true;
             conn.Close();
         }
 
