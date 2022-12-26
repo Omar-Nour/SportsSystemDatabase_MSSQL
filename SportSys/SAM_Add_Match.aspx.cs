@@ -9,15 +9,16 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            User_name.Text += Session["Username"];
+            string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
+            SqlConnection con = new SqlConnection(ConStr);
+
             if (Session["username"] == null)
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
-            User_name.Text += Session["Username"];
-            string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
-            SqlConnection con = new SqlConnection(ConStr);
-
+            
         }
 
         protected void add_match(object sender, EventArgs e)
@@ -31,9 +32,10 @@ namespace SportSys
             string Endtime = End_Time.Text;
 
             SqlCommand AddMatch = new SqlCommand("addNewMatch", con);
-
+            SqlCommand CheckClub = new SqlCommand("addNewMatch", con);
             con.Open();
 
+            
             AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
             AddMatch.Parameters.AddWithValue("@HostName", Hostname);
             AddMatch.Parameters.AddWithValue("@GuestName", Guestname);

@@ -1148,7 +1148,7 @@ EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Eg
 SELECT * FROM Ticket AS T WHERE T.FanUserName = 'shamekhjr';
 
 
-
+GO
 CREATE PROCEDURE checkUsername
 @username VARCHAR(20),
 @success bit OUTPUT
@@ -1182,6 +1182,7 @@ begin
  ELSE
 	SET @success = 0;
 end
+
 GO
 CREATE PROCEDURE checkClubExists
 @clubname VARCHAR(20),
@@ -1207,6 +1208,8 @@ SELECT * FROM SystemUser;
 
 --exec login 'abc', '123', 1, 'a';
 --REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
+
+GO
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
@@ -1242,7 +1245,7 @@ select * from Match
 select * from SportsAssociationManager
 select * from SystemUser
 select * from club
-
+delete from Match
 GO
 
 
