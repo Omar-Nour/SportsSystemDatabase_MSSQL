@@ -24,7 +24,7 @@
                 <asp:TemplateField ShowHeader="true" HeaderText="Purchase Ticket">
                 <ItemTemplate>
                     <asp:Button ID="PurchaseTicket" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="getTicket"
-                        Text="Purchase Ticket" CommandArgument='<%#Eval("Host Club") + ";" +Eval("Guest Club")+ ";" +Eval("Start Time")%>'/>
+                        Text="Purchase Ticket" CommandArgument='<%#Eval("Host Club") + ";" +Eval("Guest Club")+ ";" +Eval("Kick-Off Time")%>'/>
                 </ItemTemplate>
         </asp:TemplateField>
             </Columns>
@@ -35,7 +35,9 @@
         <asp:Label ID="PurchaseTicketLabel" runat="server" Text="Label" Font-Bold="True" ForeColor="#00FF00"></asp:Label>
         </p>
         <asp:Label ID="PurchaseHistoryLabel" runat="server" Text="Previously Purchased Tickets:" Font-Bold="True"></asp:Label>
-        <asp:GridView ID="PurchaseHistoryGridView" runat="server">
+        <asp:GridView ID="PurchaseHistoryGridView" runat="server" BorderStyle="Solid">
+            <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
+            <RowStyle BorderStyle="Solid" />
         </asp:GridView>
         <asp:Label ID="PurchaseHistoryExistsLabel" runat="server" Text="Label" Font-Bold="True" ForeColor="#FF0000"></asp:Label>
     </form>
