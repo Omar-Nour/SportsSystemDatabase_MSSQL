@@ -14,7 +14,7 @@ namespace SportSys
                 Response.Redirect("Login.aspx");
                 return;
             }
-            User_name.Text += Session["Username"];
+            User_name.Text = Session["username"].ToString();
             string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection con = new SqlConnection(ConStr);
 
