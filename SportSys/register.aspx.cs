@@ -105,7 +105,8 @@ namespace SportSys
 
                         // session redirect
                         Session["username"] = usern;
-                        Response.Redirect("stad_man.aspx"); // TODO: to be modified correspondingly
+                        Session["type"] = "stadman";
+                        Response.Redirect("Stadium manager.aspx"); // TODO: to be modified correspondingly
                     }
                     else
                     {
@@ -182,6 +183,7 @@ namespace SportSys
 
                             // session redirect
                             Session["username"] = usern;
+                            Session["type"] = "fan";
                             Response.Redirect("Fan.aspx"); // TODO: to be modified correspondingly
                         }
                     }
@@ -206,6 +208,7 @@ namespace SportSys
 
                     // session redirect
                     Session["username"] = usern;
+                    Session["type"] = "sam";
                     Response.Redirect("SAM view.aspx"); // TODO: to be modified correspondingly
 
                     break;
@@ -249,6 +252,7 @@ namespace SportSys
 
                         // session redirect
                         Session["username"] = usern;
+                        Session["type"] = "clubrep";
                         Response.Redirect("clubrep.aspx"); // TODO: to be modified correspondingly
                     }
   

@@ -18,6 +18,11 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["username"] == null || Session["type"] != "fan")
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             //string username = "shamekhjr";
             string username = Session["username"].ToString();
             string nid = ""; //initially empty until it is fetched
@@ -28,7 +33,7 @@ namespace SportSys
             PurchaseTicketLabel.Visible = false;
 
             //display username
-            UsernameLabel.Text = "username: "+ username;
+            UsernameLabel.Text = "Username: "+ username;
 
             //fetch NationalID
             //get connection string
@@ -54,7 +59,7 @@ namespace SportSys
             nid = NationalID.Value.ToString();
 
             //display NationalID
-            NIDLabel.Text = "NantionalID: " + nid;
+            NIDLabel.Text = "NationalID: " + nid;
             
         }
 
@@ -128,6 +133,7 @@ namespace SportSys
 
             //Make the GridView visible
             MatchesGridView.Visible = true;
+            conn.Close();
         }
 
         protected void MatchesGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
@@ -163,6 +169,7 @@ namespace SportSys
             PurchaseTicketLabel.Visible = true;
             PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
                 hostClub+" and "+ guestClub+" on "+startTime;
+            conn.Close();
         }
 
     }

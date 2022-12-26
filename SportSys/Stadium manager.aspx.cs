@@ -13,7 +13,11 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["username"] == null || Session["type"] != "stadman")
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
         }
 
        
