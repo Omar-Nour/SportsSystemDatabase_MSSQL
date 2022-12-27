@@ -1258,3 +1258,11 @@ drop proc reject
 EXEC SIMPREJECT '10'
 GO
 
+CREATE PROCEDURE fetchNID
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output
+AS
+	SET @NationalID = (SELECT  f.NationalID AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+
