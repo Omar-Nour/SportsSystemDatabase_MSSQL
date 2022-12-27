@@ -1279,3 +1279,10 @@ AS
 				AND T.FanUserName = @username;
 GO
 
+GO
+CREATE PROCEDURE availableMatchesToAttendProcedure 
+@date datetime
+AS 
+	SELECT * FROM availableMatchesToAttend(@date);
+GO
+
