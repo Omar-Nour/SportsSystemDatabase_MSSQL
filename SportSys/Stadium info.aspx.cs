@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -10,17 +12,18 @@ using System.Web.UI.WebControls;
 
 namespace SportSys
 {
-    public partial class Stadium_manager : System.Web.UI.Page
-    {
-        protected void Page_Load1(object sender, EventArgs e)
-        {
+	public partial class Stadium_info : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
+            string username = Session["username"].ToString();
             string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection conn = new SqlConnection(connStr);
 
             //initialize the command that fetches the table 
             SqlCommand getstadiuminfo = new SqlCommand("StadiumINFO", conn);
             getstadiuminfo.CommandType = System.Data.CommandType.StoredProcedure;
-            getstadiuminfo.Parameters.AddWithValue("@managername", "Ahmed");
+            getstadiuminfo.Parameters.AddWithValue("@managername", username);
 
             //Get table from db
             conn.Open();
@@ -57,11 +60,4 @@ namespace SportSys
 
         }
     }
-
-       
-
-        
-
-        
-    
 }

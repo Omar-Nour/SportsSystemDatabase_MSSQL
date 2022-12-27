@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Stadium info.aspx.cs" Inherits="SportSys.Stadium_manager" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Stadium info.aspx.cs" Inherits="SportSys.Stadium_info" %>
 
 <!DOCTYPE html>
 
@@ -7,16 +7,15 @@
     <title></title>
 </head>
 <body>
-    <form id="form2" runat="server">
+    <form id="form1" runat="server">
         <div>
+            
                 <asp:Label runat="server" Text="Stadium info"></asp:Label>
             </br>
-             <asp:GridView ID="GridView1" runat="server">
+                <asp:GridView ID="GridView1" runat="server">
         </asp:GridView>
+        
         </div>
-       
-        
-        
     </form>
 </body>
 </html>

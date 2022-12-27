@@ -27,7 +27,7 @@ namespace SportSys
             string username = Session["username"].ToString();
             string nid = ""; //initially empty until it is fetched
             
-            //initially make the label and gridview not visible since there 
+            //initially make the labels and gridviews not visible since there 
             //is no data yet
             MatchesGridView.Visible = false;
             PurchaseTicketLabel.Visible = false;
@@ -60,7 +60,7 @@ namespace SportSys
             //store NID in string var
             nid = NationalID.Value.ToString();
 
-            //display NationalID
+            //display NationalID and close the connection
             NIDLabel.Text = "NationalID: " + nid;
             conn.Close();
 
@@ -70,17 +70,22 @@ namespace SportSys
 
         protected void userInFunc(object sender, EventArgs e)
         {
+            //fetch the matches table but using the input time from the user
+            //as input to the procedure
             getTheTable(false);
         }
 
 
         protected void currTimeFunc(object sender, EventArgs e)
         {
+            //fetch the matches table but using the current timestamp
+            //as input to the procedure
             getTheTable(true);
         }
 
         protected void getTheTable(bool now)
         {
+            //determine datetime input based on user choice
             string input = "";
             if (now)
             {
@@ -89,6 +94,7 @@ namespace SportSys
             {
                 input = DateTimeBox.Text;
             }
+
             //get connection string
             string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection conn = new SqlConnection(connStr);
@@ -105,7 +111,7 @@ namespace SportSys
             SqlDataReader rd = getMatches.ExecuteReader();
 
 
-            //create the DataTable that will be bound to GridView
+            //create the DataTable that will be bound to the GridView
             DataTable dt = new DataTable();
 
             //Add columns 
@@ -136,7 +142,7 @@ namespace SportSys
             MatchesGridView.DataSource = dt;
             MatchesGridView.DataBind();
 
-            //Make the GridView visible
+            //Make the GridView visible and close the connection
             MatchesGridView.Visible = true;
             conn.Close();
         }
@@ -171,6 +177,7 @@ namespace SportSys
             purchaseTicket.ExecuteNonQuery();
 
             //make label visible and tell the user that the ticket has been purchased
+            //then close the connection
             PurchaseTicketLabel.Visible = true;
             PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
                 hostClub+" and "+ guestClub+" on "+startTime;
@@ -200,7 +207,7 @@ namespace SportSys
             SqlDataReader rd = getMatches.ExecuteReader();
 
 
-            //create the DataTable that will be bound to GridView
+            //create the DataTable that will be bound to the GridView
             DataTable dt = new DataTable();
 
             //Add columns 
@@ -232,6 +239,9 @@ namespace SportSys
                 }
             } else
             {
+                //the table is empty
+                //then the user hasn't purchased any tickets yet
+                //show this as output to the user
                 PurchaseHistoryExistsLabel.Visible = true;
                 PurchaseHistoryExistsLabel.Text = "No purchase history";
             }
@@ -240,7 +250,7 @@ namespace SportSys
             PurchaseHistoryGridView.DataSource = dt;
             PurchaseHistoryGridView.DataBind();
 
-            //Make the GridView visible
+            //Make the GridView visible and close the connection
             PurchaseHistoryGridView.Visible = true;
             conn.Close();
         }
