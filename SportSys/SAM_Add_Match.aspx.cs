@@ -17,6 +17,7 @@ namespace SportSys
                 return;
             }
 #pragma warning restore CS0252
+
             User_name.Text = Session["username"].ToString();
             string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection con = new SqlConnection(ConStr);
@@ -72,7 +73,7 @@ namespace SportSys
 
             else
             {
-                error_lbl.Text = "NO CLUBS FOUND";
+                error_lbl.Text = "NO CLUBS FOUND MATCHING THE INPUT NAMES";
                 error_lbl.Visible = true;
             }
 
