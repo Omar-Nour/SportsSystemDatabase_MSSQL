@@ -38,8 +38,8 @@ namespace SportSys
             AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
             AddMatch.Parameters.AddWithValue("@HostName", Hostname);
             AddMatch.Parameters.AddWithValue("@GuestName", Guestname);
-            AddMatch.Parameters.AddWithValue("@StartTime", Starttime);
-            AddMatch.Parameters.AddWithValue("@EndTime", Endtime);
+            AddMatch.Parameters.AddWithValue("@StartTime", Starttime + ":00");
+            AddMatch.Parameters.AddWithValue("@EndTime", Endtime+":00");
 
             AddMatch.ExecuteNonQuery();
 
