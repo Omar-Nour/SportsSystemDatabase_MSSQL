@@ -35,7 +35,8 @@ namespace SportSys
             string Endtime = End_Time.Text;
 
             SqlCommand AddMatch = new SqlCommand("addNewMatch", con);
-            
+            AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
+
             SqlCommand CheckClubHost = new SqlCommand("checkClubExists", con);
             CheckClubHost.CommandType = System.Data.CommandType.StoredProcedure;
             CheckClubHost.Parameters.AddWithValue("@clubname", Hostname);
@@ -54,10 +55,10 @@ namespace SportSys
 
             CheckClubHost.ExecuteNonQuery();
             CheckClubGuest.ExecuteNonQuery();
+
             if (successHost.Value.ToString() == "1" && successGuest.Value.ToString() == "1") //clubs found
             {
 
-                AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
                 AddMatch.Parameters.AddWithValue("@HostName", Hostname);
                 AddMatch.Parameters.AddWithValue("@GuestName", Guestname);
                 AddMatch.Parameters.AddWithValue("@StartTime", Starttime);

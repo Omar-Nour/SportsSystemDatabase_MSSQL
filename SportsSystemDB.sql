@@ -1,4 +1,5 @@
 CREATE DATABASE SportsSystemDB;
+
 GO
 
 --Procedure that creates all tables for DB
@@ -359,19 +360,22 @@ GO
 CREATE PROCEDURE deleteMatch
 		@HostClub VARCHAR(20),
 		@GuestClub VARCHAR(20)
+		--@Starttime DATETIME,
+		--@Endtime DATETIME
 AS
 DECLARE @Host_id INT = (SELECT C.id FROM Club C WHERE C.name = @HostClub);
 DECLARE @Guest_id INT = (SELECT C.id FROM Club C WHERE C.name = @GuestClub);
 DECLARE @Match_id INT = (SELECT M.id FROM Match M WHERE M.HostClubID = @Host_id AND M.GuestClubID = @Guest_id);
 
 
-DELETE FROM Match  
-WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id;
+DELETE FROM Match
+WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id; --AND Match.StartTime = @Starttime AND Match.EndTime = @Endtime;
 
 DELETE FROM Ticket
 WHERE Ticket.MatchID = @Match_id;
 
 GO
+
 
 --(V)
 GO
@@ -1253,6 +1257,7 @@ select * from Match
 select * from SportsAssociationManager
 select * from SystemUser
 select * from club
+select * from ticket
 
 GO
 
