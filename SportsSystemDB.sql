@@ -1266,3 +1266,16 @@ AS
 		FROM Fan AS f
 		WHERE f.username = @username);
 
+GO
+CREATE PROCEDURE getTicketsOfFan
+@username VARCHAR(20)
+AS 
+	SELECT T.id AS TicketID, T.FanUserName AS Fan, C.name AS HostClub, C2.name AS GuestClub, S.name AS Stadium,S.location AS loc, M.StartTime AS KickOffTime
+		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2, Stadium AS S
+			WHERE M.HostClubID = C.id 
+				AND M.GuestClubID = C2.id AND C.id <> C2.id
+				AND T.MatchID = M.id 
+				AND M.StadiumID = S.id
+				AND T.FanUserName = @username;
+GO
+
