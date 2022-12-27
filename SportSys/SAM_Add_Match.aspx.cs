@@ -10,11 +10,13 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+#pragma warning disable CS0252
             if (Session["username"] == null || Session["type"] != "sam")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+#pragma warning restore CS0252
             User_name.Text = Session["username"].ToString();
             string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection con = new SqlConnection(ConStr);
