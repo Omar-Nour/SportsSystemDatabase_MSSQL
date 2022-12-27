@@ -26,7 +26,7 @@
                     <asp:Button ID="PurchaseTicket" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="getTicket"
                         Text="Purchase Ticket" CommandArgument='<%#Eval("Host Club") + ";" +Eval("Guest Club")+ ";" +Eval("Kick-Off Time")%>'/>
                 </ItemTemplate>
-        </asp:TemplateField>
+                </asp:TemplateField>
             </Columns>
             <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
             <RowStyle BorderStyle="Solid" />
