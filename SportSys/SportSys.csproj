@@ -48,6 +48,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -67,6 +68,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin.aspx" />
+    <Content Include="admin_fan.aspx" />
+    <Content Include="admin_club.aspx" />
+    <Content Include="admin_stadium.aspx" />
+    <Content Include="Fan.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
@@ -78,6 +84,41 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="admin.aspx.cs">
+      <DependentUpon>admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin.aspx.designer.cs">
+      <DependentUpon>admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_fan.aspx.cs">
+      <DependentUpon>admin_fan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin_fan.aspx.designer.cs">
+      <DependentUpon>admin_fan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_club.aspx.cs">
+      <DependentUpon>admin_club.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin_club.aspx.designer.cs">
+      <DependentUpon>admin_club.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_stadium.aspx.cs">
+      <DependentUpon>admin_stadium.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin_stadium.aspx.designer.cs">
+      <DependentUpon>admin_stadium.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fan.aspx.cs">
+      <DependentUpon>Fan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fan.aspx.designer.cs">
+      <DependentUpon>Fan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
