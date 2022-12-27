@@ -292,7 +292,8 @@ CREATE VIEW allRequests AS
 			AND CR.id = H.ClubRepresentativeID;
 GO
 
-
+select * from dbo.allRequests
+GO
 
 -- (------------------ 2.3 ------------------)
 
@@ -332,8 +333,10 @@ CREATE PROCEDURE addNewMatch
 		INSERT INTO Match
 		VALUES (@StartTime, @EndTime, NULL, @HostID, @GuestID);
 
-GO
 
+GO
+exec addNewMatch 'Mancity','Liverpool','2022-04-22 10:34:23','2022-04-22 12:34:23'
+exec addNewMatch 'Mancity','Liverpool','2022-04-23 10:34:23','2022-04-23 12:34:23'
 
 --(III)
 GO 
@@ -397,7 +400,8 @@ INSERT INTO Club
 VALUES (@ClubName, @Location, NULL, NULL);
 
 GO
-
+exec addClub 'Liverpool' , 'liverpool'
+exec addClub 'Mancity' , 'Manchester'
 --(VII)
 GO
 CREATE PROCEDURE addTicket
@@ -438,7 +442,7 @@ INSERT INTO Stadium
 VALUES (@Name, @Cap, @Location, 1, NULL, NULL);
 
 GO
-exec addStadium 'emirates' , 'london', 20000
+exec addStadium 'Anfield' , 'liverpool', 70000
 
 --(X)
 GO
@@ -520,7 +524,8 @@ UPDATE Club
 SET ClubRepresentativeUserName= @Name, ClubRepresentativeID = @ID
 
 WHERE Club.name = @ClubName 
---EXEC addRepresentative 'MOH','DD','MOH1','12345'
+EXEC addRepresentative 'nasser','Mancity','nasser','12345'
+EXEC addRepresentative 'glads','Liverpool','glads','12345'
 
 
 --DROP PROC addRepresentative
@@ -563,7 +568,9 @@ WHERE M.StartTime = @date
 INSERT INTO HostRequest (status,MatchID,ClubRepresentativeID,StadiumManagerID,StadiumManagerUserName,ClubRepresentativeUserName)
 VALUES('unhandled',@MATCHid,@repid,@SMID,@SMUSERNAME,@repUSER);
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
---EXEC addHostRequest 'DD','EMIRATES','2022-04-22 10:34:23'
+EXEC addHostRequest 'Liverpool','Anfield','2022-04-23 10:34:23.000'
+EXEC addHostRequest 'Mancity','bernabou','2022-04-22 10:34:23.000'
+
 --DROP PROC addHostRequest
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -592,7 +599,7 @@ SET StadiumManagerUserName= @Name, StadiumManagerID = @ID
 
 WHERE Stadium.name = @stadiumname
 ------------------------------
-EXEC addStadiumManager 'Ahmed','emirates','Ahmed','12345'
+EXEC addStadiumManager 'perez','bernabou','perez','12345'
 
 --DROP PROC addStadiumManager
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -603,9 +610,12 @@ CREATE PROC acceptRequest
 @usernamestadman VARCHAR(20),
 @hostclub VARCHAR(20),
 @GUESTCLUB VARCHAR(20),
-@starttime DATETIME
+@starttime DATETIME,
+@HOSTID VARCHAR(20)
+
 
 AS
+
 DECLARE @MANAGERID VARCHAR(20)
 SELECT @MANAGERID=SM.id
 FROM StadiumManager SM
@@ -624,9 +634,11 @@ SELECT @MATCHID= M.id
 FROM Match M
 WHERE M.HostClubID=@HOST AND M.GuestClubID=@GUEST AND M.StartTime=@starttime
 
+
+
 UPDATE HostRequest
 SET status='accepted'
-WHERE HostRequest.MatchID=@MATCHID AND HostRequest.StadiumManagerID=@MANAGERID;
+WHERE HostRequest.ID=@HOSTID
 
 DECLARE @capacity int;
 SELECT @capacity = S.capacity FROM Stadium S, StadiumManager SM
@@ -639,8 +651,8 @@ begin
 	SET @i = @i + 1;
 end
 GO
-
---EXEC acceptRequest 'AHMED1','DD','2EW3A', '2022-04-22 10:34:23.000'
+drop proc acceptRequest
+EXEC acceptRequest 'Adham','Liverpool','Mancity', '4/23/2022 10:34:23 ','12'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --GO
 --CREATE PROC ACCEPTREQ2
@@ -704,6 +716,12 @@ UPDATE HostRequest
 SET status='rejected'
 WHERE HostRequest.MatchID=@MATCHID AND HostRequest.StadiumManagerID=@MANAGERID 
 GO
+EXEC rejectRequest 'Ahmed','Mancity','Liverpool', '2022-04-22 10:34:23.000'
+GO
+
+
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --EXEC acceptRequest'AHMED1','2EW3A','DD','2022-04-22 10:34:23'
@@ -750,6 +768,8 @@ SELECT *
 FROM Match
 SELECT * 
 FROM HostRequest
+SELECT *
+FROM Ticket
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- VIEW AVAILABELE STADUIM THAT AVAIALABLE FOR RESERVATION AND NOT ALREADY HOSTING A MATCH AT THE START TIME--------------------------------------------------
@@ -851,9 +871,9 @@ END;
 GO
 
 -- DROP FUNCTION allPendingRequests
---SELECT * FROM  DBO.allPendingRequests('Ahmed1')
+SELECT * FROM  DBO.allPendingRequests('Ahmed')
 
-
+GO
 
 ------- FROM XXI TO XXX -------
 
@@ -1144,6 +1164,48 @@ exec addClub 'nigaz', 'women';
 
 --exec login 'abc', '123', 1, 'a';
 --REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
+GO
+CREATE PROCEDURE checkUsername
+@username VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@username IN (SELECT username FROM SystemUser))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+
+CREATE PROCEDURE checkStadExists
+@stadname VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@stadname IN (SELECT name FROM Stadium))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+CREATE PROCEDURE checkNidExists
+@nid VARCHAR(20),
+@success bit OUTPUT
+AS
+begin
+ IF (@nid IN (SELECT NationalID FROM Fan))
+	SET @success = 1;
+ ELSE
+	SET @success = 0;
+end
+GO
+
+
+
+
+--------------------------------------------------------------------------------------------
+--new added procuders for stadium manager
+go
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
@@ -1156,5 +1218,43 @@ GO
 
 GO
 
+GO
+CREATE PROCEDURE ALLREQ
+@STADUSERNAME VARCHAR(20)
+AS
+SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.status AS RequestStatus, c.name AS HOST , M.StartTime , M.EndTime, H.id AS HOSTID
+		FROM HostRequest AS H,StadiumManager AS SM, ClubRepresentative AS CR, Club c , MATCH M 
+			WHERE SM.id = H.StadiumManagerID AND
+			@STADUSERNAME= H.StadiumManagerUserName
+			AND CR.id = H.ClubRepresentativeID
+			AND C.ClubRepresentativeID= H.ClubRepresentativeID
+			AND H.MatchID=M.id
 
+EXEC ALLREQ 'Ahmed'
+DROP PROC ALLREQPEND
+GO 
+CREATE PROCEDURE ALLREQPEND
+@STADUSERNAME VARCHAR(20)
+AS
+SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving, c.name AS HOST , M.StartTime , M.EndTime, H.id AS HOSTID
+		FROM HostRequest AS H,StadiumManager AS SM, ClubRepresentative AS CR, Club c , MATCH M 
+			WHERE SM.id = H.StadiumManagerID AND
+			@STADUSERNAME= H.StadiumManagerUserName
+			AND CR.id = H.ClubRepresentativeID
+			AND C.ClubRepresentativeID= H.ClubRepresentativeID
+			AND H.MatchID=M.id
+			AND H.status='unhandled'
+
+EXEC ALLREQPEND'Ahmed'
+GO
+--SIMPLE REJECTION PROCUDRE ONLY NEEDS HOST REQUEST ID TO FUNCTION
+CREATE PROCEDURE SIMPREJECT
+@ID VARCHAR (20)
+AS
+UPDATE HostRequest
+SET status='rejected'
+WHERE HostRequest.id=@ID 
+drop proc reject
+EXEC SIMPREJECT '10'
+GO
 

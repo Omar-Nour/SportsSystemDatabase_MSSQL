@@ -11,8 +11,15 @@
         <div>
                 <asp:Label runat="server" Text="welcome"></asp:Label>
             </br>
+                        <asp:Label ID="UsernameLabel" runat="server" Text="Label" Font-Bold="True"></asp:Label>
+            </br>
             <asp:Label runat="server" Text="view stadium info"></asp:Label>
+
              </br>
+              <asp:GridView ID="GridView1" runat="server">
+        </asp:GridView>
+                         </br>
+
             
                         <asp:Button ID="View" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px" Text="VIEW" Width="135px" OnClick="Viewstad" />
              </br>
