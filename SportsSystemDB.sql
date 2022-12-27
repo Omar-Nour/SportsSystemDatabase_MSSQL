@@ -367,12 +367,12 @@ DECLARE @Host_id INT = (SELECT C.id FROM Club C WHERE C.name = @HostClub);
 DECLARE @Guest_id INT = (SELECT C.id FROM Club C WHERE C.name = @GuestClub);
 DECLARE @Match_id INT = (SELECT M.id FROM Match M WHERE M.HostClubID = @Host_id AND M.GuestClubID = @Guest_id);
 
+DELETE FROM Ticket
+WHERE Ticket.MatchID = @Match_id;
 
 DELETE FROM Match  
 WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id;
 
-DELETE FROM Ticket
-WHERE Ticket.MatchID = @Match_id;
 
 GO
 
@@ -1213,7 +1213,7 @@ SELECT S.capacity , S.location ,S.StadiumManagerID, S.name , S.status
 FROM STADIUM S
 WHERE S.StadiumManagerUserName=@managername
 
-exec StadiumINFO 'Ahmed'
+--exec StadiumINFO 'Ahmed'
 GO
 
 GO
@@ -1230,8 +1230,8 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.status AS Reque
 			AND C.ClubRepresentativeID= H.ClubRepresentativeID
 			AND H.MatchID=M.id
 
-EXEC ALLREQ 'Ahmed'
-DROP PROC ALLREQPEND
+--EXEC ALLREQ 'Ahmed'
+--DROP PROC ALLREQPEND
 GO 
 CREATE PROCEDURE ALLREQPEND
 @STADUSERNAME VARCHAR(20)
@@ -1245,7 +1245,7 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving, c.name AS HOST ,
 			AND H.MatchID=M.id
 			AND H.status='unhandled'
 
-EXEC ALLREQPEND'Ahmed'
+--EXEC ALLREQPEND'Ahmed'
 GO
 --SIMPLE REJECTION PROCUDRE ONLY NEEDS HOST REQUEST ID TO FUNCTION
 CREATE PROCEDURE SIMPREJECT
