@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.Xml.Linq;
@@ -9,11 +10,14 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+#pragma warning disable CS0252
             if (Session["username"] == null || Session["type"] != "sam")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+#pragma warning restore CS0252
+
             User_name.Text = Session["username"].ToString();
             string ConStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection con = new SqlConnection(ConStr);
@@ -31,22 +35,49 @@ namespace SportSys
             string Endtime = End_Time.Text;
 
             SqlCommand AddMatch = new SqlCommand("addNewMatch", con);
-            SqlCommand CheckClub = new SqlCommand("addNewMatch", con);
+            AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlCommand CheckClubHost = new SqlCommand("checkClubExists", con);
+            CheckClubHost.CommandType = System.Data.CommandType.StoredProcedure;
+            CheckClubHost.Parameters.AddWithValue("@clubname", Hostname);
+
+            SqlCommand CheckClubGuest = new SqlCommand("checkClubExists", con);
+            CheckClubGuest.CommandType = System.Data.CommandType.StoredProcedure;
+            CheckClubGuest.Parameters.AddWithValue("@clubname", Guestname);
+
+            SqlParameter successHost = CheckClubHost.Parameters.Add("@success", SqlDbType.Int);
+            successHost.Direction = ParameterDirection.Output;
+
+            SqlParameter successGuest = CheckClubGuest.Parameters.Add("@success", SqlDbType.Int);
+            successGuest.Direction = ParameterDirection.Output;
+
             con.Open();
 
-            
-            AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
-            AddMatch.Parameters.AddWithValue("@HostName", Hostname);
-            AddMatch.Parameters.AddWithValue("@GuestName", Guestname);
-            AddMatch.Parameters.AddWithValue("@StartTime", Starttime);
-            AddMatch.Parameters.AddWithValue("@EndTime", Endtime);
+            CheckClubHost.ExecuteNonQuery();
+            CheckClubGuest.ExecuteNonQuery();
 
-            AddMatch.ExecuteNonQuery();
+            if (successHost.Value.ToString() == "1" && successGuest.Value.ToString() == "1") //clubs found
+            {
 
-            error_lbl.Text = "Match added successfully";
-            error_lbl.Visible = true;
+                AddMatch.Parameters.AddWithValue("@HostName", Hostname);
+                AddMatch.Parameters.AddWithValue("@GuestName", Guestname);
+                AddMatch.Parameters.AddWithValue("@StartTime", Starttime);
+                AddMatch.Parameters.AddWithValue("@EndTime", Endtime);
 
-            con.Close();
+                AddMatch.ExecuteNonQuery();
+
+                error_lbl.Text = "Match added successfully";
+                error_lbl.Visible = true;
+
+                con.Close();
+            }
+
+            else
+            {
+                error_lbl.Text = "NO CLUBS FOUND MATCHING THE INPUT NAMES";
+                error_lbl.Visible = true;
+            }
+
 
         }
     }
