@@ -1286,3 +1286,26 @@ AS
 	SELECT * FROM availableMatchesToAttend(@date);
 GO
 
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
+EXEC addStadium "Bernabeu", "Madrid", 40000;
+
+EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
+EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
+
+EXEC addClub "FC Barcelona", "Barcelona, Spain";
+EXEC addClub "Real Madrid", "Madrid, Spain";
+
+EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
+EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
+
+EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
+EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+
+EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
+EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
+
+EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
+EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
+
+EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+
