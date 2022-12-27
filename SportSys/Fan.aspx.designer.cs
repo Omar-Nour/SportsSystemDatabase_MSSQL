@@ -11,88 +11,106 @@ namespace SportSys
 {
 
 
-    public partial class SAM_Remove_Match
+    public partial class Fan
     {
 
         /// <summary>
-        /// Remove_Matches control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Remove_Matches;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// User_name control.
+        /// UsernameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label User_name;
+        protected global::System.Web.UI.WebControls.Label UsernameLabel;
 
         /// <summary>
-        /// Host_Club control.
+        /// NIDLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Host_Club;
+        protected global::System.Web.UI.WebControls.Label NIDLabel;
 
         /// <summary>
-        /// Guest_Club control.
+        /// DateTimeBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Guest_Club;
+        protected global::System.Web.UI.WebControls.TextBox DateTimeBox;
 
         /// <summary>
-        /// Start_Time control.
+        /// userIn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Start_Time;
+        protected global::System.Web.UI.WebControls.Button userIn;
 
         /// <summary>
-        /// End_Time control.
+        /// currTimeStamp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox End_Time;
+        protected global::System.Web.UI.WebControls.Button currTimeStamp;
 
         /// <summary>
-        /// REMOVE_MATCH control.
+        /// MatchesGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button REMOVE_MATCH;
+        protected global::System.Web.UI.WebControls.GridView MatchesGridView;
 
         /// <summary>
-        /// Back_to_main control.
+        /// PurchaseTicketLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
+        protected global::System.Web.UI.WebControls.Label PurchaseTicketLabel;
 
         /// <summary>
-        /// indicator control.
+        /// PurchaseHistoryLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label indicator;
+        protected global::System.Web.UI.WebControls.Label PurchaseHistoryLabel;
+
+        /// <summary>
+        /// PurchaseHistoryGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView PurchaseHistoryGridView;
+
+        /// <summary>
+        /// PurchaseHistoryExistsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PurchaseHistoryExistsLabel;
     }
 }

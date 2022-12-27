@@ -6,7 +6,12 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Played_Sys_User_name.Text += Session["Username"];
+            if (Session["username"] == null || Session["type"] != "sam")
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+            Played_Sys_User_name.Text += Session["username"];
         }
     }
 }

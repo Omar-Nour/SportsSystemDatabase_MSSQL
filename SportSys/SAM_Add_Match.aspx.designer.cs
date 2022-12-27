@@ -84,6 +84,15 @@ namespace SportSys
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Add_Back_to_main;
+        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
+
+        /// <summary>
+        /// error_lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label error_lbl;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -28,14 +29,66 @@ namespace SportSys
             {
                 error_lbl.Text = "username should be less than 21 characters and not empty";
                 error_lbl.Visible = true;
+                return;
             } 
             else if (passwd == "" || passwd.Length > 20)
             {
                 error_lbl.Text = "password should be less than 21 characters and not empty";
                 error_lbl.Visible = true;
+                return;
             }
 
-            
+
+            // get user type to redirect accordingly
+            SqlCommand loginproc = new SqlCommand("login ", conn);
+            loginproc.CommandType = System.Data.CommandType.StoredProcedure;
+            loginproc.Parameters.AddWithValue("@username", usern);
+            loginproc.Parameters.AddWithValue("@password", passwd);
+
+            SqlParameter success = loginproc.Parameters.Add("@success", SqlDbType.Int);
+            SqlParameter type = loginproc.Parameters.Add("@user_type", SqlDbType.VarChar, 20);
+
+            success.Direction = ParameterDirection.Output;
+            type.Direction = ParameterDirection.Output;
+
+            conn.Open();
+            loginproc.ExecuteNonQuery();
+
+            if (success.Value.ToString() == "0") // username NOT found
+            {
+                error_lbl.Text = "username not found or incorrect password";
+                error_lbl.Visible = true;
+                conn.Close();
+                return;
+            }
+            else // username found
+            {
+                Session["username"] = usern;
+                switch (type.Value.ToString())
+                {
+                    case "fan":
+                        Session["type"] = "fan";
+                        Response.Redirect("Fan.aspx");
+                        break;
+                    case "stadman":
+                        Session["type"] = "stadman";
+                        Response.Redirect("Stadium manager.aspx");
+                        break;
+                    case "clubrep":
+                        Session["type"] = "clubrep";
+                        Response.Redirect("ClubRep.aspx"); // to be modified
+                        break;
+                    case "sam":
+                        Session["type"] = "sam";
+                        Response.Redirect("SAM view.aspx");
+                        break;
+                    case "admin":
+                        Session["type"] = "admin";
+                        Response.Redirect("admin.aspx");
+                        break;
+                }
+            }
+
         }
 
         protected void redirect_registraion(object sender, EventArgs e)

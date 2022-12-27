@@ -11,88 +11,88 @@ namespace SportSys
 {
 
 
-    public partial class SAM_Remove_Match
+    public partial class admin_match
     {
 
         /// <summary>
-        /// Remove_Matches control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Remove_Matches;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// User_name control.
+        /// club_n control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label User_name;
+        protected global::System.Web.UI.WebControls.TextBox club_n;
 
         /// <summary>
-        /// Host_Club control.
+        /// club_l control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Host_Club;
+        protected global::System.Web.UI.WebControls.TextBox club_l;
 
         /// <summary>
-        /// Guest_Club control.
+        /// addclub_b control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Guest_Club;
+        protected global::System.Web.UI.WebControls.Button addclub_b;
 
         /// <summary>
-        /// Start_Time control.
+        /// d_club_n control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Start_Time;
+        protected global::System.Web.UI.WebControls.TextBox d_club_n;
 
         /// <summary>
-        /// End_Time control.
+        /// deleteclub_b control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox End_Time;
+        protected global::System.Web.UI.WebControls.Button deleteclub_b;
 
         /// <summary>
-        /// REMOVE_MATCH control.
+        /// error_lbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button REMOVE_MATCH;
+        protected global::System.Web.UI.WebControls.Label error_lbl;
 
         /// <summary>
-        /// Back_to_main control.
+        /// ClubsGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
+        protected global::System.Web.UI.WebControls.GridView ClubsGridView;
 
         /// <summary>
-        /// indicator control.
+        /// back control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label indicator;
+        protected global::System.Web.UI.WebControls.LinkButton back;
     }
 }

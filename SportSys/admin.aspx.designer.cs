@@ -11,34 +11,52 @@ namespace SportSys
 {
 
 
-    public partial class SAM_View_Upcoming
+    public partial class admin
     {
 
         /// <summary>
-        /// View_Upcoming control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm View_Upcoming;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Upcoming_Sys_User_name control.
+        /// admin_l control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Upcoming_Sys_User_name;
+        protected global::System.Web.UI.WebControls.Label admin_l;
 
         /// <summary>
-        /// Back_to_main control.
+        /// mngClubs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
+        protected global::System.Web.UI.WebControls.LinkButton mngClubs;
+
+        /// <summary>
+        /// mngStads control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton mngStads;
+
+        /// <summary>
+        /// mngFans control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton mngFans;
     }
 }

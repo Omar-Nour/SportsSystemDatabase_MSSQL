@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SAM_Add_Match.aspx.cs" Inherits="SportSys.SAM_Add_Match" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SAM_Remove_Match.aspx.cs" Inherits="SportSys.SAM_Remove_Match" %>
 
 <!DOCTYPE html>
 
@@ -37,16 +37,23 @@
         <p>
             <asp:TextBox ID="End_Time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px"></asp:TextBox>
         </p>
+
         <p>
             &nbsp;</p>
 
           <p>
-          <asp:Button ID="REMOVE_MATCH" style="text-align:center" Font-Underline="false" BackColor="Red" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="DELETE MATCH" />
+          <asp:Button ID="REMOVE_MATCH" style="text-align:center" Font-Underline="false" BackColor="Red" BorderStyle="Double" ForeColor="White" OnClick="remove_match" runat="server" Width="325px" Text="DELETE MATCH" />
        </p>
+
 
           <p>
           <asp:LinkButton ID="Back_to_main" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="BACK TO MAIN MENU" PostBackUrl="~/SAM View.aspx"/>
        </p>
+
+        <p>
+            <asp:Label ID="indicator" runat="server" Font-Bold="True" ForeColor="#CC6600" Text="Label" Visible="False"></asp:Label>
+        </p>
+
     </form>
 </body>
 </html>
