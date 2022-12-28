@@ -22,10 +22,10 @@
         <asp:GridView ID="MatchesGridView" runat="server" OnRowCommand="MatchesGridView_OnRowCommand" BorderStyle="Solid">
             <Columns>
                 <asp:TemplateField ShowHeader="true" HeaderText="Purchase Ticket">
-                <ItemTemplate>
-                    <asp:Button ID="PurchaseTicket" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="getTicket"
-                        Text="Purchase Ticket" CommandArgument='<%#Eval("Host Club") + ";" +Eval("Guest Club")+ ";" +Eval("Kick-Off Time")%>'/>
-                </ItemTemplate>
+                    <ItemTemplate>
+                        <asp:Button ID="PurchaseTicket" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="getTicket"
+                            Text="Purchase Ticket" CommandArgument='<%#Eval("Host Club") + ";" +Eval("Guest Club")+ ";" +Eval("Kick-Off Time")%>'/>
+                    </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
             <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
