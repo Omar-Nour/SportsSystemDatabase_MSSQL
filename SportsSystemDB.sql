@@ -1347,3 +1347,8 @@ GO
 
 select * from fan
 exec unblockFan '12345678901234'
+
+select StartTime, EndTime, C1.name AS Host_Name, C2.name AS Guest_Name
+from Match INNER JOIN Club C1 ON Match.HostClubID = C1.id 
+INNER JOIN Club C2 ON Match.GuestClubID = C2.id
+WHERE StartTime < CURRENT_TIMESTAMP

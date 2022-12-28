@@ -16,7 +16,7 @@
               </div>
 
             <p>
-            <asp:GridView ID="PurchaseHistoryGridView" runat="server" BorderStyle="Solid">
+            <asp:GridView ID="View_played_view" runat="server" BorderStyle="Solid">
             <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
             <RowStyle BorderStyle="Solid" />
         </asp:GridView>
@@ -28,6 +28,7 @@
 
 
         </div>
+        <asp:Label ID="Status" runat="server" Text="Label" Visible = "false" ></asp:Label>
     </form>
 </body>
 </html>
