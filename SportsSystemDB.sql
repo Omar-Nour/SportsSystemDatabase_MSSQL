@@ -155,7 +155,8 @@ AS
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
 	DROP PROCEDURE availableMatchesToAttendProcedure;
-	DROP PROCEDURE fetchNID
+	DROP PROCEDURE fetchNID;
+	DROP PROCEDURE getTicketsOfFan;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
