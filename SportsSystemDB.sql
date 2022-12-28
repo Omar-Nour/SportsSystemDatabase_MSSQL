@@ -157,6 +157,7 @@ AS
 	DROP PROCEDURE availableMatchesToAttendProcedure;
 	DROP PROCEDURE fetchNID;
 	DROP PROCEDURE getTicketsOfFan;
+	DROP PROCEDURE fetchStatus;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -1269,6 +1270,17 @@ AS
 		FROM Fan AS f
 		WHERE f.username = @username);
 
+
+GO
+CREATE PROCEDURE fetchStatus
+@username VARCHAR(20),
+@status VARCHAR(20) output
+AS
+	SET @status = (SELECT  f.status AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+GO
+
 GO
 CREATE PROCEDURE getTicketsOfFan
 @username VARCHAR(20)
@@ -1311,6 +1323,9 @@ EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:
 EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
 
 EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+EXEC blockFan "22222";
+
+SELECT * FROM Fan;
 
 GO
 

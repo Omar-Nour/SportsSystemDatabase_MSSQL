@@ -33,13 +33,17 @@
         </asp:GridView>
         <p>
         <asp:Label ID="PurchaseTicketLabel" runat="server" Text="Label" Font-Bold="True" ForeColor="#00FF00"></asp:Label>
+        <p>
+        <asp:Label ID="FanIsBlocked" runat="server" Text="Label" Font-Bold="True" ForeColor="#FF0000"></asp:Label>
         </p>
         <asp:Label ID="PurchaseHistoryLabel" runat="server" Text="Previously Purchased Tickets:" Font-Bold="True"></asp:Label>
         <asp:GridView ID="PurchaseHistoryGridView" runat="server" BorderStyle="Solid">
             <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
             <RowStyle BorderStyle="Solid" />
         </asp:GridView>
+        <p>
         <asp:Label ID="PurchaseHistoryExistsLabel" runat="server" Text="Label" Font-Bold="True" ForeColor="#FF0000"></asp:Label>
+        </p>
     </form>
 </body>
 </html>
