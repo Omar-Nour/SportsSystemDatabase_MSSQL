@@ -476,7 +476,7 @@ CREATE PROC blockFan
 AS
 UPDATE Fan
 SET status=0
-WHERE @NatId= Fan.NationalID
+WHERE NationalID = @NatId
 
 GO
 --INSERT INTO Fan VALUES('ADHFJADSF','123','1232','DSFA','FDS',1,'10/24/2001')
@@ -492,7 +492,7 @@ CREATE PROC unblockFan
 AS
 UPDATE Fan
 SET status=1
-WHERE @NatId= Fan.NationalID
+WHERE  Fan.NationalID = @NatId
 
 --INSERT INTO Fan VALUES('ADHFJADSF','123','1232','DSFA','FDS',1,'10/24/2001')
 --INSERT INTO SystemUser VALUES('ADHFJADSF','ASFF')
@@ -1309,3 +1309,23 @@ EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00"
 
 EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
 
+GO
+
+CREATE PROCEDURE fetchNID2
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output,
+@success bit output
+AS
+begin
+	if EXISTS (SELECT * FROM Fan f WHERE f.username = @username)
+	begin
+		SET @NationalID = (SELECT f.NationalID FROM Fan f WHERE f.username = @username)
+		SET @success = 1;
+	end
+	ELSE
+		SET @success = 0;
+end
+GO
+
+select * from fan
+exec unblockFan '12345678901234'
