@@ -73,7 +73,9 @@
     <Content Include="admin_club.aspx" />
     <Content Include="admin_stadium.aspx" />
     <Content Include="Fan.aspx" />
+    <Content Include="Hostrequests.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="pending requests.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
     <Content Include="SAM_View_Played.aspx" />
@@ -119,12 +121,26 @@
     <Compile Include="Fan.aspx.designer.cs">
       <DependentUpon>Fan.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Hostrequests.aspx.cs">
+      <DependentUpon>Hostrequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Hostrequests.aspx.designer.cs">
+      <DependentUpon>Hostrequests.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pending requests.aspx.cs">
+      <DependentUpon>pending requests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pending requests.aspx.designer.cs">
+      <DependentUpon>pending requests.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">

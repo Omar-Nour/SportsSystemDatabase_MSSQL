@@ -11,17 +11,26 @@ namespace SportSys
 {
 
 
-    public partial class Stadium_manager
+    public partial class Hostrequests
     {
 
         /// <summary>
-        /// form3 control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form3;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// allreq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView allreq;
 
         /// <summary>
         /// pendreq control.

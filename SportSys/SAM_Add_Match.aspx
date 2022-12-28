@@ -28,14 +28,14 @@
             START TIME :
         </p>
         <p>
-            <asp:TextBox ID="Start_Time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px"></asp:TextBox>
+            <asp:TextBox ID="Start_Time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px" TextMode="DateTimeLocal"></asp:TextBox>
         </p>
 
           <p>
             END TIME :
         </p>
         <p>
-            <asp:TextBox ID="End_Time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px"></asp:TextBox>
+            <asp:TextBox ID="End_Time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px" TextMode="DateTimeLocal"></asp:TextBox>
         </p>
         <p>
             &nbsp;</p>
