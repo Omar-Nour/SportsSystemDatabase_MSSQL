@@ -16,11 +16,13 @@ namespace SportSys
         {
 
 
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
             if (Session["username"] == null || Session["type"] != "stadman")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
             
             string username = Session["username"].ToString();
             //hardcoded username =Ahmed
