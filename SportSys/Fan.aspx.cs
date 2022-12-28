@@ -18,11 +18,13 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
             if (Session["username"] == null || Session["type"] != "fan")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
             //string username = "shamekhjr";
             string username = Session["username"].ToString();
             string nid = ""; //initially empty until it is fetched

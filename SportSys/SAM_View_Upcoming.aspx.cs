@@ -11,7 +11,7 @@ namespace SportSys
                 Response.Redirect("Login.aspx");
                 return;
             }
-            Upcoming_Sys_User_name.Text += Session["username"];
+            Upcoming_Sys_User_name.Text = Session["username"].ToString();
         }
     }
 }
