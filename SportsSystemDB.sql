@@ -1135,6 +1135,8 @@ AS
 	SELECT * FROM availableMatchesToAttend(@date);
 GO
 
+
+
 DROP PROCEDURE availableMatchesToAttendProcedure;
 
 EXEC availableMatchesToAttendProcedure "2022/12/12 00:00:00";
@@ -1258,7 +1260,7 @@ select * from SportsAssociationManager
 select * from SystemUser
 select * from club
 select * from ticket
-
+EXEC availableMatchesToAttendProcedure "2022/3/28 19:30:00";
 GO
 
 Select * from SystemUser
