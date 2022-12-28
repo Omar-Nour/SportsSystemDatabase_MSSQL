@@ -28,7 +28,7 @@
             <asp:Label ID="Date" runat="server" Text="Date and time: "></asp:Label>
         </p>
          <p>
-            <asp:TextBox ID="date_time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px"></asp:TextBox>
+            <asp:TextBox ID="date_time" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px" TextMode="DateTimeLocal"></asp:TextBox>
         </p>
         
         <p>
