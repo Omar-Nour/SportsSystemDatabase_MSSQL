@@ -11,26 +11,26 @@ namespace SportSys
 {
 
 
-    public partial class SAM_View_Played
+    public partial class SAM_view_unmatched
     {
 
         /// <summary>
-        /// View_Past control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm View_Past;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Played_Sys_User_name control.
+        /// Unmatched_User_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Played_Sys_User_name;
+        protected global::System.Web.UI.WebControls.Label Unmatched_User_name;
 
         /// <summary>
         /// View_played_view control.

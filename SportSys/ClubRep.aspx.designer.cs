@@ -11,79 +11,79 @@ namespace SportSys
 {
 
 
-    public partial class admin_fan
+    public partial class REP_view
     {
 
         /// <summary>
-        /// form1 control.
+        /// Sys_User_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label Sys_User_name;
 
         /// <summary>
-        /// block_f_n control.
+        /// Rep_club control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox block_f_n;
+        protected global::System.Web.UI.WebControls.Label Rep_club;
 
         /// <summary>
-        /// block_f_b control.
+        /// club_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button block_f_b;
+        protected global::System.Web.UI.WebControls.Label club_id;
 
         /// <summary>
-        /// unblock_f_n control.
+        /// club_loc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox unblock_f_n;
+        protected global::System.Web.UI.WebControls.Label club_loc;
 
         /// <summary>
-        /// unblock_f_b control.
+        /// upcoming control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button unblock_f_b;
+        protected global::System.Web.UI.WebControls.Label upcoming;
 
         /// <summary>
-        /// error_lbl control.
+        /// Upcoming_matches_view control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label error_lbl;
+        protected global::System.Web.UI.WebControls.GridView Upcoming_matches_view;
 
         /// <summary>
-        /// FansGridView control.
+        /// View_available_stadiums control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView FansGridView;
+        protected global::System.Web.UI.WebControls.LinkButton View_available_stadiums;
 
         /// <summary>
-        /// back control.
+        /// Send_request control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton back;
+        protected global::System.Web.UI.WebControls.LinkButton Send_request;
     }
 }

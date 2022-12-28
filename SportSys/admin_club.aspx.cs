@@ -38,7 +38,7 @@ namespace SportSys
 
             SqlCommand clubproc = new SqlCommand("checkClubExists", conn);
             clubproc.CommandType = System.Data.CommandType.StoredProcedure;
-            clubproc.Parameters.AddWithValue("clubname", club_n.Text);
+            clubproc.Parameters.AddWithValue("@clubname", club_n.Text);
 
             SqlParameter success_clubproc = clubproc.Parameters.Add("@success", SqlDbType.Int);
 

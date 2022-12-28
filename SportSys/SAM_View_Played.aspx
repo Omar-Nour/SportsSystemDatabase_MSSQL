@@ -13,12 +13,23 @@
         <div>
             VIEWING PLAYED MATCHES AS <asp:Label ID="Played_Sys_User_name" runat="server" Text=""></asp:Label>
             <br />
+            <br />
               </div>
-        
-              <p>
+
+            <p>
+            <asp:GridView ID="View_played_view" runat="server" BorderStyle="Solid">
+            <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
+            <RowStyle BorderStyle="Solid" />
+        </asp:GridView>
+                </p>
+
+            <p>
           <asp:LinkButton ID="Back_to_main" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="BACK TO MAIN MENU" PostBackUrl="~/SAM View.aspx"/>
        </p>
+
+
         </div>
+        <asp:Label ID="Status" runat="server" Text="Label" Visible = "false" ></asp:Label>
     </form>
 </body>
 </html>

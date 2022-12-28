@@ -33,6 +33,15 @@ namespace SportSys
         protected global::System.Web.UI.WebControls.Label Upcoming_Sys_User_name;
 
         /// <summary>
+        /// View_played_view control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView View_played_view;
+
+        /// <summary>
         /// Back_to_main control.
         /// </summary>
         /// <remarks>
@@ -40,5 +49,14 @@ namespace SportSys
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton Back_to_main;
+
+        /// <summary>
+        /// Status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Status;
     }
 }

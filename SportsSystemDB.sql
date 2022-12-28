@@ -135,6 +135,7 @@ AS
 	DROP PROCEDURE dropAllTables;
 	DROP PROCEDURE clearAllTables;
 	DROP PROCEDURE addAssociationManager;
+	DROP PROCEDURE Fetch_Club_Rep_Club_Info;
 	DROP PROCEDURE addNewMatch;
 	DROP PROCEDURE deleteMatch;
 	DROP PROCEDURE deleteMatchesOnStadium;
@@ -153,8 +154,10 @@ AS
 	DROP PROCEDURE addFan;
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
-	DROP PROCEDURE availableMatchesToAttendProcedure; 
+	DROP PROCEDURE availableMatchesToAttendProcedure;
 	DROP PROCEDURE fetchNID;
+	DROP PROCEDURE getTicketsOfFan;
+	DROP PROCEDURE fetchStatus;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -370,12 +373,12 @@ DECLARE @Host_id INT = (SELECT C.id FROM Club C WHERE C.name = @HostClub);
 DECLARE @Guest_id INT = (SELECT C.id FROM Club C WHERE C.name = @GuestClub);
 DECLARE @Match_id INT = (SELECT M.id FROM Match M WHERE M.HostClubID = @Host_id AND M.GuestClubID = @Guest_id);
 
+DELETE FROM Ticket
+WHERE Ticket.MatchID = @Match_id;
 
 DELETE FROM Match
 WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id; --AND Match.StartTime = @Starttime AND Match.EndTime = @Endtime;
 
-DELETE FROM Ticket
-WHERE Ticket.MatchID = @Match_id;
 
 GO
 
@@ -480,7 +483,7 @@ CREATE PROC blockFan
 AS
 UPDATE Fan
 SET status=0
-WHERE @NatId= Fan.NationalID
+WHERE NationalID = @NatId
 
 GO
 --INSERT INTO Fan VALUES('ADHFJADSF','123','1232','DSFA','FDS',1,'10/24/2001')
@@ -496,7 +499,7 @@ CREATE PROC unblockFan
 AS
 UPDATE Fan
 SET status=1
-WHERE @NatId= Fan.NationalID
+WHERE  Fan.NationalID = @NatId
 
 --INSERT INTO Fan VALUES('ADHFJADSF','123','1232','DSFA','FDS',1,'10/24/2001')
 --INSERT INTO SystemUser VALUES('ADHFJADSF','ASFF')
@@ -521,11 +524,11 @@ VALUES(@Username,@Name)
 DECLARE @ID VARCHAR(20)
 SELECT @ID=CR.id
 FROM ClubRepresentative CR
-WHERE CR.username=@Username
+WHERE CR.username = @Username
 
 
 UPDATE Club
-SET ClubRepresentativeUserName= @Name, ClubRepresentativeID = @ID
+SET ClubRepresentativeUserName = @Username, ClubRepresentativeID = @ID
 
 WHERE Club.name = @ClubName 
 EXEC addRepresentative 'nasser','Mancity','nasser','12345'
@@ -985,7 +988,7 @@ GO
 CREATE VIEW clubsNeverMatched AS
 	SELECT C1.name as club1, C2.name as club2
 	FROM Club C1, Club C2
-	WHERE C1.id < C2.id 
+	WHERE C1.id < C2.id
 	AND NOT EXISTS (SELECT * FROM Match M 
 					WHERE  (M.HostClubID = C1.id AND M.GuestClubID = C2.id)
 					OR (M.HostClubID = C2.id AND M.GuestClubID = C1.id) AND
@@ -993,6 +996,11 @@ CREATE VIEW clubsNeverMatched AS
 	);
 GO
 
+select * from club
+select * from ClubRepresentative
+select * from SystemUser
+select name from club where club.ClubRepresentativeUserName = 'xavi'
+GO
 -- XXVIII
 CREATE FUNCTION [clubsNeverPlayed]
 (@club_name varchar(20))
@@ -1003,6 +1011,9 @@ AS
 			OR (C.name = V.club1 and V.club2 = @club_name)
 	);
 GO
+
+
+
 
 -- XXIX
 CREATE FUNCTION [matchWithHighestAttendance]()
@@ -1290,7 +1301,7 @@ SELECT S.capacity , S.location ,S.StadiumManagerID, S.name , S.status
 FROM STADIUM S
 WHERE S.StadiumManagerUserName=@managername
 
-exec StadiumINFO 'Ahmed'
+--exec StadiumINFO 'Ahmed'
 GO
 
 EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
@@ -1339,8 +1350,8 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.status AS Reque
 			AND C.ClubRepresentativeID= H.ClubRepresentativeID
 			AND H.MatchID=M.id
 
-EXEC ALLREQ 'Ahmed'
-DROP PROC ALLREQPEND
+--EXEC ALLREQ 'Ahmed'
+--DROP PROC ALLREQPEND
 GO 
 
 --VIEW PENDING REQUESTS
@@ -1356,7 +1367,7 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving, c.name AS HOST ,
 			AND H.MatchID=M.id
 			AND H.status='unhandled'
 
-EXEC ALLREQPEND'Ahmed'
+--EXEC ALLREQPEND'Ahmed'
 GO
 --SIMPLE REJECTION PROCUDRE ONLY NEEDS HOST REQUEST ID TO FUNCTION
 CREATE PROCEDURE SIMPREJECT
@@ -1367,6 +1378,110 @@ SET status='rejected'
 WHERE HostRequest.id=@ID 
 drop proc reject
 EXEC SIMPREJECT '10'
+GO
+
+CREATE PROCEDURE fetchNID
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output
+AS
+	SET @NationalID = (SELECT  f.NationalID AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+
+
+GO
+CREATE PROCEDURE fetchStatus
+@username VARCHAR(20),
+@status VARCHAR(20) output
+AS
+	SET @status = (SELECT  f.status AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+GO
+
+GO
+CREATE PROCEDURE getTicketsOfFan
+@username VARCHAR(20)
+AS 
+	SELECT T.id AS TicketID, T.FanUserName AS Fan, C.name AS HostClub, C2.name AS GuestClub, S.name AS Stadium,S.location AS loc, M.StartTime AS KickOffTime
+		FROM Match AS M, Ticket AS T, Club AS C, Club AS C2, Stadium AS S
+			WHERE M.HostClubID = C.id 
+				AND M.GuestClubID = C2.id AND C.id <> C2.id
+				AND T.MatchID = M.id 
+				AND M.StadiumID = S.id
+				AND T.FanUserName = @username;
+GO
+
+GO
+CREATE PROCEDURE availableMatchesToAttendProcedure 
+@date datetime
+AS 
+	SELECT * FROM availableMatchesToAttend(@date);
+GO
+
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
+EXEC addStadium "Bernabeu", "Madrid", 40000;
+
+EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
+EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
+
+EXEC addClub "FC Barcelona", "Barcelona, Spain";
+EXEC addClub "Real Madrid", "Madrid, Spain";
+
+EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
+EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
+
+EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
+EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+
+EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
+EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
+
+EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
+EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
+
+EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+EXEC blockFan "22222";
+
+SELECT * FROM Fan;
+
+GO
+
+CREATE PROCEDURE fetchNID2
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output,
+@success bit output
+AS
+begin
+	if EXISTS (SELECT * FROM Fan f WHERE f.username = @username)
+	begin
+		SET @NationalID = (SELECT f.NationalID FROM Fan f WHERE f.username = @username)
+		SET @success = 1;
+	end
+	ELSE
+		SET @success = 0;
+end
+GO
+
+select * from fan
+exec unblockFan '12345678901234'
+
+select StartTime, EndTime, C1.name AS Host_Name, C2.name AS Guest_Name
+from Match INNER JOIN Club C1 ON Match.HostClubID = C1.id 
+INNER JOIN Club C2 ON Match.GuestClubID = C2.id
+WHERE StartTime < CURRENT_TIMESTAMP
+
+GO
+CREATE PROCEDURE Fetch_Club_Rep_Club_Info
+@Club_Rep_User VARCHAR(20),
+@Club_name  VARCHAR(20) output ,
+@Club_location VARCHAR(20) output ,
+@Club_id INT output 
+AS
+SET @Club_name = (SELECT name from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
+SET @Club_location = (SELECT location from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
+SET @Club_id = (SELECT id from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
+
 GO
 
 --SIMPLE ACCEPT REUEST ONLY NEEDS HOST REQUEST ID AND STADIUM MANAGER USERNAME TO FUNCTION

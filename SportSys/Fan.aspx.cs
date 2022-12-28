@@ -18,11 +18,13 @@ namespace SportSys
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
             if (Session["username"] == null || Session["type"] != "fan")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
             //string username = "shamekhjr";
             string username = Session["username"].ToString();
             string nid = ""; //initially empty until it is fetched
@@ -33,6 +35,7 @@ namespace SportSys
             PurchaseTicketLabel.Visible = false;
             PurchaseHistoryGridView.Visible = false;
             PurchaseHistoryExistsLabel.Visible = false;
+            Blocked_stat.Visible= false;
 
             //display username
             UsernameLabel.Text = "Username: "+ username;
@@ -154,15 +157,36 @@ namespace SportSys
             //keep GridView Visible
             MatchesGridView.Visible = true;
 
+            //check first if the fan is blocked
+            //get connection string
+            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
+            SqlConnection conn = new SqlConnection(connStr);
+
+            SqlCommand getStatus = new SqlCommand("fetchStatus", conn);
+            getStatus.CommandType = System.Data.CommandType.StoredProcedure;
+
+            //add input params
+            getStatus.Parameters.AddWithValue("@username", UsernameLabel.Text.Split(' ')[1]);
+
+            //specify output params
+            SqlParameter status = getStatus.Parameters.Add("@status", SqlDbType.VarChar, 20);
+            status.Direction = ParameterDirection.Output;
+
+            //open a connection and execute the procedure
+            conn.Open();
+            getStatus.ExecuteNonQuery();
+
+            //if the fan is blocked, display an error message then exit the function
+            if (status.Value.ToString() == "0") {
+                Blocked_stat.Visible= true;
+                Blocked_stat.Text = "You are blocked. Cannot purchase ticket";
+                return; 
+            } 
+
             //partition the data
             string hostClub= e.CommandArgument.ToString().Split(';')[0];
             string guestClub = e.CommandArgument.ToString().Split(';')[1];
             string startTime = e.CommandArgument.ToString().Split(';')[2];
-
-
-            //get connection string
-            string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
-            SqlConnection conn = new SqlConnection(connStr);
 
             //initialize the command that purchases the ticket 
             SqlCommand purchaseTicket = new SqlCommand("purchaseTicket", conn);
@@ -173,7 +197,6 @@ namespace SportSys
             purchaseTicket.Parameters.AddWithValue("@start_time", startTime);
 
             //open a connection and execute the procedure
-            conn.Open();
             purchaseTicket.ExecuteNonQuery();
 
             //make label visible and tell the user that the ticket has been purchased

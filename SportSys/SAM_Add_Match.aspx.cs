@@ -59,10 +59,16 @@ namespace SportSys
             if (successHost.Value.ToString() == "1" && successGuest.Value.ToString() == "1") //clubs found
             {
 
-                AddMatch.Parameters.AddWithValue("@HostName", Hostname);
+                /*AddMatch.Parameters.AddWithValue("@HostName", Hostname);
                 AddMatch.Parameters.AddWithValue("@GuestName", Guestname);
                 AddMatch.Parameters.AddWithValue("@StartTime", Starttime);
-                AddMatch.Parameters.AddWithValue("@EndTime", Endtime);
+                AddMatch.Parameters.AddWithValue("@EndTime", Endtime);*/
+            
+            AddMatch.CommandType = System.Data.CommandType.StoredProcedure;
+            AddMatch.Parameters.AddWithValue("@HostName", Hostname);
+            AddMatch.Parameters.AddWithValue("@GuestName", Guestname);
+            AddMatch.Parameters.AddWithValue("@StartTime", Starttime + ":00");
+            AddMatch.Parameters.AddWithValue("@EndTime", Endtime+":00");
 
                 AddMatch.ExecuteNonQuery();
 
