@@ -71,7 +71,7 @@ namespace SportSys
                     dr["PhoneNo"] = rd[2];
                     dr["Address"] = rd[3];
                     dr["Name"] = rd[4];
-                    dr["Status"] = (rd[5].ToString() == "False") ? "blocked" : "unblocked";
+                    dr["Status"] = (rd[5].ToString().Equals("False")) ? "blocked" : "unblocked" ;
                     dr["BirthDate"] = rd[6];
                     dt.Rows.Add(dr);
                 }

@@ -66,7 +66,7 @@ namespace SportSys
                     dr["Stadium Name"] = rd[1];
                     dr["Capacity"] = rd[2];
                     dr["Location"] = rd[3];
-                    dr["Status"] = (rd[4].ToString() == "True") ? "available" : "unavailable";
+                    dr["Status"] = (rd[4].ToString().Equals("True")) ? "available" : "unavailable";
                     dr["Stadium Manager ID"] = rd[5];
                     dr["Stadium Manager User Name"] = rd[6];
                     dt.Rows.Add(dr);
