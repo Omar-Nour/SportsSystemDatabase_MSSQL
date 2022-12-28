@@ -25,9 +25,8 @@ namespace SportSys
             string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection conn = new SqlConnection(connStr);
 
-            SqlCommand View_Played = new SqlCommand("select StartTime, EndTime, C1.name AS Host_Name, C2.name AS Guest_Name\r\nfrom Match INNER JOIN Club C1 ON Match.HostClubID = C1.id \r\nINNER JOIN Club C2 ON Match.GuestClubID = C2.id\r\nWHERE StartTime < CURRENT_TIMESTAMP", conn);
-            //View_Played.CommandType = System.Data.CommandType.TableDirect;
-
+            SqlCommand View_Played = new SqlCommand("select StartTime, EndTime, C1.name AS Host_Name, C2.name AS Guest_Name\r\nfrom Match INNER JOIN Club C1 ON Match.HostClubID = C1.id \r\nINNER JOIN Club C2 ON Match.GuestClubID = C2.id\r\nWHERE EndTime < CURRENT_TIMESTAMP", conn);
+            
             conn.Open();
             SqlDataReader rd = View_Played.ExecuteReader();
             DataTable dt = new DataTable();

@@ -13,6 +13,7 @@
         <div>
             VIEWING PLAYED MATCHES AS <asp:Label ID="Played_Sys_User_name" runat="server" Text=""></asp:Label>
             <br />
+            <br />
               </div>
 
             <p>

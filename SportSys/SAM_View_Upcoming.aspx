@@ -9,15 +9,24 @@
 <body>
     <form id="View_Upcoming" runat="server">
         <div>
-            VIEWING UPCOMING MATCHES AS <asp:Label ID="Upcoming_Sys_User_name" runat="server" Text=""></asp:Label></div>
+            VIEWING UPCOMING MATCHES AS <asp:Label ID="Upcoming_Sys_User_name" runat="server" Text=""></asp:Label>
+            <br />
+            <br />
+            <br />
+        </div>
         
         <div>
+            <asp:GridView ID="View_played_view" runat="server" BorderStyle="Solid">
+            <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
+            <RowStyle BorderStyle="Solid" />
+        </asp:GridView>
 
         </div>
 
           <p>
           <asp:LinkButton ID="Back_to_main" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="BACK TO MAIN MENU" PostBackUrl="~/SAM View.aspx"/>
        </p>
+          <asp:Label ID="Status" runat="server" Text="Label" Visible = "false" ></asp:Label>
     </form>
 </body>
 </html>
