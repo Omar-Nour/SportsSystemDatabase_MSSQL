@@ -87,13 +87,13 @@ namespace SportSys
         protected global::System.Web.UI.WebControls.Label PurchaseTicketLabel;
 
         /// <summary>
-        /// FanIsBlocked control.
+        /// Blocked_stat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FanIsBlocked;
+        protected global::System.Web.UI.WebControls.Label Blocked_stat;
 
         /// <summary>
         /// PurchaseHistoryLabel control.

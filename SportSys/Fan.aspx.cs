@@ -35,7 +35,7 @@ namespace SportSys
             PurchaseTicketLabel.Visible = false;
             PurchaseHistoryGridView.Visible = false;
             PurchaseHistoryExistsLabel.Visible = false;
-            FanIsBlocked.Visible= false;
+            Blocked_stat.Visible= false;
 
             //display username
             UsernameLabel.Text = "Username: "+ username;
@@ -177,9 +177,9 @@ namespace SportSys
             getStatus.ExecuteNonQuery();
 
             //if the fan is blocked, display an error message then exit the function
-            if (status.Value.ToString() == "0") { 
-                FanIsBlocked.Visible= true;
-                FanIsBlocked.Text = "You are blocked. Cannot purchase ticket";
+            if (status.Value.ToString() == "0") {
+                Blocked_stat.Visible= true;
+                Blocked_stat.Text = "You are blocked. Cannot purchase ticket";
                 return; 
             } 
 

@@ -27,11 +27,11 @@
        </p>
 
          <p>
-          <asp:LinkButton ID="View_Past" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW OLD MATCHES" PostBackUrl="~/SAM_View_Upcoming.aspx"/>
+          <asp:LinkButton ID="View_Past" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW OLD MATCHES" PostBackUrl="~/SAM_View_Played.aspx"/>
        </p>
 
          <p>
-          <asp:LinkButton ID="View_Unmatched" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW UNMATCHED CLUBS" />
+          <asp:LinkButton ID="View_Unmatched" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="VIEW UNMATCHED CLUBS" PostBackUrl="~/SAM_view_unmatched.aspx"/>
        </p>
      </form>
 </body>

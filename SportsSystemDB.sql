@@ -976,7 +976,7 @@ GO
 CREATE VIEW clubsNeverMatched AS
 	SELECT C1.name as club1, C2.name as club2
 	FROM Club C1, Club C2
-	WHERE C1.id < C2.id 
+	WHERE C1.id < C2.id
 	AND NOT EXISTS (SELECT * FROM Match M 
 					WHERE  (M.HostClubID = C1.id AND M.GuestClubID = C2.id)
 					OR (M.HostClubID = C2.id AND M.GuestClubID = C1.id) AND
@@ -984,6 +984,8 @@ CREATE VIEW clubsNeverMatched AS
 	);
 GO
 
+
+GO
 -- XXVIII
 CREATE FUNCTION [clubsNeverPlayed]
 (@club_name varchar(20))

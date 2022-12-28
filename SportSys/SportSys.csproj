@@ -79,6 +79,7 @@
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
     <Content Include="SAM_View_Played.aspx" />
+    <Content Include="SAM_view_unmatched.aspx" />
     <Content Include="SAM_View_Upcoming.aspx" />
     <Content Include="SAM_Remove_Match.aspx" />
     <Content Include="SAM_Add_Match.aspx" />
@@ -163,6 +164,13 @@
     </Compile>
     <Compile Include="SAM_View_Played.aspx.designer.cs">
       <DependentUpon>SAM_View_Played.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SAM_view_unmatched.aspx.cs">
+      <DependentUpon>SAM_view_unmatched.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SAM_view_unmatched.aspx.designer.cs">
+      <DependentUpon>SAM_view_unmatched.aspx</DependentUpon>
     </Compile>
     <Compile Include="SAM_View_Upcoming.aspx.cs">
       <DependentUpon>SAM_View_Upcoming.aspx</DependentUpon>
