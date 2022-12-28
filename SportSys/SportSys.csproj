@@ -72,6 +72,7 @@
     <Content Include="admin_fan.aspx" />
     <Content Include="admin_club.aspx" />
     <Content Include="admin_stadium.aspx" />
+    <Content Include="ClubRep_send_request.aspx" />
     <Content Include="Fan.aspx" />
     <Content Include="Hostrequests.aspx" />
     <Content Include="Login.aspx" />
@@ -115,6 +116,13 @@
     </Compile>
     <Compile Include="admin_stadium.aspx.designer.cs">
       <DependentUpon>admin_stadium.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClubRep_send_request.aspx.cs">
+      <DependentUpon>ClubRep_send_request.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRep_send_request.aspx.designer.cs">
+      <DependentUpon>ClubRep_send_request.aspx</DependentUpon>
     </Compile>
     <Compile Include="Fan.aspx.cs">
       <DependentUpon>Fan.aspx</DependentUpon>

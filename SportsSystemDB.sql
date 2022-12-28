@@ -1389,7 +1389,7 @@ values ('nigga' , 'nagnaga', NULL, NUll)
 
 
 select * from SystemUser
-
+select * from HostRequest
 select * from match
 select * from ClubRepresentative
 
@@ -1398,3 +1398,5 @@ select M.StartTime, M.EndTime, S.name, C1.name AS Host_name, C2.name AS Guest_na
 from Match M INNER JOIN Stadium S ON M.StadiumID = S.id
 INNER JOIN Club C1 ON M.HostClubID = C1.id
 INNER JOIN Club C2 ON M.GuestClubID = C2.id
+
+Where C1.name = 'nigga' OR C2.name = 'nigga'

@@ -41,10 +41,10 @@
 
         <br />
          <p>
-          <asp:LinkButton ID="View_available_stadiums" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="View available stadiums" PostBackUrl="ClubRep_view_upcoming"/>
+          <asp:LinkButton ID="View_available_stadiums" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="View available stadiums" PostBackUrl="ClubRep_send_request"/>
        </p>
         <p>
-          <asp:LinkButton ID="Send_request" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="Send request to stadium manager" PostBackUrl=""/>
+          <asp:LinkButton ID="Send_request" style="text-align:center" Font-Underline="false" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" runat="server" Width="325px" Text="Send request to stadium manager" PostBackUrl="~/ClubRep_send_request.aspx"/>
        </p>
 
     </form>
