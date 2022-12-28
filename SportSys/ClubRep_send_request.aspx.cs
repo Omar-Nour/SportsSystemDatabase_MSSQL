@@ -39,6 +39,14 @@ namespace SportSys
             string Stadium = Stadium_name.Text;
             string date = date_time.Text;
 
+            SqlCommand check_stad = new SqlCommand("checkStadExists", conn);
+            check_stad.CommandType = System.Data.CommandType.StoredProcedure;
+            check_stad.Parameters.AddWithValue("@stadname", Stadium);
+            SqlParameter success_stad = check_stad.Parameters.Add("@success", SqlDbType.VarChar, 20);
+            success_stad.Direction = ParameterDirection.Output;
+
+
+
             SqlCommand Club_name_command = new SqlCommand("Fetch_Club_Rep_Club_Info", conn);
             Club_name_command.CommandType = System.Data.CommandType.StoredProcedure;
             Club_name_command.Parameters.AddWithValue("@Club_Rep_User", Session["username"].ToString());
@@ -58,6 +66,7 @@ namespace SportSys
 
             conn.Open();
             Club_name_command.ExecuteNonQuery();
+            check_stad.ExecuteNonQuery();
 
             if (!Club_name_var.Equals(Club_name_value.Value.ToString()))
             {
@@ -66,17 +75,43 @@ namespace SportSys
                 conn.Close();
             }
 
-            else { 
-            SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
-            SendRequest.Parameters.AddWithValue("@stadname", Stadium);
-            SendRequest.Parameters.AddWithValue("@date", date + ":00");
+            else {
 
-            SendRequest.ExecuteNonQuery();
+                if (success_stad.Value.ToString() != "1")
+                {
+                    status.Text = "Stad not found in Data Base";
+                    status.Visible = true;
+                    conn.Close();
+                }
 
-            status.Text = "Request sent successfully";
-            status.Visible = true;
+                else 
+                {
 
-            conn.Close();
+                    if (Int16.Parse(date_time.Text.Split('-')[0]) >= DateTime.Now.Year && Int16.Parse(date_time.Text.Split('-')[1]) >= DateTime.Now.Month && Int16.Parse(date_time.Text.Split('-')[2]) >= DateTime.Now.Day)
+                    {
+
+                        SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
+                        SendRequest.Parameters.AddWithValue("@stadname", Stadium);
+                        SendRequest.Parameters.AddWithValue("@date", date + ":00");
+
+                        SendRequest.ExecuteNonQuery();
+
+                        status.Text = "Request sent successfully";
+                        status.Visible = true;
+
+                        conn.Close();
+                    }
+                  
+                    
+                    else
+                    {
+
+                    status.Text = "Date or time are not valid";
+                    status.Visible = true;
+                    conn.Close();
+                    }
+                }
+                
 
             }
 
