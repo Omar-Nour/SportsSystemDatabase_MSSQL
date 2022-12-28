@@ -77,6 +77,7 @@
     <Content Include="Login.aspx" />
     <Content Include="pending requests.aspx" />
     <Content Include="register.aspx" />
+    <Content Include="ClubRep.aspx" />
     <Content Include="SAM view.aspx" />
     <Content Include="SAM_View_Played.aspx" />
     <Content Include="SAM_view_unmatched.aspx" />
@@ -150,6 +151,13 @@
     </Compile>
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClubRep.aspx.cs">
+      <DependentUpon>ClubRep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRep.aspx.designer.cs">
+      <DependentUpon>ClubRep.aspx</DependentUpon>
     </Compile>
     <Compile Include="SAM view.aspx.cs">
       <DependentUpon>SAM view.aspx</DependentUpon>

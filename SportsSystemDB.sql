@@ -136,6 +136,7 @@ AS
 	DROP PROCEDURE dropAllTables;
 	DROP PROCEDURE clearAllTables;
 	DROP PROCEDURE addAssociationManager;
+	DROP PROCEDURE Fetch_Club_Rep_Club_Info;
 	DROP PROCEDURE addNewMatch;
 	DROP PROCEDURE deleteMatch;
 	DROP PROCEDURE deleteMatchesOnStadium;
@@ -521,11 +522,11 @@ VALUES(@Username,@Name)
 DECLARE @ID VARCHAR(20)
 SELECT @ID=CR.id
 FROM ClubRepresentative CR
-WHERE CR.username=@Username
+WHERE CR.username = @Username
 
 
 UPDATE Club
-SET ClubRepresentativeUserName= @Name, ClubRepresentativeID = @ID
+SET ClubRepresentativeUserName = @Username, ClubRepresentativeID = @ID
 
 WHERE Club.name = @ClubName 
 EXEC addRepresentative 'nasser','Mancity','nasser','12345'
@@ -984,7 +985,10 @@ CREATE VIEW clubsNeverMatched AS
 	);
 GO
 
-
+select * from club
+select * from ClubRepresentative
+select * from SystemUser
+select name from club where club.ClubRepresentativeUserName = 'xavi'
 GO
 -- XXVIII
 CREATE FUNCTION [clubsNeverPlayed]
@@ -996,6 +1000,9 @@ AS
 			OR (C.name = V.club1 and V.club2 = @club_name)
 	);
 GO
+
+
+
 
 -- XXIX
 CREATE FUNCTION [matchWithHighestAttendance]()
@@ -1354,3 +1361,40 @@ select StartTime, EndTime, C1.name AS Host_Name, C2.name AS Guest_Name
 from Match INNER JOIN Club C1 ON Match.HostClubID = C1.id 
 INNER JOIN Club C2 ON Match.GuestClubID = C2.id
 WHERE StartTime < CURRENT_TIMESTAMP
+
+GO
+CREATE PROCEDURE Fetch_Club_Rep_Club_Info
+@Club_Rep_User VARCHAR(20),
+@Club_name  VARCHAR(20) output ,
+@Club_location VARCHAR(20) output ,
+@Club_id INT output 
+AS
+SET @Club_name = (SELECT name from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
+SET @Club_location = (SELECT location from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
+SET @Club_id = (SELECT id from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
+
+GO
+
+DECLARE @name varchar(20);
+DECLARE @id INT;
+DECLARE @loc varchar(20);
+EXEC Fetch_Club_Rep_Club_Info "xhernandez", @name, @loc, @id 
+
+SELECT @name, @loc, @id 
+
+select * from club
+
+Insert into Club
+values ('nigga' , 'nagnaga', NULL, NUll)
+
+
+select * from SystemUser
+
+select * from match
+select * from ClubRepresentative
+
+select M.StartTime, M.EndTime, S.name, C1.name AS Host_name, C2.name AS Guest_name
+
+from Match M INNER JOIN Stadium S ON M.StadiumID = S.id
+INNER JOIN Club C1 ON M.HostClubID = C1.id
+INNER JOIN Club C2 ON M.GuestClubID = C2.id
