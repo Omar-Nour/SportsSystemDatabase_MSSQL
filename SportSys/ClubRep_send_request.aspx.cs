@@ -59,7 +59,7 @@ namespace SportSys
             conn.Open();
             Club_name_command.ExecuteNonQuery();
 
-            if (Club_name_var != Club_name_value.ToString())
+            if (!Club_name_var.Equals(Club_name_value.Value.ToString()))
             {
                 status.Text = "Club name was not matching representative's club";
                 status.Visible = true;
@@ -69,7 +69,7 @@ namespace SportSys
             else { 
             SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
             SendRequest.Parameters.AddWithValue("@stadname", Stadium);
-            SendRequest.Parameters.AddWithValue("@date", date);
+            SendRequest.Parameters.AddWithValue("@date", date + ":00");
 
             SendRequest.ExecuteNonQuery();
 

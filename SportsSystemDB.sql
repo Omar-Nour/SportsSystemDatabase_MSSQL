@@ -1378,9 +1378,9 @@ GO
 DECLARE @name varchar(20);
 DECLARE @id INT;
 DECLARE @loc varchar(20);
-EXEC Fetch_Club_Rep_Club_Info "xhernandez", @name, @loc, @id 
+EXEC Fetch_Club_Rep_Club_Info 'clubrep_un', @name, @loc, @id; 
 
-SELECT @name, @loc, @id 
+SELECT @name, @loc, @id;
 
 select * from club
 
@@ -1400,3 +1400,5 @@ INNER JOIN Club C1 ON M.HostClubID = C1.id
 INNER JOIN Club C2 ON M.GuestClubID = C2.id
 
 Where C1.name = 'nigga' OR C2.name = 'nigga'
+
+select * from club
