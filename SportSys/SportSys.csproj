@@ -76,6 +76,7 @@
     <Content Include="Hostrequests.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="pending requests.aspx" />
+    <Content Include="pendingrequesttest.aspx" />
     <Content Include="register.aspx" />
     <Content Include="SAM view.aspx" />
     <Content Include="SAM_View_Played.aspx" />
@@ -141,6 +142,13 @@
     </Compile>
     <Compile Include="pending requests.aspx.designer.cs">
       <DependentUpon>pending requests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pendingrequesttest.aspx.cs">
+      <DependentUpon>pendingrequesttest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pendingrequesttest.aspx.designer.cs">
+      <DependentUpon>pendingrequesttest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">

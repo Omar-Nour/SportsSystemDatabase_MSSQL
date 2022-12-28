@@ -85,6 +85,7 @@ namespace SportSys
             GridView1.DataSource = dt;
             GridView1.DataBind();
             GridView1.Visible = true;
+            View.Visible = false;
 
         }
 

@@ -12,6 +12,9 @@
                <asp:Label runat="server" Text="Host requests"></asp:Label>
             </br>
              <asp:GridView ID="allreq" runat="server">
+
+                  <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
+            <RowStyle BorderStyle="Solid" />
         </asp:GridView>
             </br>
             <asp:Label runat="server" Text="Pending requests"></asp:Label>

@@ -1,6 +1,5 @@
 CREATE DATABASE SportsSystemDB;
 
-
 GO
 
 --Procedure that creates all tables for DB
@@ -154,6 +153,8 @@ AS
 	DROP PROCEDURE addFan;
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
+	DROP PROCEDURE availableMatchesToAttendProcedure; 
+	DROP PROCEDURE fetchNID;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -362,19 +363,22 @@ GO
 CREATE PROCEDURE deleteMatch
 		@HostClub VARCHAR(20),
 		@GuestClub VARCHAR(20)
+		--@Starttime DATETIME,
+		--@Endtime DATETIME
 AS
 DECLARE @Host_id INT = (SELECT C.id FROM Club C WHERE C.name = @HostClub);
 DECLARE @Guest_id INT = (SELECT C.id FROM Club C WHERE C.name = @GuestClub);
 DECLARE @Match_id INT = (SELECT M.id FROM Match M WHERE M.HostClubID = @Host_id AND M.GuestClubID = @Guest_id);
 
 
-DELETE FROM Match  
-WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id;
+DELETE FROM Match
+WHERE Match.HostClubID = @Host_id AND Match.GuestClubID = @Guest_id; --AND Match.StartTime = @Starttime AND Match.EndTime = @Endtime;
 
 DELETE FROM Ticket
 WHERE Ticket.MatchID = @Match_id;
 
 GO
+
 
 --(V)
 GO
@@ -568,8 +572,8 @@ WHERE M.StartTime = @date
 INSERT INTO HostRequest (status,MatchID,ClubRepresentativeID,StadiumManagerID,StadiumManagerUserName,ClubRepresentativeUserName)
 VALUES('unhandled',@MATCHid,@repid,@SMID,@SMUSERNAME,@repUSER);
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-EXEC addHostRequest 'Liverpool','Anfield','2022-04-23 10:34:23.000'
-EXEC addHostRequest 'Mancity','bernabou','2022-04-22 10:34:23.000'
+EXEC addHostRequest 'Mancity','emirates','2022-04-23 10:34:23.000'
+EXEC addHostRequest 'Mancity','Anfield','2022-04-22 10:34:23.000'
 
 --DROP PROC addHostRequest
 
@@ -625,10 +629,14 @@ DECLARE @HOST VARCHAR(20)
 DECLARE @GUEST VARCHAR(20)
 
 DECLARE @MATCHID VARCHAR(20)
+DECLARE @STADIUMID int;
 
-SELECT @HOST=C.id , @GUEST=C.id
-FROM CLUB C
-WHERE @hostclub=C.name AND @GUESTCLUB=C.name
+SELECT @STADIUMID = S.id FROM Stadium S, StadiumManager SM
+WHERE S.StadiumManagerID = SM.id AND SM.username = @usernamestadman
+
+SELECT @HOST=C1.id , @GUEST=C2.id
+FROM CLUB C1, CLub C2
+WHERE @hostclub=C1.name AND @GUESTCLUB=C2.name AND C1.id <> C2.id;
 
 SELECT @MATCHID= M.id
 FROM Match M
@@ -640,8 +648,13 @@ UPDATE HostRequest
 SET status='accepted'
 WHERE HostRequest.ID=@HOSTID
 
+UPDATE Match
+SET StadiumID = @STADIUMID
+WHERE id = @MATCHID;
+
 DECLARE @capacity int;
-SELECT @capacity = S.capacity FROM Stadium S, StadiumManager SM
+SELECT @capacity = S.capacity
+FROM Stadium S, StadiumManager SM
 WHERE S.StadiumManagerID = SM.id AND SM.username = @usernamestadman;
 
 DECLARE @i int = 1;
@@ -906,9 +919,9 @@ GO
 CREATE FUNCTION [availableMatchesToAttend]
 (@date datetime)
 RETURNS TABLE AS 
-	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name
+	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name,S.location AS stadium_loc
 			FROM Club H, Club G, Match M, Stadium S
-			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID)
+			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID) AND S.id = M.StadiumID
 			AND EXISTS (SELECT * FROM Ticket T WHERE T.MatchID = M.id AND T.status = 1);
 GO
 
@@ -928,7 +941,7 @@ AS
 					  AND G.name = @guest_name
 	);
 	SET @ticket_id = (SELECT MIN(T.id) FROM Ticket T, Match M
-					  WHERE M.id = T.MatchID AND T.status = 1 
+					  WHERE M.id = T.MatchID AND T.status = 1 AND M.id = @match_id
 	);
 	SET @fan_user_name = (SELECT username FROM Fan WHERE NationalID = @nid);
 
@@ -1106,6 +1119,69 @@ AS
 	--print @user_type
 GO
 
+
+--adding info to test fan page
+--to insert into match
+--i need to insert into staidum, and thus stadium manager, and club and thus club rep
+
+
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
+EXEC addStadium "Bernabeu", "Madrid", 40000;
+
+EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
+EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
+
+EXEC addClub "FC Barcelona", "Barcelona, Spain";
+EXEC addClub "Real Madrid", "Madrid, Spain";
+
+EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
+EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
+
+EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
+EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+
+EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
+EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
+
+EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
+EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
+
+SELECT * FROM Ticket;
+
+--create a procedure that calls the availableMatchesToAttend function
+GO
+CREATE PROCEDURE availableMatchesToAttendProcedure 
+@date datetime
+AS 
+	SELECT * FROM availableMatchesToAttend(@date);
+GO
+
+DROP PROCEDURE availableMatchesToAttendProcedure;
+
+EXEC availableMatchesToAttendProcedure "2022/12/12 00:00:00";
+--error in the sql file (a match shows up twice, marra be stadium el awal we marra be stadium
+
+SELECT * FROM Match;
+
+GO
+CREATE PROCEDURE fetchNID
+@username VARCHAR(20),
+@NationalID VARCHAR(20) output
+AS
+	SET @NationalID = (SELECT  f.NationalID AS nid
+		FROM Fan AS f
+		WHERE f.username = @username);
+GO
+
+--DROP PROCEDURE fetchNID;
+
+--adding fan example to db
+EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
+
+SELECT * FROM Ticket AS T WHERE T.FanUserName = 'shamekhjr';
+
+
+GO
 CREATE PROCEDURE checkUsername
 @username VARCHAR(20),
 @success bit OUTPUT
@@ -1139,6 +1215,7 @@ begin
  ELSE
 	SET @success = 0;
 end
+
 GO
 CREATE PROCEDURE checkClubExists
 @clubname VARCHAR(20),
@@ -1155,7 +1232,7 @@ GO
 exec addClub 'nigaz', 'women';
 --EXEC addAssociationManager 'a','abc','123'; 
 --DROP PROCEDURE checkUsername;
---SELECT * FROM SystemUser;
+SELECT * FROM SystemUser;
 --SELECT * FROM Fan
 --SELECT * FROM SportsAssociationManager
 --DECLARE @success bit;
@@ -1216,6 +1293,38 @@ WHERE S.StadiumManagerUserName=@managername
 exec StadiumINFO 'Ahmed'
 GO
 
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
+EXEC addStadium "Bernabeu", "Madrid", 40000;
+
+EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
+EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
+
+EXEC addClub "FC Barcelona", "Barcelona, Spain";
+EXEC addClub "Real Madrid", "Madrid, Spain";
+
+EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
+EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
+
+EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
+EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+
+EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
+EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
+
+EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
+EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
+
+select * from Match
+select * from SportsAssociationManager
+select * from SystemUser
+select * from club
+select * from ticket
+
+GO
+
+Select * from SystemUser
+select * from SportsAssociationManager
+
 GO
 
 GO
@@ -1233,6 +1342,8 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.status AS Reque
 EXEC ALLREQ 'Ahmed'
 DROP PROC ALLREQPEND
 GO 
+
+--VIEW PENDING REQUESTS
 CREATE PROCEDURE ALLREQPEND
 @STADUSERNAME VARCHAR(20)
 AS
@@ -1258,3 +1369,85 @@ drop proc reject
 EXEC SIMPREJECT '10'
 GO
 
+--SIMPLE ACCEPT REUEST ONLY NEEDS HOST REQUEST ID AND STADIUM MANAGER USERNAME TO FUNCTION
+
+CREATE PROCEDURE SIMPACCEPT
+@STADUDERNAME VARCHAR(20),
+@ID VARCHAR (20)
+AS
+
+DECLARE @STADSTATUS BIT
+SELECT @STADSTATUS= S.status
+FROM Stadium S
+WHERE S.StadiumManagerUserName=@STADUDERNAME
+
+
+
+
+UPDATE HostRequest
+SET status='accepted'
+WHERE HostRequest.id=@ID 
+
+
+DECLARE @MATCHID VARCHAR(20)
+SELECT @MATCHID=H.MatchID
+FROM HostRequest H
+WHERE H.ID=@ID
+
+
+declare @STADIUMID varchar(20)
+select @STADIUMID= s.id
+from Stadium s
+where s.StadiumManagerUserName=@STADUDERNAME
+
+
+
+UPDATE Match
+SET StadiumID = @STADIUMID
+WHERE id = @MATCHID;
+
+UPDATE Stadium
+SET status= 0
+WHERE StadiumManagerUserName= @STADUDERNAME
+
+DECLARE @capacity int;
+SELECT @capacity = S.capacity 
+FROM Stadium S, StadiumManager SM
+WHERE S.StadiumManagerID = SM.id AND SM.username = @STADUDERNAME;
+
+declare @hostclubid varchar(20)
+declare @GUESTCLUBid varchar(20)
+
+declare @hostclub varchar(20)
+declare @GUESTCLUB varchar(20)
+declare @starttime varchar(20)
+
+select  @hostclubid= m.HostClubID , @GUESTCLUBid = m.GuestClubID , @starttime=m.StartTime
+from match m
+where m.id=@MATCHID
+
+select @hostclub=c.name
+from club c
+where c.id=@hostclubid
+
+select @GUESTCLUB=c.name
+from club c
+where c.id=@GUESTCLUBid
+
+
+DECLARE @i int = 1;
+while (@i <= @capacity) 
+begin
+	exec addTicket @hostclub, @GUESTCLUB, @starttime;
+	SET @i = @i + 1;
+END
+
+
+
+DROP PROC SIMPACCEPT
+EXEC SIMPACCEPT 'Ahmed' ,'14'
+
+
+UPDATE  Stadium
+SET status= 'True'
+WHERE StadiumManagerUserName='Ahmed'

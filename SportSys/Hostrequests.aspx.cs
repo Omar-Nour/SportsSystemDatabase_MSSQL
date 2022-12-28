@@ -69,7 +69,7 @@ namespace SportSys
         }
         protected void Viewpend(object sender, EventArgs e)
         {
-            Response.Redirect("pending requests.aspx");
+            Response.Redirect("pendingrequesttest.aspx");
         }
     }
 }

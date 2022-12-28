@@ -17,6 +17,9 @@
 
              </br>
               <asp:GridView ID="GridView1" runat="server">
+
+                   <HeaderStyle BackColor="Black" BorderStyle="Solid" ForeColor="White" />
+            <RowStyle BorderStyle="Solid" />
         </asp:GridView>
                          </br>
 
