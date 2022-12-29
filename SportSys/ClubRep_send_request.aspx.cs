@@ -16,11 +16,13 @@ namespace SportSys
         protected void Page_Load(object sender, EventArgs e)
         {
 
+#pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
             if (Session["username"] == null || Session["type"] != "clubrep")
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+#pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
 #pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
             Sys_User_name.Text ="Seding requests as " + Session["username"].ToString();
 
@@ -87,7 +89,7 @@ namespace SportSys
                 else 
                 {
 
-                    if (Int16.Parse(date_time.Text.Split('-')[0]) >= DateTime.Now.Year && Int16.Parse(date_time.Text.Split('-')[1]) >= DateTime.Now.Month && Int16.Parse(date_time.Text.Split('-')[2].Split('T')[0]) >= DateTime.Now.Day)
+                    if (Int16.Parse(date_time.Text.Split('-')[0]) > DateTime.Now.Year)
                     {
 
                         SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
@@ -100,15 +102,70 @@ namespace SportSys
                         status.Visible = true;
 
                         conn.Close();
-                    }
-                  
-                    
+                    } 
+
+                    else if (Int16.Parse(date_time.Text.Split('-')[0]) == DateTime.Now.Year) 
+                    { 
+                        if (Int16.Parse(date_time.Text.Split('-')[1]) > DateTime.Now.Month)
+                        {
+                            SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
+                            SendRequest.Parameters.AddWithValue("@stadname", Stadium);
+                            SendRequest.Parameters.AddWithValue("@date", date + ":00");
+
+                            SendRequest.ExecuteNonQuery();
+
+                            status.Text = "Request sent successfully";
+                            status.Visible = true;
+
+                            conn.Close();
+                        }
+
+                        else if (Int16.Parse(date_time.Text.Split('-')[1]) == DateTime.Now.Month)
+                        {
+                            if (Int16.Parse(date_time.Text.Split('-')[2]) > DateTime.Now.Day)
+                            {
+                                SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
+                                SendRequest.Parameters.AddWithValue("@stadname", Stadium);
+                                SendRequest.Parameters.AddWithValue("@date", date + ":00");
+
+                                SendRequest.ExecuteNonQuery();
+
+                                status.Text = "Request sent successfully";
+                                status.Visible = true;
+
+                                conn.Close();
+                            } else if (Int16.Parse(date_time.Text.Split('-')[2]) == DateTime.Now.Day)
+                            {
+                                if (Int16.Parse(date_time.Text.Split('T')[1]) > DateTime.Now.Hour)
+                                {
+                                    SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
+                                    SendRequest.Parameters.AddWithValue("@stadname", Stadium);
+                                    SendRequest.Parameters.AddWithValue("@date", date + ":00");
+
+                                    SendRequest.ExecuteNonQuery();
+
+                                    status.Text = "Request sent successfully";
+                                    status.Visible = true;
+
+                                    conn.Close();
+                                }
+                                else
+                                {
+                                    status.Text = "Date or time are not valid";
+                                    status.Visible = true;
+                                    conn.Close();
+                                }
+                            }
+
+                        }
+
+                    } 
                     else
                     {
 
-                    status.Text = "Date or time are not valid";
-                    status.Visible = true;
-                    conn.Close();
+                        status.Text = "Date or time are not valid";
+                        status.Visible = true;
+                        conn.Close();
                     }
                 }
                 

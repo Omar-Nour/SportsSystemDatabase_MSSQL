@@ -95,7 +95,7 @@ namespace SportSys
                 input = DateTime.Now.ToString();
             } else
             {
-                input = DateTimeBox.Text;
+                input = DateTimeBox.Text + ":00";
             }
 
             //get connection string
@@ -198,6 +198,7 @@ namespace SportSys
 
             //open a connection and execute the procedure
             purchaseTicket.ExecuteNonQuery();
+            PurchaseHistoryExistsLabel.Visible= false;
 
             //make label visible and tell the user that the ticket has been purchased
             //then close the connection
@@ -219,15 +220,15 @@ namespace SportSys
             SqlConnection conn = new SqlConnection(connStr);
 
             //initialize the command that fetches the table 
-            SqlCommand getMatches = new SqlCommand("getTicketsOfFan", conn);
-            getMatches.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand getPurchasedTickets = new SqlCommand("getTicketsOfFan", conn);
+            getPurchasedTickets.CommandType = System.Data.CommandType.StoredProcedure;
 
             //add input params
-            getMatches.Parameters.AddWithValue("@username", UsernameLabel.Text.Split(' ')[1]);
+            getPurchasedTickets.Parameters.AddWithValue("@username", UsernameLabel.Text.Split(' ')[1]);
 
             //Get table from db
             conn.Open();
-            SqlDataReader rd = getMatches.ExecuteReader();
+            SqlDataReader rd = getPurchasedTickets.ExecuteReader();
 
 
             //create the DataTable that will be bound to the GridView

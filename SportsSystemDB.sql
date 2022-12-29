@@ -168,6 +168,7 @@ AS
 	DROP PROCEDURE SIMPREJECT;
 	DROP PROCEDURE ALLREQPEND;
 	DROP PROCEDURE ALLREQ;
+	DROP PROCEDURE SIMPACCEPT;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -590,40 +591,27 @@ CREATE PROC acceptRequest
 @usernamestadman VARCHAR(20),
 @hostclub VARCHAR(20),
 @GUESTCLUB VARCHAR(20),
-@starttime DATETIME,
-@HOSTID VARCHAR(20)
-
-
+@starttime DATETIME
 AS
-
 DECLARE @MANAGERID VARCHAR(20)
 SELECT @MANAGERID=SM.id
 FROM StadiumManager SM
 WHERE SM.username=@usernamestadman
-
 DECLARE @HOST VARCHAR(20) 
 DECLARE @GUEST VARCHAR(20)
-
 DECLARE @MATCHID VARCHAR(20)
-
 SELECT @HOST=C.id , @GUEST=C.id
 FROM CLUB C
 WHERE @hostclub=C.name AND @GUESTCLUB=C.name
-
 SELECT @MATCHID= M.id
 FROM Match M
 WHERE M.HostClubID=@HOST AND M.GuestClubID=@GUEST AND M.StartTime=@starttime
-
-
-
 UPDATE HostRequest
 SET status='accepted'
-WHERE HostRequest.ID=@HOSTID
-
+WHERE HostRequest.MatchID=@MATCHID AND HostRequest.StadiumManagerID=@MANAGERID;
 DECLARE @capacity int;
 SELECT @capacity = S.capacity FROM Stadium S, StadiumManager SM
 WHERE S.StadiumManagerID = SM.id AND SM.username = @usernamestadman;
-
 DECLARE @i int = 1;
 while (@i <= @capacity) 
 begin
@@ -798,10 +786,11 @@ GO
 CREATE FUNCTION [availableMatchesToAttend]
 (@date datetime)
 RETURNS TABLE AS 
-	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name
+	RETURN SELECT H.name as host, G.name as guest, M.StartTime , S.name as stadium_name,S.location AS loc
 			FROM Club H, Club G, Match M, Stadium S
 			WHERE M.StartTime >= @date AND (H.id = M.HostClubID AND G.id = M.GuestClubID)
-			AND EXISTS (SELECT * FROM Ticket T WHERE T.MatchID = M.id AND T.status = 1);
+			AND EXISTS (SELECT * FROM Ticket T WHERE T.MatchID = M.id AND T.status = 1)
+			AND M.StadiumID = S.id;
 GO
 
 -- XXIV
@@ -1094,6 +1083,57 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving, c.name AS HOST ,
 			AND H.status='unhandled'
 GO
 
+GO
+CREATE PROCEDURE SIMPACCEPT
+@STADUDERNAME VARCHAR(20),
+@ID VARCHAR (20)
+AS
+DECLARE @STADSTATUS BIT
+SELECT @STADSTATUS= S.status
+FROM Stadium S
+WHERE S.StadiumManagerUserName=@STADUDERNAME
+UPDATE HostRequest
+SET status='accepted'
+WHERE HostRequest.id=@ID 
+DECLARE @MATCHID VARCHAR(20)
+SELECT @MATCHID=H.MatchID
+FROM HostRequest H
+WHERE H.ID=@ID
+declare @STADIUMID varchar(20)
+select @STADIUMID= s.id
+from Stadium s
+where s.StadiumManagerUserName=@STADUDERNAME
+UPDATE Match
+SET StadiumID = @STADIUMID
+WHERE id = @MATCHID;
+UPDATE Stadium
+SET status= 0
+WHERE StadiumManagerUserName= @STADUDERNAME
+DECLARE @capacity int;
+SELECT @capacity = S.capacity 
+FROM Stadium S, StadiumManager SM
+WHERE S.StadiumManagerID = SM.id AND SM.username = @STADUDERNAME;
+declare @hostclubid varchar(20)
+declare @GUESTCLUBid varchar(20)
+declare @hostclub varchar(20)
+declare @GUESTCLUB varchar(20)
+declare @starttime varchar(20)
+select  @hostclubid= m.HostClubID , @GUESTCLUBid = m.GuestClubID , @starttime=m.StartTime
+from match m
+where m.id=@MATCHID
+select @hostclub=c.name
+from club c
+where c.id=@hostclubid
+select @GUESTCLUB=c.name
+from club c
+where c.id=@GUESTCLUBid
+DECLARE @i int = 1;
+while (@i <= @capacity) 
+begin
+	exec addTicket @hostclub, @GUESTCLUB, @starttime;
+	SET @i = @i + 1;
+END
+GO
 
 --SIMPLE REJECTION PROCUDRE ONLY NEEDS HOST REQUEST ID TO FUNCTION
 GO
@@ -1185,3 +1225,20 @@ INSERT INTO SystemUser
 VALUES('storexadmin','admin');
 
 INSERT INTO SystemAdmin VALUES('storexadmin','Hacker');
+
+SELECT * FROM Club;
+
+SELECT * FROM Stadium;
+
+SELECT * FROM StadiumManager;
+
+SELECT * FROM SystemUser;
+
+SELECT * FROM Match;
+
+SELECT * FROM HostRequest;
+
+DELETE FROM Match;
+DELETE FROM HostRequest;
+
+EXEC SIMPACCEPT "nouman", 3;

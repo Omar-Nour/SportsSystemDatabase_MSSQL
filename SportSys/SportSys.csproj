@@ -77,7 +77,6 @@
     <Content Include="Fan.aspx" />
     <Content Include="Hostrequests.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="pending requests.aspx" />
     <Content Include="pendingrequesttest.aspx" />
     <Content Include="register.aspx" />
     <Content Include="ClubRep.aspx" />
@@ -153,13 +152,6 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pending requests.aspx.cs">
-      <DependentUpon>pending requests.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pending requests.aspx.designer.cs">
-      <DependentUpon>pending requests.aspx</DependentUpon>
     </Compile>
     <Compile Include="pendingrequesttest.aspx.cs">
       <DependentUpon>pendingrequesttest.aspx</DependentUpon>

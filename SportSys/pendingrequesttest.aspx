@@ -23,7 +23,7 @@
                             Text="Reject" CommandArgument='<%#Eval("Host ID") %>'/>
 
                         <asp:Button ID="Accept2" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="Accept"
-                            Text="Accept" CommandArgument='<%#Eval("Stadium manager")+ ";" +Eval("Host id")%>'/>
+                            Text="Accept" CommandArgument='<%#Eval("Host Club")+ ";" +Eval("Guest Club")+";"+Eval()%>'/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
