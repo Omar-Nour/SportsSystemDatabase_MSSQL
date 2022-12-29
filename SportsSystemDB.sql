@@ -160,6 +160,16 @@ AS
 	DROP PROCEDURE fetchNID;
 	DROP PROCEDURE getTicketsOfFan;
 	DROP PROCEDURE fetchStatus;
+	DROP PROCEDURE login;
+	DROP PROCEDURE checkUsername;
+	DROP PROCEDURE checkStadExists;
+	DROP PROCEDURE checkNidExists;
+	DROP PROCEDURE checkClubExists;
+	DROP PROCEDURE StadiumINFO;
+	DROP PROCEDURE fetchNID2;
+	DROP PROCEDURE SIMPREJECT;
+	DROP PROCEDURE ALLREQPEND;
+	DROP PROCEDURE ALLREQ;
 
 	DROP VIEW allAssocManagers;
 	DROP VIEW allClubRepresentatives;
@@ -298,8 +308,6 @@ CREATE VIEW allRequests AS
 			AND CR.id = H.ClubRepresentativeID;
 GO
 
-select * from dbo.allRequests
-GO
 
 -- (------------------ 2.3 ------------------)
 
