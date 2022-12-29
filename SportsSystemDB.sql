@@ -1323,8 +1323,8 @@ GO
 
 EXEC clearAllTables;
 
-EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
-EXEC addStadium "Bernabeu", "Madrid", 40000;
+EXEC addStadium "Camp Nou", "Barcelona, Spain", 2;
+EXEC addStadium "Bernabeu", "Madrid", 1;
 
 EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
 EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";

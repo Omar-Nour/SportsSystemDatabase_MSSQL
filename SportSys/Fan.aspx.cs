@@ -201,9 +201,9 @@ namespace SportSys
 
             //make label visible and tell the user that the ticket has been purchased
             //then close the connection
-            PurchaseTicketLabel.Visible = true;
-            PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
-                hostClub+" and "+ guestClub+" on "+startTime;
+            //PurchaseTicketLabel.Visible = true;
+            //PurchaseTicketLabel.Text = "Purchased ticket for the match between "+
+                //hostClub+" and "+ guestClub+" on "+startTime;
             conn.Close();
 
             //update purchase history
