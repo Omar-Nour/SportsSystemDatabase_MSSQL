@@ -582,8 +582,7 @@ UPDATE Stadium
 SET StadiumManagerUserName= @Username, StadiumManagerID = @ID
 
 WHERE Stadium.name = @stadiumname
-------------------------------
-EXEC addStadiumManager 'perez','bernabou','perez','12345'
+GO
 
 --ACCEPT REQUEST
 GO
