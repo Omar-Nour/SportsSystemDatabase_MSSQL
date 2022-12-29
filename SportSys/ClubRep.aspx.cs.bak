@@ -30,7 +30,7 @@ namespace SportSys
             SqlConnection conn = new SqlConnection(connStr);
 
             SqlCommand View_stads = new SqlCommand("viewAvailableStadiumsOn", conn);
-            View_stads.CommandType = CommandType.;
+            View_stads.CommandType = CommandType.StoredProcedure;
             View_stads.Parameters.AddWithValue("@starttime", DateTimeBox.Text);
 
 

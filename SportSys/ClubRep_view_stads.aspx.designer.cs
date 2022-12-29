@@ -33,6 +33,33 @@ namespace SportSys
         protected global::System.Web.UI.WebControls.Label Sys_User_name;
 
         /// <summary>
+        /// DateTimeBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox DateTimeBox;
+
+        /// <summary>
+        /// userIn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button userIn;
+
+        /// <summary>
+        /// currTimeStamp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button currTimeStamp;
+
+        /// <summary>
         /// View_stads_view control.
         /// </summary>
         /// <remarks>

@@ -12,7 +12,13 @@
 
             <asp:Label ID="Sys_User_name" runat="server" Text="Viewing available stadiums as "></asp:Label>
             <br />
+            <br />
+            <br />
 
+               <asp:TextBox ID="DateTimeBox" runat="server" BackColor="#CCCCCC" BorderStyle="Solid" Height="26px" Width="294px" TextMode="Date"></asp:TextBox>
+        <asp:Button ID="userIn" runat="server" Text="Choose Date Time" OnClick="userInFunc" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px"   Width="135px"/>
+        <asp:Button ID="currTimeStamp" runat="server" Text="From Current Time" OnClick="currTimeFunc" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" Height="41px"   Width="135px"/>
+        <p>
 
             <p>
             <asp:GridView ID="View_stads_view" runat="server" BorderStyle="Solid">

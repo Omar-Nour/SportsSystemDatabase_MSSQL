@@ -87,7 +87,7 @@ namespace SportSys
                 else 
                 {
 
-                    if (Int16.Parse(date_time.Text.Split('-')[0]) >= DateTime.Now.Year && Int16.Parse(date_time.Text.Split('-')[1]) >= DateTime.Now.Month && Int16.Parse(date_time.Text.Split('-')[2]) >= DateTime.Now.Day)
+                    if (Int16.Parse(date_time.Text.Split('-')[0]) >= DateTime.Now.Year && Int16.Parse(date_time.Text.Split('-')[1]) >= DateTime.Now.Month && Int16.Parse(date_time.Text.Split('-')[2].Split('T')[0]) >= DateTime.Now.Day)
                     {
 
                         SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);

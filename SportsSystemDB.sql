@@ -788,8 +788,14 @@ RETURN
 	FROM Stadium S , Match M
 	WHERE S.status= 1 AND S.id  != M.StadiumID OR  S.id=M.StadiumID AND M.StartTime!=@starttime
 
+	GO
 
+	CREATE PROCEDURE viewAvailableStadiumsOnProc
+	@starttime DATETIME
+	AS
+	SELECT * FROM viewAvailableStadiumsOn(@starttime);
 
+	GO
 
 GO 
 -- DROP FUNCTION viewAvailableStadiumsOn
@@ -1390,6 +1396,7 @@ values ('nigga' , 'nagnaga', NULL, NUll)
 
 select * from SystemUser
 select * from HostRequest
+delete from HostRequest
 select * from match
 
 select * from ClubRepresentative
