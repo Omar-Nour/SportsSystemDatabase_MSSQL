@@ -1225,20 +1225,3 @@ INSERT INTO SystemUser
 VALUES('storexadmin','admin');
 
 INSERT INTO SystemAdmin VALUES('storexadmin','Hacker');
-
-SELECT * FROM Club;
-
-SELECT * FROM Stadium;
-
-SELECT * FROM StadiumManager;
-
-SELECT * FROM SystemUser;
-
-SELECT * FROM Match;
-
-SELECT * FROM HostRequest;
-
-DELETE FROM Match;
-DELETE FROM HostRequest;
-
-EXEC SIMPACCEPT "nouman", 3;
