@@ -341,8 +341,6 @@ CREATE PROCEDURE addNewMatch
 
 
 GO
-exec addNewMatch 'Mancity','Liverpool','2022-04-22 10:34:23','2022-04-22 12:34:23'
-exec addNewMatch 'Mancity','Liverpool','2022-04-23 10:34:23','2022-04-23 12:34:23'
 
 --(III)
 GO 
@@ -406,8 +404,7 @@ INSERT INTO Club
 VALUES (@ClubName, @Location, NULL, NULL);
 
 GO
-exec addClub 'Liverpool' , 'liverpool'
-exec addClub 'Mancity' , 'Manchester'
+
 --(VII)
 GO
 CREATE PROCEDURE addTicket
@@ -448,7 +445,7 @@ INSERT INTO Stadium
 VALUES (@Name, @Cap, @Location, 1, NULL, NULL);
 
 GO
-exec addStadium 'Anfield' , 'liverpool', 70000
+
 
 --(X)
 GO
@@ -470,11 +467,6 @@ DELETE FROM SystemUser WHERE username = @username;
 
 GO
 
---EXEC createAllTables
-
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --BLOCK FAN
 GO
 CREATE PROC blockFan
@@ -485,12 +477,7 @@ SET status=0
 WHERE NationalID = @NatId
 
 GO
---INSERT INTO Fan VALUES('ADHFJADSF','123','1232','DSFA','FDS',1,'10/24/2001')
---INSERT INTO SystemUser VALUES('ADHFJADSF','ASFF')
 
---EXEC unblockFan '123'
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- UNBLOCK FAN
 GO
 CREATE PROC unblockFan
@@ -500,10 +487,7 @@ UPDATE Fan
 SET status=1
 WHERE  Fan.NationalID = @NatId
 
---INSERT INTO Fan VALUES('ADHFJADSF','123','1232','DSFA','FDS',1,'10/24/2001')
---INSERT INTO SystemUser VALUES('ADHFJADSF','ASFF')
------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- ADD CLUB REPRESENTATIVE DONE
+
 
 GO
 CREATE PROC addRepresentative
@@ -513,10 +497,8 @@ CREATE PROC addRepresentative
 @Password VARCHAR(20)
 
 
-
 AS
 INSERT INTO SystemUser VALUES(@Username ,@Password)
---SET IDENTITY_INSERT ClubRepresentative ON
 INSERT INTO ClubRepresentative(username,name)
 VALUES(@Username,@Name)
 
@@ -530,17 +512,12 @@ UPDATE Club
 SET ClubRepresentativeUserName = @Username, ClubRepresentativeID = @ID
 
 WHERE Club.name = @ClubName 
-EXEC addRepresentative 'nasser','Mancity','nasser','12345'
-EXEC addRepresentative 'glads','Liverpool','glads','12345'
-
-EXEC clearAllTables;
+GO
 
 
---DROP PROC addRepresentative
------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 GO
 --ADDHOST REQUEST
----HOST REQUEST ID IS INT NOT IDENTITY?????
 CREATE PROC addHostRequest
 @clubname VARCHAR(20),
 @stadname VARCHAR(20),
@@ -575,15 +552,9 @@ WHERE M.StartTime = @date
 
 INSERT INTO HostRequest (status,MatchID,ClubRepresentativeID,StadiumManagerID,StadiumManagerUserName,ClubRepresentativeUserName)
 VALUES('unhandled',@MATCHid,@repid,@SMID,@SMUSERNAME,@repUSER);
------------------------------------------------------------------------------------------------------------------------------------------------------------------
-EXEC addHostRequest 'Liverpool','Anfield','2022-04-23 10:34:23.000'
-EXEC addHostRequest 'Mancity','bernabou','2022-04-22 10:34:23.000'
+GO
 
---DROP PROC addHostRequest
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --ADD STADUIM MANAGER DONE
-
 GO
 CREATE PROC addStadiumManager
 @name VARCHAR(20),
@@ -609,10 +580,7 @@ WHERE Stadium.name = @stadiumname
 ------------------------------
 EXEC addStadiumManager 'perez','bernabou','perez','12345'
 
---DROP PROC addStadiumManager
------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --ACCEPT REQUEST
--- null to be handeled correct logic
 GO
 CREATE PROC acceptRequest
 @usernamestadman VARCHAR(20),
@@ -659,42 +627,8 @@ begin
 	SET @i = @i + 1;
 end
 GO
-drop proc acceptRequest
-EXEC acceptRequest 'Adham','Liverpool','Mancity', '4/23/2022 10:34:23 ','12'
------------------------------------------------------------------------------------------------------------------------------------------------------------------
---GO
---CREATE PROC ACCEPTREQ2
---@usernamestadman varchar(20),
---@hostclub VARCHAR(20),
---@GUESTCLUB VARCHAR(20),
---@starttime date
 
---AS
---DECLARE @HOSTID VARCHAR(20)
---SELECT @HOSTID = C.id
---FROM Club C
---WHERE C.name=@hostclub
-
-
---DECLARE @GUESTID VARCHAR(20)
---SELECT @GUESTID = C.id
---FROM CLUB C
---WHERE C.NAME= @GUESTCLUB
-
-
---DECLARE @MATCHID VARCHAR(20)
---SELECT @MATCHID= M.id
---FROM MATCH M
---WHERE @HOSTID=M.HostClubID AND @GUESTID=M.GuestClubID AND M.StartTime=@starttime
-
---UPDATE HostRequest
---SET status=1
---WHERE HostRequest.MatchID=@MATCHID AND HostRequest.StadiumManagerUserName=@usernamestadman
-
-
---REJECT REQUEST
--- null to be handeled correct logic
-
+--reject request
 GO
 CREATE PROC rejectRequest
 @usernamestadman varchar(20),
@@ -724,66 +658,8 @@ UPDATE HostRequest
 SET status='rejected'
 WHERE HostRequest.MatchID=@MATCHID AND HostRequest.StadiumManagerID=@MANAGERID 
 GO
-EXEC rejectRequest 'Ahmed','Mancity','Liverpool', '2022-04-22 10:34:23.000'
-GO
 
 
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
---EXEC acceptRequest'AHMED1','2EW3A','DD','2022-04-22 10:34:23'
-
-
---TRASH-----------------------------------------------------------------------------------------------------------------------------------------------------------
-
---EXEC addRepresentative 'SDbgAF','2EW3A','Al222aAa','FF','323'
-
---INSERT INTO SystemUser VALUES('Ahmed1','1EW')
---INSERT INTO StadiumManager(name,username)
---VALUES('Ahmed','Ahmed1')
---INSERT INTO Match(StartTime,EndTime,HostClubID,GuestClubID,StadiumID)
---VALUES('2022-04-22 10:34:23','2022-04-22 11:34:23' ,6,3,1)
-
---INSERT INTO HostRequest(ID,ClubRepresentativeID,StadiumManagerID,MatchID,StadiumManagerUserName,ClubRepresentativeUserName)
---VALUES(23,324,1,1,'AHMED1','MOH1')
-
---INSERT INTO Stadium( name, location, capacity,status)
---VALUES('EMIRATES','LONDON',2000,1)
---SET IDENTITY_INSERT ClubRepresentative ON
---INSERT INTO ClubRepresentative(id,username,name)
---VALUES(2,'SAFDF','FF')
---SET IDENTITY_INSERT Club OFF
---INSERT INTO Club(name,location,ClubRepresentativeID,ClubRepresentativeUserName)
---VALUES('2EW3A','WA7WA7',1,'SAFDF')
------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
---SELECT* -------------------------------------------------------------------------------------------------------------------------------------------------------
-
-SELECT * 
-FROM StadiumManager
-SELECT * 
-FROM ClubRepresentative
-SELECT * 
-FROM SystemUser
-SELECT * 
-FROM Club
-SELECT *
-FROM Stadium
-SELECT *
-FROM Match
-SELECT * 
-FROM HostRequest
-SELECT *
-FROM Ticket
----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
---- VIEW AVAILABELE STADUIM THAT AVAIALABLE FOR RESERVATION AND NOT ALREADY HOSTING A MATCH AT THE START TIME--------------------------------------------------
-
-DROP FUNCTION viewAvailableStadiumsOn;
-SELECT * FROM Match;
 GO
 CREATE FUNCTION viewAvailableStadiumsOn
 (@starttime DATETIME)
@@ -793,18 +669,16 @@ RETURN
     SELECT S.name , S.location , S.capacity
 	FROM Stadium S, Match M
 	WHERE S.status = 1 AND ( (S.id  NOT IN (SELECT StadiumID FROM Match)) OR ( (S.id IN (SELECT StadiumID FROM Match) AND S.id = M.StadiumID AND @starttime NOT BETWEEN M.StartTime AND M.EndTime) )  ); 
-	GO
+GO
 
-	CREATE PROCEDURE viewAvailableStadiumsOnProc
-	@starttime DATETIME
-	AS
-	SELECT * FROM viewAvailableStadiumsOn(@starttime);
-
-	GO
+GO
+CREATE PROCEDURE viewAvailableStadiumsOnProc
+@starttime DATETIME
+AS
+SELECT * FROM viewAvailableStadiumsOn(@starttime);
+GO
 
 GO 
--- DROP FUNCTION viewAvailableStadiumsOn
--- SELECT * FROM  DBO.viewAvailableStadiumsOn ('2022-04-22 11:34:23')
 
 
 -----ALL UNASSIGNED MATCHES-------------------------------------------------------------------------------------------------------------------------------------
@@ -840,9 +714,6 @@ RETURN;
 END;
 GO
 
---SELECT * FROM  DBO.allUnassignedMatches ('2EW3A')
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------ PENDING REQUEST DONE
 GO
 CREATE FUNCTION allPendingRequests
@@ -886,14 +757,13 @@ RETURN;
 END;
 GO
 
--- DROP FUNCTION allPendingRequests
-SELECT * FROM  DBO.allPendingRequests('Ahmed')
 
 GO
 
 ------- FROM XXI TO XXX -------
 
 -- XXI
+GO
 CREATE PROCEDURE addFan
 @name varchar(20),
 @username varchar(20),
@@ -908,6 +778,7 @@ INSERT INTO Fan VALUES (@username, @nid, @phone_num, @address, @name, 1, @bd);
 GO
 
 -- XXII
+GO
 CREATE FUNCTION [upcomingMatchesOfClub]
 (@club_name varchar(20))
 RETURNS TABLE AS 
@@ -919,6 +790,7 @@ RETURNS TABLE AS
 GO
 
 -- XXIII
+GO
 CREATE FUNCTION [availableMatchesToAttend]
 (@date datetime)
 RETURNS TABLE AS 
@@ -929,6 +801,7 @@ RETURNS TABLE AS
 GO
 
 -- XXIV
+GO
 CREATE PROCEDURE purchaseTicket
 @host_name varchar(20),
 @guest_name varchar(20),
@@ -955,6 +828,7 @@ AS
 GO
 
 -- XXV
+GO
 CREATE PROCEDURE updateMatchHost
 @host_name varchar(20),
 @guest_name varchar(20),
@@ -977,6 +851,7 @@ AS
 GO
 
 -- XXVI
+GO
 CREATE VIEW matchesPerTeam AS
 	SELECT C.name as club_name, COUNT(M.id) as matchs_played FROM Club C, Match M
 	WHERE (C.id = M.HostClubID OR C.id = M.GuestClubID) 
@@ -985,6 +860,7 @@ CREATE VIEW matchesPerTeam AS
 GO
 
 -- XXVII
+GO
 CREATE VIEW clubsNeverMatched AS
 	SELECT C1.name as club1, C2.name as club2
 	FROM Club C1, Club C2
@@ -996,12 +872,9 @@ CREATE VIEW clubsNeverMatched AS
 	);
 GO
 
-select * from club
-select * from ClubRepresentative
-select * from SystemUser
-select name from club where club.ClubRepresentativeUserName = 'xavi'
-GO
+
 -- XXVIII
+GO
 CREATE FUNCTION [clubsNeverPlayed]
 (@club_name varchar(20))
 RETURNS TABLE
@@ -1012,10 +885,8 @@ AS
 	);
 GO
 
-
-
-
 -- XXIX
+GO
 CREATE FUNCTION [matchWithHighestAttendance]()
 RETURNS TABLE
 AS
@@ -1080,9 +951,6 @@ RETURN (
 GO
 
 
-
-
-
 ----------------------------
 GO
 -- Login Procedure
@@ -1126,10 +994,9 @@ AS
 		SET @success = 0;
 		SET @user_type = 'fail';
 	end
-	--print @success 
-	--print @user_type
 GO
 
+GO
 CREATE PROCEDURE checkUsername
 @username VARCHAR(20),
 @success bit OUTPUT
@@ -1142,6 +1009,7 @@ begin
 end
 GO
 
+GO
 CREATE PROCEDURE checkStadExists
 @stadname VARCHAR(20),
 @success bit OUTPUT
@@ -1153,6 +1021,8 @@ begin
 	SET @success = 0;
 end
 GO
+
+GO
 CREATE PROCEDURE checkNidExists
 @nid VARCHAR(20),
 @success bit OUTPUT
@@ -1163,6 +1033,8 @@ begin
  ELSE
 	SET @success = 0;
 end
+GO
+
 GO
 CREATE PROCEDURE checkClubExists
 @clubname VARCHAR(20),
@@ -1176,71 +1048,19 @@ begin
 end
 GO
 
-exec addClub 'nigaz', 'women';
---EXEC addAssociationManager 'a','abc','123'; 
---DROP PROCEDURE checkUsername;
---SELECT * FROM SystemUser;
---SELECT * FROM Fan
---SELECT * FROM SportsAssociationManager
---DECLARE @success bit;
---exec checkUsername 'abce', @success;
-
-
---exec login 'abc', '123', 1, 'a';
---REQUIRES STADIUM MANAGER USERNAME RETURNS STAIUM INFO
-GO
-CREATE PROCEDURE checkUsername
-@username VARCHAR(20),
-@success bit OUTPUT
-AS
-begin
- IF (@username IN (SELECT username FROM SystemUser))
-	SET @success = 1;
- ELSE
-	SET @success = 0;
-end
-GO
-
-CREATE PROCEDURE checkStadExists
-@stadname VARCHAR(20),
-@success bit OUTPUT
-AS
-begin
- IF (@stadname IN (SELECT name FROM Stadium))
-	SET @success = 1;
- ELSE
-	SET @success = 0;
-end
-GO
-CREATE PROCEDURE checkNidExists
-@nid VARCHAR(20),
-@success bit OUTPUT
-AS
-begin
- IF (@nid IN (SELECT NationalID FROM Fan))
-	SET @success = 1;
- ELSE
-	SET @success = 0;
-end
-GO
-
-
 
 
 --------------------------------------------------------------------------------------------
 --new added procuders for stadium manager
-go
+GO
 CREATE PROCEDURE StadiumINFO
 @managername VARCHAR(20)
 AS
 SELECT S.capacity , S.location ,S.StadiumManagerID, S.name , S.status
 FROM STADIUM S
 WHERE S.StadiumManagerUserName=@managername
-
---exec StadiumINFO 'Ahmed'
 GO
 
-GO
 
 GO
 CREATE PROCEDURE ALLREQ
@@ -1253,9 +1073,9 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving,H.status AS Reque
 			AND CR.id = H.ClubRepresentativeID
 			AND C.ClubRepresentativeID= H.ClubRepresentativeID
 			AND H.MatchID=M.id
+GO
 
---EXEC ALLREQ 'Ahmed'
---DROP PROC ALLREQPEND
+
 GO 
 CREATE PROCEDURE ALLREQPEND
 @STADUSERNAME VARCHAR(20)
@@ -1268,10 +1088,11 @@ SELECT  CR.name AS ClubRepSending, SM.name AS StadManReceiving, c.name AS HOST ,
 			AND C.ClubRepresentativeID= H.ClubRepresentativeID
 			AND H.MatchID=M.id
 			AND H.status='unhandled'
-
---EXEC ALLREQPEND'Ahmed'
 GO
+
+
 --SIMPLE REJECTION PROCUDRE ONLY NEEDS HOST REQUEST ID TO FUNCTION
+GO
 CREATE PROCEDURE SIMPREJECT
 @ID VARCHAR (20)
 AS
@@ -1282,6 +1103,7 @@ drop proc reject
 EXEC SIMPREJECT '10'
 GO
 
+GO
 CREATE PROCEDURE fetchNID
 @username VARCHAR(20),
 @NationalID VARCHAR(20) output
@@ -1289,6 +1111,7 @@ AS
 	SET @NationalID = (SELECT  f.NationalID AS nid
 		FROM Fan AS f
 		WHERE f.username = @username);
+GO
 
 
 GO
@@ -1321,42 +1144,9 @@ AS
 	SELECT * FROM availableMatchesToAttend(@date);
 GO
 
-EXEC clearAllTables;
 
-EXEC addStadium "Camp Nou", "Barcelona, Spain", 2;
-EXEC addStadium "Bernabeu", "Madrid", 1;
-
-EXEC addStadiumManager "Laporta", "Camp Nou", "jolaporta", "admin";
-EXEC addStadiumManager "Perez", "Bernabeu", "fperez", "admin";
-
-EXEC addClub "FC Barcelona", "Barcelona, Spain";
-EXEC addClub "Real Madrid", "Madrid, Spain";
-
-EXEC addRepresentative "Xavi", "FC Barcelona","xhernandez","admin";
-EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
-
-EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
-EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
-EXEC addNewMatch "nigga", "FC Barcelona", "2023/2/11 20:30:00", "2023/2/11 22:30:00";
-
-SELECT * FROM Stadium;
-
-insert into Match
-Values('nigga', 'FC Barcelona', 1, '2023/2/11', '2023/2/11')
-
-EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
-EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
-
-EXEC acceptRequest "jolaporta", "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00";
-EXEC acceptRequest "fperez", "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00";
-
-EXEC addFan "Shamekh","shamekhjr","admin","22222","2002/3/28 9:30:00","Cairo, Egypt",01278444221;
-EXEC blockFan "22222";
-
-SELECT * FROM Fan;
 
 GO
-
 CREATE PROCEDURE fetchNID2
 @username VARCHAR(20),
 @NationalID VARCHAR(20) output,
@@ -1373,13 +1163,7 @@ begin
 end
 GO
 
-select * from fan
-exec unblockFan '12345678901234'
 
-select StartTime, EndTime, C1.name AS Host_Name, C2.name AS Guest_Name
-from Match INNER JOIN Club C1 ON Match.HostClubID = C1.id 
-INNER JOIN Club C2 ON Match.GuestClubID = C2.id
-WHERE StartTime < CURRENT_TIMESTAMP
 
 GO
 CREATE PROCEDURE Fetch_Club_Rep_Club_Info
@@ -1391,49 +1175,4 @@ AS
 SET @Club_name = (SELECT name from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
 SET @Club_location = (SELECT location from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
 SET @Club_id = (SELECT id from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
-
 GO
-
-DECLARE @name varchar(20);
-DECLARE @id INT;
-DECLARE @loc varchar(20);
-EXEC Fetch_Club_Rep_Club_Info 'clubrep_un', @name, @loc, @id; 
-
-SELECT @name, @loc, @id;
-
-select * from club
-
-Insert into Club
-values ('nigga' , 'nagnaga', NULL, NUll)
-
-
-select * from SystemUser
-select * from HostRequest
-delete from HostRequest
-select * from match;
-
-delete from match;
-
-select * from Stadium
-delete from Stadium
-
-UPDATE match
-SET StadiumID = 15
-WHERE match.HostClubID =5
-
-UPDATE Stadium
-SET status = 1
-WHERE stadium.id = 15
-
-select * from ClubRepresentative
-
-select M.StartTime, M.EndTime, S.name, C1.name AS Host_name, C2.name AS Guest_name
-
-from Match M INNER JOIN Stadium S ON M.StadiumID = S.id
-INNER JOIN Club C1 ON M.HostClubID = C1.id
-INNER JOIN Club C2 ON M.GuestClubID = C2.id
-
-Where C1.name = 'nigga' OR C2.name = 'nigga'
-
-select * from club
-select * from Stadium;
