@@ -1,9 +1,7 @@
 CREATE DATABASE SportsSystemDB;
 
-
-GO
-
 --Procedure that creates all tables for DB
+GO
 CREATE PROCEDURE createAllTables
 AS 
 	CREATE TABLE SystemUser (
@@ -193,7 +191,6 @@ AS
 	DROP FUNCTION availableMatchesToAttend;
 	DROP FUNCTION clubsNeverPlayed;
 	DROP FUNCTION matchWithHighestAttendance;
-	--Add as you go: DONE
 GO
 
 GO
@@ -1184,3 +1181,8 @@ SET @Club_name = (SELECT name from Club where Club.ClubRepresentativeUserName = 
 SET @Club_location = (SELECT location from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
 SET @Club_id = (SELECT id from Club where Club.ClubRepresentativeUserName = @Club_Rep_User);
 GO
+
+INSERT INTO SystemUser
+VALUES('storexadmin','admin');
+
+INSERT INTO SystemAdmin VALUES('storexadmin','Hacker');
