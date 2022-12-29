@@ -152,6 +152,7 @@ AS
 	DROP PROCEDURE addStadiumManager;
 	DROP PROCEDURE acceptRequest;
 	DROP PROCEDURE rejectRequest;
+	DROP PROCEDURE viewAvailableStadiumsOnProc
 	DROP PROCEDURE addFan;
 	DROP PROCEDURE purchaseTicket;
 	DROP PROCEDURE updateMatchHost;
@@ -1330,6 +1331,10 @@ EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
 
 EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
 EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
+EXEC addNewMatch "nigga", "FC Barcelona", "2023/2/11 20:30:00", "2023/2/11 22:30:00";
+
+insert into Match
+Values('nigga', 'FC Barcelona', 1, '2023/2/11', '2023/2/11')
 
 EXEC addHostRequest "FC Barcelona", "Camp Nou","2023/3/28 20:30:00";
 EXEC addHostRequest "Real Madrid", "Bernabeu","2023/4/15 20:30:00";
@@ -1397,7 +1402,20 @@ values ('nigga' , 'nagnaga', NULL, NUll)
 select * from SystemUser
 select * from HostRequest
 delete from HostRequest
-select * from match
+select * from match;
+
+delete from match;
+
+select * from Stadium
+delete from Stadium
+
+UPDATE match
+SET StadiumID = 15
+WHERE match.HostClubID =5
+
+UPDATE Stadium
+SET status = 1
+WHERE stadium.id = 15
 
 select * from ClubRepresentative
 
