@@ -20,10 +20,10 @@
                 <asp:TemplateField ShowHeader="true" HeaderText="Purchase Ticket">
                     <ItemTemplate>
                         <asp:Button ID="Reject2" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="Reject" 
-                            Text="Reject" CommandArgument='<%#Eval("Host ID") %>'/>
+                            Text="Reject" CommandArgument='<%#Eval("Host id") %>'/>
 
                         <asp:Button ID="Accept2" runat="server" BackColor="#CC3300" BorderStyle="Double" ForeColor="White" CommandName="Accept"
-                            Text="Accept" CommandArgument='<%#Eval("Stadium manager")+";"+Eval("Host ID")%>'/>
+                            Text="Accept" CommandArgument='<%#Eval("Stadium manager")+";"+Eval("Host id")%>'/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

@@ -1106,9 +1106,6 @@ where s.StadiumManagerUserName=@STADUDERNAME
 UPDATE Match
 SET StadiumID = @STADIUMID
 WHERE id = @MATCHID;
-UPDATE Stadium
-SET status= 0
-WHERE StadiumManagerUserName= @STADUDERNAME
 DECLARE @capacity int;
 SELECT @capacity = S.capacity 
 FROM Stadium S, StadiumManager SM
@@ -1143,8 +1140,6 @@ AS
 UPDATE HostRequest
 SET status='rejected'
 WHERE HostRequest.id=@ID 
-drop proc reject
-EXEC SIMPREJECT '10'
 GO
 
 GO
