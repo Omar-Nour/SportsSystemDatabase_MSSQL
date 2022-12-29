@@ -122,7 +122,7 @@ namespace SportSys
 
                         else if (Int16.Parse(date_time.Text.Split('-')[1]) == DateTime.Now.Month)
                         {
-                            if (Int16.Parse(date_time.Text.Split('-')[2]) > DateTime.Now.Day)
+                            if (Int16.Parse(date_time.Text.Split('-')[2].Split('T')[0]) > DateTime.Now.Day)
                             {
                                 SendRequest.Parameters.AddWithValue("@clubname", Club_name_var);
                                 SendRequest.Parameters.AddWithValue("@stadname", Stadium);
@@ -134,7 +134,7 @@ namespace SportSys
                                 status.Visible = true;
 
                                 conn.Close();
-                            } else if (Int16.Parse(date_time.Text.Split('-')[2]) == DateTime.Now.Day)
+                            } else if (Int16.Parse(date_time.Text.Split('-')[2].Split('T')[0]) == DateTime.Now.Day)
                             {
                                 if (Int16.Parse(date_time.Text.Split('T')[1]) > DateTime.Now.Hour)
                                 {
