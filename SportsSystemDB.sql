@@ -533,6 +533,8 @@ WHERE Club.name = @ClubName
 EXEC addRepresentative 'nasser','Mancity','nasser','12345'
 EXEC addRepresentative 'glads','Liverpool','glads','12345'
 
+EXEC clearAllTables;
+
 
 --DROP PROC addRepresentative
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -601,7 +603,7 @@ FROM StadiumManager SM
 WHERE @Username=SM.username
 
 UPDATE Stadium
-SET StadiumManagerUserName= @Name, StadiumManagerID = @ID
+SET StadiumManagerUserName= @Username, StadiumManagerID = @ID
 
 WHERE Stadium.name = @stadiumname
 ------------------------------
@@ -779,6 +781,9 @@ FROM Ticket
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- VIEW AVAILABELE STADUIM THAT AVAIALABLE FOR RESERVATION AND NOT ALREADY HOSTING A MATCH AT THE START TIME--------------------------------------------------
+
+DROP FUNCTION viewAvailableStadiumsOn;
+SELECT * FROM Match;
 GO
 CREATE FUNCTION viewAvailableStadiumsOn
 (@starttime DATETIME)
@@ -786,9 +791,8 @@ RETURNS TABLE
 AS  
 RETURN  
     SELECT S.name , S.location , S.capacity
-	FROM Stadium S , Match M
-	WHERE S.status= 1 AND S.id  != M.StadiumID OR  S.id=M.StadiumID AND M.StartTime!=@starttime
-
+	FROM Stadium S, Match M
+	WHERE S.status = 1 AND ( (S.id  NOT IN (SELECT StadiumID FROM Match)) OR ( (S.id IN (SELECT StadiumID FROM Match) AND S.id = M.StadiumID AND @starttime NOT BETWEEN M.StartTime AND M.EndTime) )  ); 
 	GO
 
 	CREATE PROCEDURE viewAvailableStadiumsOnProc
@@ -1317,6 +1321,8 @@ AS
 	SELECT * FROM availableMatchesToAttend(@date);
 GO
 
+EXEC clearAllTables;
+
 EXEC addStadium "Camp Nou", "Barcelona, Spain", 80000;
 EXEC addStadium "Bernabeu", "Madrid", 40000;
 
@@ -1332,6 +1338,8 @@ EXEC addRepresentative "Ancelotti", "Real Madrid","cancelotti","admin";
 EXEC addNewMatch "FC Barcelona", "Real Madrid", "2023/3/28 20:30:00", "2023/3/28 22:30:00";
 EXEC addNewMatch "Real Madrid", "FC Barcelona", "2023/4/15 20:30:00", "2023/4/15 22:30:00";
 EXEC addNewMatch "nigga", "FC Barcelona", "2023/2/11 20:30:00", "2023/2/11 22:30:00";
+
+SELECT * FROM Stadium;
 
 insert into Match
 Values('nigga', 'FC Barcelona', 1, '2023/2/11', '2023/2/11')
@@ -1428,3 +1436,4 @@ INNER JOIN Club C2 ON M.GuestClubID = C2.id
 Where C1.name = 'nigga' OR C2.name = 'nigga'
 
 select * from club
+select * from Stadium;
