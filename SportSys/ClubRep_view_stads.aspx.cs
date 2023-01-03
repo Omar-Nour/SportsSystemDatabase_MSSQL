@@ -36,9 +36,9 @@ namespace SportSys
             string connStr = WebConfigurationManager.ConnectionStrings["SportSys"].ToString();
             SqlConnection conn = new SqlConnection(connStr);
 
-            SqlCommand View_stads = new SqlCommand("SELECT S.name , S.location , S.capacity\r\n\tFROM Stadium S , Match M\r\n\tWHERE S.status= 1 AND S.id  != M.StadiumID AND M.StartTime >" + DateTimeBox.Text.ToString(), conn);
-            // View_stads.CommandType = CommandType.StoredProcedure;
-            //View_stads.Parameters.AddWithValue("@starttime", DateTimeBox.Text);
+            SqlCommand View_stads = new SqlCommand("viewAvailableStadiumsOnProc", conn);
+            View_stads.CommandType = CommandType.StoredProcedure;
+            View_stads.Parameters.AddWithValue("@starttime", DateTimeBox.Text);
 
 
             conn.Open();
